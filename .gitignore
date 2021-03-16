@@ -25,4 +25,6 @@ hs_err_pid*
 # IntelliJ IDEA Files
 .idea/*.xml
 .idea/.gitignore
+.idea/.name
+.idea/libraries/
 *.iml
