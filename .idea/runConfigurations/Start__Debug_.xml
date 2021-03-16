@@ -1,13 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="FightForSalvation" type="Application" factoryName="Application" nameIsGenerated="true">
+  <configuration default="false" name="Start (Debug)" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.yologamer123415.fightforsalvation.FightForSalvation" />
-    <module name="Fight for Salvation" />
+    <module name="fight-for-salvation" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.yologamer123415.fightforsalvation.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
+    <option name="PROGRAM_PARAMETERS" value="--debug" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
