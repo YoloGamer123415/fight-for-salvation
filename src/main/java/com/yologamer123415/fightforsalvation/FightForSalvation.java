@@ -5,21 +5,24 @@ import nl.han.ica.oopg.engine.GameEngine;
 
 public class FightForSalvation extends GameEngine {
 	public static void main(String[] args) {
-		Rarity rar = Rarity.getRarity();
-		System.out.println(rar.name());
+		for (int i = 0; i < 10; i++) {
+			Rarity rar = Rarity.getRarity();
+			System.out.println(rar.name());
+			System.out.println("------------");
+		}
 
-		FightForSalvation ffs = new FightForSalvation();
-
-		ffs.runSketch();
+//		FightForSalvation ffs = new FightForSalvation();
+//
+//		ffs.runSketch();
 	}
 
 	@Override
 	public void setupGame() {
-		//TODO Implement...
+		// TODO Implement...
 	}
 
 	@Override
 	public void update() {
-		//TODO Implement...
+		// TODO Implement...
 	}
 }

@@ -15,21 +15,17 @@ public enum Rarity {
 	}
 
 	public static Rarity getRarity() {
+		Rarity[] values = Rarity.values();
 		int random = (int) (Math.random() * 100);
 
-		//TODO Fix dit...
+		System.out.println(random);
 
-		Rarity[] rarities = values();
-		int start = 0;
-		for (int i = rarities.length - 1; i >= 0; i--) {
-			int currentStart = start == 0 ? 0 : start + 1;
-			int end = start + rarities[i].chance;
+		for (int i = 0; i < values.length; i++) {
+			int boundry = 0;
 
-			if (random > currentStart && random < end) {
-				return rarities[i];
-			}
+			for (int j = 0; j <= i; j++) boundry += values[j].chance;
 
-			start += rarities[i].chance;
+			if (random <= boundry) return values[i];
 		}
 
 		return Rarity.COMMON;
