@@ -1,6 +1,6 @@
 package com.yologamer123415.fightforsalvation;
 
-import com.yologamer123415.fightforsalvation.api.Rarity;
+import com.yologamer123415.fightforsalvation.rarity.Rarity;
 import nl.han.ica.oopg.engine.GameEngine;
 
 public class FightForSalvation extends GameEngine {
@@ -18,11 +18,11 @@ public class FightForSalvation extends GameEngine {
 
 	@Override
 	public void setupGame() {
-		// TODO Implement...
+
 	}
 
 	@Override
 	public void update() {
-		// TODO Implement...
+
 	}
 }

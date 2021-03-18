@@ -1,4 +1,4 @@
-package com.yologamer123415.fightforsalvation.api;
+package com.yologamer123415.fightforsalvation.rarity;
 
 public enum Rarity {
 	COMMON(50),
@@ -22,8 +22,9 @@ public enum Rarity {
 
 		for (int i = 0; i < values.length; i++) {
 			int boundry = 0;
-
-			for (int j = 0; j <= i; j++) boundry += values[j].chance;
+			for (int j = 0; j <= i; j++) {
+				boundry += values[j].chance;
+			}
 
 			if (random <= boundry) return values[i];
 		}
