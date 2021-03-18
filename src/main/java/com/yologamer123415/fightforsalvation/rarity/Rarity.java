@@ -1,4 +1,4 @@
-package com.yologamer123415.fightforsalvation.api;
+package com.yologamer123415.fightforsalvation.rarity;
 
 public enum Rarity {
 	COMMON(50),
@@ -17,7 +17,7 @@ public enum Rarity {
 	public static Rarity getRarity() {
 		int random = (int) (Math.random() * 100);
 
-		//TODO Fix dit...
+		//TODO Fix this method...
 
 		Rarity[] rarities = values();
 		int start = 0;
