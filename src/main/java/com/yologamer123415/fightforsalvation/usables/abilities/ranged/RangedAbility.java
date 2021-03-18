@@ -1,0 +1,10 @@
+package com.yologamer123415.fightforsalvation.usables.abilities.ranged;
+
+import com.yologamer123415.fightforsalvation.usables.UsableObject;
+import nl.han.ica.oopg.objects.Sprite;
+
+public abstract class RangedAbility extends UsableObject {
+	public RangedAbility(Sprite sprite) {
+		super(sprite);
+	}
+}
