@@ -1,4 +1,4 @@
-package com.yologamer123415.fightforsalvation.usables;
+package com.yologamer123415.fightforsalvation.helpers;
 
 public enum Rarity {
 	COMMON(50),

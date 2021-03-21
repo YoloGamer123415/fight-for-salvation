@@ -1,10 +1,10 @@
 package com.yologamer123415.fightforsalvation.usables.abilities.normal;
 
-import processing.core.PVector;
+import com.yologamer123415.fightforsalvation.helpers.Vector;
 
 public class RegenerationAbility extends NormalAbility {
 	@Override
-	public void use(PVector mousePos) {
+	public void use(Vector mousePos) {
 
 	}
 }

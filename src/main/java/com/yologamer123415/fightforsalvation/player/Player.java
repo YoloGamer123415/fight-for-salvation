@@ -1,12 +1,15 @@
 package com.yologamer123415.fightforsalvation.player;
 
 import com.yologamer123415.fightforsalvation.obstacles.FlamableSpriteObject;
+import com.yologamer123415.fightforsalvation.usables.UsableObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.List;
 
 public class Player extends FlamableSpriteObject {
+	private UsableObject activeUsable;
+
 	public Player(Sprite sprite, int duration, int tickTime) {
 		super(sprite, duration, tickTime);
 	}

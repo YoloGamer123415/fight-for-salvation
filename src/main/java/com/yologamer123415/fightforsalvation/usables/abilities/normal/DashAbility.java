@@ -1,7 +1,7 @@
 package com.yologamer123415.fightforsalvation.usables.abilities.normal;
 
+import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.Sprite;
-import processing.core.PVector;
 
 public class DashAbility extends NormalAbility {
 	public DashAbility(Sprite sprite) {
@@ -9,7 +9,7 @@ public class DashAbility extends NormalAbility {
 	}
 
 	@Override
-	public void use(PVector mousePos) {
+	public void use(Vector mousePos) {
 
 	}
 

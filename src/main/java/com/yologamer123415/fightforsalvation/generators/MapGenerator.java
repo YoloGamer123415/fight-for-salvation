@@ -21,7 +21,8 @@ public class MapGenerator {
 	public static int[][] generateTilemapFromFile(FilePersistence file) {
 		int[][] array = new int[6][6];
 
-		if (!file.fileExists()) return null;
+		if (!file.fileExists()) return array;
+
 		String[] data = file.loadDataStringArray("\n");
 		for (int i = 0; i < data.length; i++) {
 			char[] row = data[i].toCharArray();
