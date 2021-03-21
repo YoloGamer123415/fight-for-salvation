@@ -1,4 +1,4 @@
-package com.yologamer123415.fightforsalvation.usables;
+package com.yologamer123415.fightforsalvation.object;
 
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.Sprite;

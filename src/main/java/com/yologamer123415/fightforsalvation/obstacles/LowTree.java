@@ -1,5 +1,6 @@
 package com.yologamer123415.fightforsalvation.obstacles;
 
+import com.yologamer123415.fightforsalvation.object.FlamableSpriteObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 

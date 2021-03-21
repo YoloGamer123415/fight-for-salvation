@@ -1,4 +1,4 @@
-package com.yologamer123415.fightforsalvation.obstacles;
+package com.yologamer123415.fightforsalvation.object;
 
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.collision.ICollidableWithGameObjects;

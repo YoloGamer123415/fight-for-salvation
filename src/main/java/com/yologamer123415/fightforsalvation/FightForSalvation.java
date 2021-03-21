@@ -5,8 +5,7 @@ import nl.han.ica.oopg.engine.GameEngine;
 public class FightForSalvation extends GameEngine {
 	public static void main(String[] args) {
 		FightForSalvation ffs = new FightForSalvation();
-
-		ffs.runSketch();
+		runSketch(new String[]{FightForSalvation.class.getCanonicalName()}, ffs);
 	}
 
 	@Override

@@ -14,11 +14,13 @@ public enum Rarity {
 		this.chance = rarity;
 	}
 
-	public static Rarity getRarity() {
+	public static Rarity getRandomRarity() {
+		return getRandomRarity(Rarity.COMMON);
+	}
+
+	public static Rarity getRandomRarity(Rarity from) {
 		Rarity[] values = Rarity.values();
 		int random = (int) (Math.random() * 100);
-
-		System.out.println(random);
 
 		for (int i = 0; i < values.length; i++) {
 			int boundry = 0;
