@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapGenerator {
+	private static final String LEVELPATH = "main/resources/levels/";
 	private static final Map<Character, Integer> tiles = new HashMap<>();
 
 	static {
@@ -18,7 +19,9 @@ public class MapGenerator {
 		tiles.put('s', 6);
 	}
 
-	public static int[][] generateTilemapFromFile(FilePersistence file) {
+	public static int[][] generateTilemapFromFile(int level) {
+		FilePersistence file = new FilePersistence(LEVELPATH + level + ".txt");
+
 		int[][] array = new int[6][6];
 
 		if (!file.fileExists()) return array;
