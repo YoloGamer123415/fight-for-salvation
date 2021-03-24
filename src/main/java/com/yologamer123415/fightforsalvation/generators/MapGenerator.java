@@ -57,8 +57,8 @@ public class MapGenerator {
 		if (!file.fileExists()) return null;
 		String[] data = file.loadDataStringArray("\n");
 
-		TileType<?>[] types = new TileType[tileTypes.size()];
-		int[][] indexMap = new int[data.length][data.length];
+		TileType<?>[] types = new TileType[ tileTypes.size() ];
+		int[][] indexMap = new int[ data.length ][ data.length ];
 
 		for (int i = 0; i < data.length; i++) {
 			char[] row = data[i].toCharArray();
@@ -80,8 +80,7 @@ public class MapGenerator {
 	 * @return The uppercased string
 	 */
 	private static String uppercaseString(String in) {
-		return Stream.of(in.trim().split("\\s"))
-				.filter(word -> word.length() > 0)
+		return Stream.of(in.trim().split("-"))
 				.map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
 				.collect(Collectors.joining(""));
 	}
