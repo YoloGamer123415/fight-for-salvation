@@ -23,16 +23,18 @@ public class MapGenerator {
 		}
 
 		File[] files = new File("src/main/resources/tiletypes").listFiles((dir, name) -> name.toLowerCase().endsWith(".jpg"));
+
 		if (files == null) return;
+
 		for (File file : files) {
 			String[] spriteNameSplit = file.getName().split("_");
 			char spriteChar = spriteNameSplit[0].charAt(0);
-			String className = stringToClassName(spriteNameSplit[1]);
+			String className = stringToClassName( spriteNameSplit[1] );
 
 			TileType<?> tileType;
 			try {
 				Class<?> spriteClass = Class.forName(className);
-				Sprite sprite = new Sprite(file.getAbsolutePath());
+				Sprite sprite = new Sprite( file.getAbsolutePath() );
 
 				tileType = (TileType<?>) tileClass.getConstructor(Class.class, Sprite.class).newInstance(spriteClass, sprite);
 			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
@@ -55,13 +57,15 @@ public class MapGenerator {
 		if (!file.fileExists()) return null;
 		String[] data = file.loadDataStringArray("\n");
 
-		TileType<?>[] types = new TileType[tileTypes.size()];
+		TileType<?>[] types = new TileType[ tileTypes.size() ];
 		int[][] indexMap = new int[data.length][data.length];
+
 		for (int i = 0; i < data.length; i++) {
 			char[] row = data[i].toCharArray();
+
 			for (int j = 0; j < row.length; j++) {
-				types[row[j]] = tileTypes.get(row[j]);
-				indexMap[i][j] = new ArrayList<>(tileTypes.keySet()).indexOf(row[j]);
+				types[ row[j] ] = tileTypes.get( row[j] );
+				indexMap[i][j] = new ArrayList<>( tileTypes.keySet() ).indexOf( row[j] );
 			}
 		}
 
@@ -81,9 +85,9 @@ public class MapGenerator {
 	 * @return The uppercased string
 	 */
 	private static String uppercaseString(String in) {
-		return Stream.of(in.trim().split("\\s"))
-				.filter(word -> word.length() > 0)
-				.map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-				.collect(Collectors.joining(""));
+		return Stream.of( in.trim().split("\\s") )
+				.filter( word -> word.length() > 0 )
+				.map( word -> word.substring(0, 1).toUpperCase() + word.substring(1) )
+				.collect( Collectors.joining("") );
 	}
 }
