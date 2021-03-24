@@ -4,8 +4,8 @@ import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class InvicibleAbility extends NormalAbility {
-	public InvicibleAbility(Sprite sprite) {
-		super(sprite);
+	public InvicibleAbility(String name, Sprite sprite) {
+		super(name, sprite);
 	}
 
 	@Override

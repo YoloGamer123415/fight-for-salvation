@@ -1,7 +1,5 @@
 package com.yologamer123415.fightforsalvation.helpers;
 
-import java.util.Arrays;
-
 public enum Rarity {
 	COMMON(50),
 	NORMAL(35),
@@ -16,14 +14,13 @@ public enum Rarity {
 		this.chance = chance;
 	}
 
-	public int getCalculationValue()
-	{
+	public int getCalculationValue() {
 		Rarity[] rarities = Rarity.values();
-
-		for (int i = 0; i < rarities.length; i++)
-			if ( this.equals( rarities[i] ) )
+		for (int i = 0; i < rarities.length; i++) {
+			if (this.equals(rarities[i])) {
 				return ++i;
-
+			}
+		}
 		return 1;
 	}
 
@@ -33,10 +30,8 @@ public enum Rarity {
 
 	public static Rarity getRandomRarity(Rarity from) {
 		final Rarity[] values = Rarity.values();
-		final double modifier = from.getCalculationValue() / 2d + 0.5;
-		final int random = (int) (
-				Math.random() * 100 + 100 * (modifier - 1)
-		);
+		final double modifier = from.getCalculationValue() / 2.0 + 0.5;
+		final int random = (int) (Math.random() * 100 + 100 * (modifier - 1));
 
 		for (int i = 0; i < values.length; i++) {
 			int boundary = 0;

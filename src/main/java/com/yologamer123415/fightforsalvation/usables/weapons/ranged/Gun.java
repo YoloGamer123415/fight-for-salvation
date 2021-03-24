@@ -9,8 +9,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class Gun extends Weapon implements ICollidableWithGameObjects {
-	public Gun(Sprite sprite) {
-		super(sprite);
+	public Gun() {
+		super("Gun", new Sprite(""));
 	}
 
 	@Override

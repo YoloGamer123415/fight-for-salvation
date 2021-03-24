@@ -4,8 +4,8 @@ import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class StrengthAbility extends NormalAbility {
-	public StrengthAbility(Sprite sprite) {
-		super(sprite);
+	public StrengthAbility(String name, Sprite sprite) {
+		super(name, sprite);
 	}
 
 	@Override

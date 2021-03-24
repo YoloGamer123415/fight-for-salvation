@@ -5,8 +5,8 @@ import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class Knife extends Weapon {
-	public Knife(Sprite sprite) {
-		super(sprite);
+	public Knife() {
+		super("Knife", new Sprite(""));
 	}
 
 	@Override
