@@ -12,8 +12,8 @@ public enum Rarity {
 	 */
 	private final int chance;
 
-	Rarity(int rarity) {
-		this.chance = rarity;
+	Rarity(int chance) {
+		this.chance = chance;
 	}
 
 	public int getCalculationValue()
