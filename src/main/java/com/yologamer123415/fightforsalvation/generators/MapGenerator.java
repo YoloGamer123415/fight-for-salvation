@@ -1,48 +1,51 @@
 package com.yologamer123415.fightforsalvation.generators;
 
+import com.yologamer123415.fightforsalvation.chests.Chest;
+import com.yologamer123415.fightforsalvation.monsters.Monster;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.persistence.FilePersistence;
 import nl.han.ica.oopg.tile.TileMap;
 import nl.han.ica.oopg.tile.TileType;
+import processing.data.JSONObject;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
 
 	public static void loadTileTypes() {
-		Class<?> tileClass;
-		try {
-			tileClass = Class.forName("nl.han.ica.oopg.tile.TileType");
-		} catch (ClassNotFoundException e) {
-			return;
-		}
-
-		File[] files = new File("src/main/resources/tiletypes").listFiles((dir, name) -> name.toLowerCase().endsWith(".jpg"));
+		File[] files = new File("src/main/resources/tiletypes").listFiles((dir, name) -> name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg"));
 
 		if (files == null) return;
 
+		System.out.println("Loading tiletypes...");
+
 		for (File file : files) {
-			String[] spriteNameSplit = file.getName().split("_");
-			char spriteChar = spriteNameSplit[0].charAt(0);
-			String className = uppercaseString( spriteNameSplit[1] );
+			String[] spriteNameSplit = getBaseName(file.getName()).split("_");
 
-			TileType<?> tileType;
+			boolean isObstacle = false;
+			char spriteChar;
+			if (spriteNameSplit[0].charAt(0) == '%') {
+				isObstacle = true;
+				spriteChar = spriteNameSplit[0].charAt(1);
+			} else {
+				spriteChar = spriteNameSplit[0].charAt(0);
+			}
+
+			String packageName = "com.yologamer123415.fightforsalvation." + ( isObstacle ? "obstacles" : "tyles" );
+
+			Class<?> tileTypeClass;
 			try {
-				Class<?> spriteClass = Class.forName(className);
-				Sprite sprite = new Sprite( file.getAbsolutePath() );
-
-				tileType = (TileType<?>) tileClass.getConstructor(Class.class, Sprite.class).newInstance(spriteClass, sprite);
-			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+				tileTypeClass = Class.forName( packageName + "." + spriteNameSplit[1] );
+			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				continue;
 			}
 
-			tileTypes.put(spriteChar, tileType);
+			System.out.println("Discovered sprite with char '" + spriteChar + "' and tiletype '" + tileTypeClass.getName() + "'.");
+
+			tileTypes.put( spriteChar, new TileType( tileTypeClass, new Sprite( file.getAbsolutePath() ) ) );
 		}
 	}
 
@@ -53,35 +56,78 @@ public class MapGenerator {
 	 * @return The TileMap to use.
 	 */
 	public static TileMap generateTilemapFromFile(int level) {
-		FilePersistence file = new FilePersistence("main/resources/levels/" + level + ".txt");
-		if (!file.fileExists()) return null;
-		String[] data = file.loadDataStringArray("\n");
+		FilePersistence file = new FilePersistence("main/resources/levels/" + level + ".json");
+		if (!file.fileExists()) throw new IllegalArgumentException("Level " + level + " does not exists!");
+		JSONObject data = JSONObject.parse(file.loadDataString());
 
-		TileType<?>[] types = new TileType[ tileTypes.size() ];
-		int[][] indexMap = new int[ data.length ][ data.length ];
+		int monsterCount = data.getInt("totalMonsters");
+		int chestCount = data.getInt("totalChests");
+		String[] mapRows = data.getJSONArray("map").getStringArray();
 
-		for (int i = 0; i < data.length; i++) {
-			char[] row = data[i].toCharArray();
+		System.out.println("Loading tilemap for level " + level + "...");
+
+		List<TilePosition> monsterPositions = new ArrayList<>();
+		List<TilePosition> chestPositions = new ArrayList<>();
+
+		TileType<?>[] types = new TileType[ tileTypes.size() + 2 ]; //Append to for monster and chests
+		int[][] indexMap = new int[ mapRows.length ][ mapRows[0].toCharArray().length ];
+
+		for (int i = 0; i < mapRows.length; i++) {
+			char[] row = mapRows[i].toCharArray();
 
 			for (int j = 0; j < row.length; j++) {
-				types[row[j]] = tileTypes.get( row[j] );
-				indexMap[i][j] = new ArrayList<>( tileTypes.keySet() ).indexOf( row[j] );
+				char placeChar = row[j];
+
+				if (placeChar == '@') {
+					monsterPositions.add(new TilePosition(i, j));
+				} else if (placeChar == 'c') {
+					chestPositions.add(new TilePosition(i, j));
+				} else if (placeChar == 'C') {
+					//TODO Place end chest
+				} else if (placeChar == '*') {
+					//TODO Place player
+				} else {
+					int typeIndex = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
+
+					if (typeIndex == -1) continue; //Incorrect tile, ignore.
+
+					types[typeIndex] = tileTypes.get(row[j]);
+					indexMap[i][j] = typeIndex;
+				}
 			}
 		}
 
-		return new TileMap(data.length * data.length, types, indexMap);
+		//TODO Implement rarity
+		types[ tileTypes.size() ] = new TileType(Chest.class, new Sprite(""));
+		types[ tileTypes.size() + 1 ] = new TileType(Monster.class, new Sprite(""));
+
+		System.out.println("TileMap has been generated, and is ready to set.");
+
+		return new TileMap(50, types, indexMap);
+	}
+
+	private static void placeRandomly(int toPlaceIndex, List<TilePosition> availablePositions, int placeCount, int[][] indexMap) {
+		final Random rand = new Random();
+
+		for (int i = 0; i < placeCount; i++) {
+			TilePosition randomPos = availablePositions.get(rand.nextInt(availablePositions.size()));
+
+			indexMap[ randomPos.getRow() ][  randomPos.getLine() ] = toPlaceIndex;
+		}
 	}
 
 	/**
-	 * Uppercase every word in a {@link String}
-	 * SOURCE: https://gist.github.com/Hylke1982/166a792313c5e2df9d31
+	 * Removes the extension of a filename.
 	 *
-	 * @param in The input string
-	 * @return The uppercased string
+	 * SOURCE: https://github.com/google/guava/blob/018796b79b314b5b7790c9320c1a7c89140af76d/guava/src/com/google/common/io/Files.java#L820
+	 * EDITED, removed unneeded methods.
+	 *
+	 *
+	 * @param fileName The name of the file
+	 * @return The name without extension
 	 */
-	private static String uppercaseString(String in) {
-		return Stream.of(in.trim().split("-"))
-				.map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-				.collect(Collectors.joining(""));
+	private static String getBaseName(String fileName) {
+		int dotIndex = fileName.lastIndexOf('.');
+		return (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
 	}
 }
