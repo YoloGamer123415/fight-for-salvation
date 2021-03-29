@@ -24,7 +24,7 @@ public class FightForSalvation extends GameEngine {
 
 	@Override
 	public void setupGame() {
-
+		MapGenerator.loadTileTypes();
 	}
 
 	@Override
