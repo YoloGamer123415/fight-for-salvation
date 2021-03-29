@@ -3,6 +3,7 @@ package com.yologamer123415.fightforsalvation.generators;
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.chests.EndChest;
 import com.yologamer123415.fightforsalvation.chests.NormalChest;
+import com.yologamer123415.fightforsalvation.helpers.FileHelper;
 import com.yologamer123415.fightforsalvation.monsters.BowMonster;
 import com.yologamer123415.fightforsalvation.monsters.Monster;
 import com.yologamer123415.fightforsalvation.monsters.SwordMonster;
@@ -15,49 +16,60 @@ import nl.han.ica.oopg.tile.TileType;
 import processing.data.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
+	private static final Map<Character, GameObject> gameObjects = new LinkedHashMap<>();
 	private static final int TILESIZE = 50;
 
 	/**
-	 * Loads the {@link TileType}s into the map.
+	 * Loads the {@link TileType}s and {@link GameObject}s into the map.
 	 * Should only be used at initialization!
 	 */
-	public static void loadTileTypes() {
-		File[] files = new File("src/main/resources/tiletypes")
-				.listFiles((dir, name) -> name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg"));
+	public static void load() {
+		for (File file : FileHelper.listFiles("tiletypes")) {
+			String[] spriteNameSplit = FileHelper.getBaseName(file.getName()).split("_");
 
-		if (files == null) return;
-
-		System.out.println("Loading tiletypes...");
-
-		for (File file : files) {
-			String[] spriteNameSplit = getBaseName(file.getName()).split("_");
-
-			boolean isObstacle = false;
-			char spriteChar;
-			if (spriteNameSplit[0].charAt(0) == '%') {
-				isObstacle = true;
-				spriteChar = spriteNameSplit[0].charAt(1);
-			} else {
-				spriteChar = spriteNameSplit[0].charAt(0);
-			}
-
-			String packageName = "com.yologamer123415.fightforsalvation." + ( isObstacle ? "obstacles" : "tyles" );
+			char spriteChar = spriteNameSplit[0].charAt(0);
 
 			Class<?> tileTypeClass;
 			try {
-				tileTypeClass = Class.forName( packageName + "." + spriteNameSplit[1] );
+				tileTypeClass = Class.forName("com.yologamer123415.fightforsalvation." + spriteNameSplit[1]);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				continue;
 			}
 
-			System.out.println("Discovered sprite with char '" + spriteChar + "' and tiletype '" + tileTypeClass.getName() + "'.");
+			Sprite sprite = new Sprite("src/main/resources/" + file.getParentFile().getName() + "/" + file.getName());
 
-			tileTypes.put( spriteChar, new TileType( tileTypeClass, new Sprite( file.getAbsolutePath() ) ) );
+			tileTypes.put(spriteChar, new TileType(tileTypeClass, sprite));
+		}
+
+		for (File file : FileHelper.listFiles("gameobjects")) {
+			String[] spriteNameSplit = FileHelper.getBaseName(file.getName()).split("_");
+
+			char spriteChar = spriteNameSplit[0].charAt(0);
+			Class<?> gameObjectClass;
+			try {
+				gameObjectClass = Class.forName("com.yologamer123415.fightforsalvation." + spriteNameSplit[1]);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				continue;
+			}
+
+			Sprite sprite = new Sprite("src/main/resources/" + file.getParentFile().getName() + "/" + file.getName());
+
+			GameObject object;
+			try {
+				object = (GameObject) gameObjectClass.getDeclaredConstructor(Sprite.class).newInstance(sprite);
+			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+				e.printStackTrace();
+				return;
+			}
+
+			gameObjects.put(spriteChar, object);
 		}
 	}
 
@@ -84,37 +96,40 @@ public class MapGenerator {
 		final int chestIndex = tileTypes.size();
 		final int endChestIndex = tileTypes.size() + 1;
 
-		TileType<?>[] types = new TileType[endChestIndex + 1];
 		int[][] indexMap = new int[ mapRows.length ][ mapRows[0].toCharArray().length ];
 
-		for (int i = 0; i < mapRows.length; i++) {
-			Arrays.fill(indexMap[i], -1); //Fill with default value (-1)
+		for (int x = 0; x < mapRows.length; x++) {
+			Arrays.fill(indexMap[x], -1); //Fill with default value (-1)
 
-			char[] row = mapRows[i].toCharArray();
+			char[] row = mapRows[x].toCharArray();
 
-			for (int j = 0; j < row.length; j++) {
-				char placeChar = row[j];
-				switch (placeChar) {
-					case '@':
-						monsterPositions.add(new TilePosition(i, j));
-						break;
-					case 'c':
-						chestPositions.add(new TilePosition(i, j));
-						break;
-					case 'C':
-						indexMap[i][j] = endChestIndex;
-						break;
-					case '*':
-						Player player = new Player();
-						FightForSalvation.getInstance().addGameObject(player, TILESIZE * i, TILESIZE * j);
-						break;
-					default:
-						int typeIndex = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
-						if (typeIndex == -1) continue; //Incorrect tile, ignore.
+			for (int y = 0; y < row.length; y++) {
+				char placeChar = row[y];
 
-						types[typeIndex] = tileTypes.get(row[j]);
-						indexMap[i][j] = typeIndex;
-						break;
+				if (gameObjects.containsKey(placeChar)) {
+					GameObject object = gameObjects.get(placeChar);
+
+					if (FightForSalvation.getInstance().getGameObjectItems().contains(object)) continue;
+
+					FightForSalvation.getInstance().addGameObject(object, (float) (y * TILESIZE), (float) (x * TILESIZE));
+				} else if (tileTypes.containsKey(placeChar)) {
+					indexMap[x][y] = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
+				} else {
+					switch (placeChar) {
+						case '@':
+							monsterPositions.add(new TilePosition(x, y));
+							break;
+						case 'c':
+							chestPositions.add(new TilePosition(x, y));
+							break;
+						case 'C':
+							indexMap[x][y] = endChestIndex;
+							break;
+						case ' ':
+							break;
+						default:
+							throw new IllegalArgumentException("Char " + placeChar + " not registed in resources.");
+					}
 				}
 			}
 		}
@@ -122,15 +137,16 @@ public class MapGenerator {
 		if (chestPositions.size() < chestCount) throw new IllegalArgumentException("Not enough chest positions available for size.");
 		if (monsterPositions.size() < monsterCount) throw new IllegalArgumentException("Not enough chest positions available for size.");
 
-		types[chestIndex] = new TileType(NormalChest.class, new Sprite("src/main/resources/sprites/Chest.png"));
-		types[endChestIndex] = new TileType(EndChest.class, new Sprite("src/main/resources/sprites/EndChest.png"));
+		List<TileType<?>> types = new LinkedList<>(tileTypes.values());
+		types.add(new TileType(NormalChest.class, new Sprite("src/main/resources/tiletypes/special/NormalChest.png")));
+		types.add(new TileType(EndChest.class, new Sprite("src/main/resources/tiletypes/special/EndChest.png")));
 
-		place( monsterPositions, monsterCount, getRandomMonster() );
-		place( chestPositions, chestCount, indexMap, chestIndex );
+//		place(monsterPositions, monsterCount, getRandomMonster());
+		place(chestPositions, chestCount, indexMap, chestIndex);
 
 		System.out.println("TileMap has been generated, and is ready to set.");
 
-		return new TileMap(TILESIZE, types, indexMap);
+		return new TileMap(TILESIZE, types.toArray(new TileType[0]), indexMap);
 	}
 
 	/**
@@ -181,20 +197,5 @@ public class MapGenerator {
 		} else {
 			return new SwordMonster(new Sprite(""));
 		}
-	}
-
-	/**
-	 * Removes the extension of a filename.
-	 *
-	 * SOURCE: https://github.com/google/guava/blob/018796b79b314b5b7790c9320c1a7c89140af76d/guava/src/com/google/common/io/Files.java#L820
-	 * EDITED, removed unneeded methods.
-	 *
-	 *
-	 * @param fileName The name of the file
-	 * @return The name without extension
-	 */
-	private static String getBaseName(String fileName) {
-		int dotIndex = fileName.lastIndexOf('.');
-		return (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
 	}
 }

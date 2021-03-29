@@ -7,8 +7,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class LowTree extends FlammableSpriteObject {
-	public LowTree(Sprite sprite, int duration, int tickTime) {
-		super(sprite, duration, tickTime);
+	public LowTree(Sprite sprite) {
+		super(sprite, 0, 0);
 	}
 
 	@Override

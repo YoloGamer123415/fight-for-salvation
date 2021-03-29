@@ -1,4 +1,4 @@
-# Tile Types
+# Generator File format
 Deze map bevat alle tile types van het spel.
 Hierbij moet een vaste format worden aangehouden: `{CHAR}_{CLASSNAME}.{EXTENSION}`
 
