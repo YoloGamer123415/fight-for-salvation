@@ -16,4 +16,12 @@ public class TilePosition {
 	public int getLine() {
 		return line;
 	}
+
+	@Override
+	public String toString() {
+		return "TilePosition{" +
+				"row=" + row +
+				", line=" + line +
+				'}';
+	}
 }

@@ -10,8 +10,8 @@ import java.util.List;
 public class Player extends FlamableSpriteObject {
 	private UsableObject activeUsable;
 
-	public Player(Sprite sprite, int duration, int tickTime) {
-		super(sprite, duration, tickTime);
+	public Player(Sprite sprite) {
+		super(sprite, 0, 0); //TODO Fix super constructor
 	}
 
 	@Override
