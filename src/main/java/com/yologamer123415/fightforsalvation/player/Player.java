@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Player extends FlammableSpriteObject {
 	private static final float SPEED_STOPPED = 0;
-	private static final float SPEED_NORMAL = 2;
+	private static final float SPEED_NORMAL = 3.5f;
 
 	private int totalEssence;
 
@@ -29,6 +29,8 @@ public class Player extends FlammableSpriteObject {
 	@Override
 	public void update() {
 		super.update();
+
+		this.setSpeed(0);
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class Player extends FlammableSpriteObject {
 				this.setySpeed(SPEED_NORMAL);
 				break;
 			case 'd':
-				this.setX(SPEED_NORMAL);
+				this.setxSpeed(SPEED_NORMAL);
 				this.setySpeed(SPEED_STOPPED);
 				break;
 			case ' ':
