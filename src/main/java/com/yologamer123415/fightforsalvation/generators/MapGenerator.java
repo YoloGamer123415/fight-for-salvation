@@ -19,7 +19,7 @@ import java.util.*;
 
 public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
-	private static final int TILESIZE = 50;
+	public static final int TILESIZE = 50;
 
 	/**
 	 * Loads the {@link TileType}s into the map.
@@ -125,8 +125,8 @@ public class MapGenerator {
 		types[chestIndex] = new TileType(NormalChest.class, new Sprite("src/main/resources/sprites/Chest.png"));
 		types[endChestIndex] = new TileType(EndChest.class, new Sprite("src/main/resources/sprites/EndChest.png"));
 
-		place( monsterPositions, monsterCount, getRandomMonster() );
-		place( chestPositions, chestCount, indexMap, chestIndex );
+//		place( monsterPositions, monsterCount, getRandomMonster() );
+//		place( chestPositions, chestCount, indexMap, chestIndex );
 
 		System.out.println("TileMap has been generated, and is ready to set.");
 
