@@ -22,6 +22,14 @@ public class FightForSalvation extends GameEngine {
 		return instance;
 	}
 
+	public Inventory getInventory() {
+		return this.inventory;
+	}
+
+	public Player getPlayer() {
+		return this.player;
+	}
+
 	@Override
 	public void setupGame() {
 		MapGenerator.loadTileTypes();
@@ -30,10 +38,6 @@ public class FightForSalvation extends GameEngine {
 	@Override
 	public void update() {
 
-	}
-
-	public Player getPlayer() {
-		return this.player;
 	}
 
 	protected void closedInventory() {
