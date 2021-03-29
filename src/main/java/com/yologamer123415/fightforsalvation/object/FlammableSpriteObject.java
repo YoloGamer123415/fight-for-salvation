@@ -5,11 +5,11 @@ import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
 
-public abstract class FlamableSpriteObject extends AnimatedSpriteObject implements IAlarmListener, ICollidableWithGameObjects {
+public abstract class FlammableSpriteObject extends AnimatedSpriteObject implements IAlarmListener, ICollidableWithGameObjects {
 	private final int tickTime;
 	private boolean shouldDoDamage = false;
 
-	public FlamableSpriteObject(Sprite sprite, int duration, int tickTime) {
+	public FlammableSpriteObject(Sprite sprite, int duration, int tickTime) {
 		super(sprite, 2);
 		this.tickTime = tickTime;
 	}
