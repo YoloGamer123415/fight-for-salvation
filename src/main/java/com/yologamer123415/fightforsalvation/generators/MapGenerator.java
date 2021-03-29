@@ -15,7 +15,8 @@ public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
 
 	public static void loadTileTypes() {
-		File[] files = new File("src/main/resources/tiletypes").listFiles((dir, name) -> name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg"));
+		File[] files = new File("src/main/resources/tiletypes")
+				.listFiles((dir, name) -> name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg"));
 
 		if (files == null) return;
 
@@ -73,26 +74,33 @@ public class MapGenerator {
 		int[][] indexMap = new int[ mapRows.length ][ mapRows[0].toCharArray().length ];
 
 		for (int i = 0; i < mapRows.length; i++) {
+			Arrays.fill(indexMap[i], -1); //Fill with default value (-1)
+
 			char[] row = mapRows[i].toCharArray();
 
 			for (int j = 0; j < row.length; j++) {
 				char placeChar = row[j];
+				switch (placeChar) {
+					case '@':
+						monsterPositions.add(new TilePosition(i, j));
+						break;
+					case 'c':
+						chestPositions.add(new TilePosition(i, j));
+						break;
+					case 'C':
+						//TODO Place end chest
+						break;
+					case '*':
+						//TODO Place player
+						break;
+					default:
+						int typeIndex = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
 
-				if (placeChar == '@') {
-					monsterPositions.add(new TilePosition(i, j));
-				} else if (placeChar == 'c') {
-					chestPositions.add(new TilePosition(i, j));
-				} else if (placeChar == 'C') {
-					//TODO Place end chest
-				} else if (placeChar == '*') {
-					//TODO Place player
-				} else {
-					int typeIndex = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
+						if (typeIndex == -1) continue; //Incorrect tile, ignore.
 
-					if (typeIndex == -1) continue; //Incorrect tile, ignore.
-
-					types[typeIndex] = tileTypes.get(row[j]);
-					indexMap[i][j] = typeIndex;
+						types[typeIndex] = tileTypes.get(row[j]);
+						indexMap[i][j] = typeIndex;
+						break;
 				}
 			}
 		}
