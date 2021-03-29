@@ -22,7 +22,7 @@ import java.util.*;
 public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
 	private static final Map<Character, GameObject> gameObjects = new LinkedHashMap<>();
-	private static final int TILESIZE = 50;
+	public static final int TILESIZE = 50;
 
 	/**
 	 * Loads the {@link TileType}s and {@link GameObject}s into the map.
