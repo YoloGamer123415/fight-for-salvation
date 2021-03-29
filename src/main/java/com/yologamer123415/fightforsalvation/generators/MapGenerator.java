@@ -23,7 +23,7 @@ public class MapGenerator {
 
 	/**
 	 * Loads the {@link TileType}s into the map.
-	 * @apiNote Should only be used at initialization!
+	 * Should only be used at initialization!
 	 */
 	public static void loadTileTypes() {
 		File[] files = new File("src/main/resources/tiletypes")
@@ -105,7 +105,7 @@ public class MapGenerator {
 						indexMap[i][j] = endChestIndex;
 						break;
 					case '*':
-						Player player = new Player(new Sprite("src/main/resources/sprites/Player.png"));
+						Player player = new Player();
 						FightForSalvation.getInstance().addGameObject(player, TILESIZE * i, TILESIZE * j);
 						break;
 					default:
