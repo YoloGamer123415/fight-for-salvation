@@ -10,8 +10,8 @@ import java.util.List;
 public class Monster extends FlammableSpriteObject {
 	private Weapon weapon;
 
-	public Monster(Sprite sprite, int duration, int tickTime) {
-		super(sprite, duration, tickTime);
+	public Monster(Sprite sprite) {
+		super(sprite, 0, 0); //TODO Fix constructor
 	}
 
 	@Override
