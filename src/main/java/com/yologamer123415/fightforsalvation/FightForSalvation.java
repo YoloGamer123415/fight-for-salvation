@@ -49,7 +49,7 @@ public class FightForSalvation extends GameEngine {
 
 	}
 
-	protected void closedInventory() {
+	public void closedInventory() {
 
 	}
 }
