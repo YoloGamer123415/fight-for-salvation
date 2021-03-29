@@ -16,8 +16,8 @@ public class Player extends FlammableSpriteObject {
 
 	private int totalEssence;
 
-	public Player(Sprite sprite, int duration, int tickTime) {
-		super(sprite, duration, tickTime);
+	public Player(Sprite sprite) {
+		super(sprite, 10, 2);
 
 		this.totalEssence = 0;
 	}
