@@ -4,8 +4,8 @@ import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class LightningBolt extends RangedAbility {
-	public LightningBolt(String name, Sprite sprite) {
-		super(name, sprite);
+	public LightningBolt() {
+		super("LightningBolt", new Sprite("src/main/resources/usables/abilities/ranged/spark.png"));
 	}
 
 	@Override

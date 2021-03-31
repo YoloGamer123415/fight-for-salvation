@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Gun extends Weapon implements ICollidableWithGameObjects {
 	public Gun() {
-		super("Gun", new Sprite(""));
+		super("Gun", new Sprite("src/main/resources/usables/weapons/ranged/Revolver.png"));
 	}
 
 	@Override

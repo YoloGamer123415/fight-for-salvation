@@ -7,8 +7,14 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class LowTree extends FlammableSpriteObject {
+	/**
+	 * Construct a new LowTree object.
+	 * This method will be called from the MapGenerator!
+	 *
+	 * @param sprite The sprite to use.
+	 */
 	public LowTree(Sprite sprite) {
-		super(sprite, 0, 0);
+		super(sprite, 6, 2);
 	}
 
 	@Override

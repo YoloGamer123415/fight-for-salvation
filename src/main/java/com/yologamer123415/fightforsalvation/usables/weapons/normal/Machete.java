@@ -6,7 +6,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public class Machete extends Weapon {
 	public Machete() {
-		super("Machete", new Sprite(""));
+		super("Machete", new Sprite("src/main/resources/usables/weapons/normal/machete.png"));
 	}
 
 	@Override

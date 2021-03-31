@@ -8,8 +8,14 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class HighTree extends FlammableSpriteObject implements ObjectClip {
+	/**
+	 * Construct a new HighTree object.
+	 * This method will be called from the MapGenerator!
+	 *
+	 * @param sprite The sprite to use.
+	 */
 	public HighTree(Sprite sprite) {
-		super(sprite, 0, 0);
+		super(sprite, 15, 5);
 	}
 
 	@Override

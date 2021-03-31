@@ -8,10 +8,11 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class Monster extends FlammableSpriteObject {
-	private Weapon weapon;
+	private final Weapon weapon;
 
-	public Monster(Sprite sprite) {
-		super(sprite, 0, 0); //TODO Fix constructor
+	public Monster(Sprite sprite, Weapon weapon) {
+		super(sprite, 10, 2);
+		this.weapon = weapon;
 	}
 
 	@Override

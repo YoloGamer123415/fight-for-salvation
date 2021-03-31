@@ -6,7 +6,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public class Knife extends Weapon {
 	public Knife() {
-		super("Knife", new Sprite(""));
+		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"));
 	}
 
 	@Override

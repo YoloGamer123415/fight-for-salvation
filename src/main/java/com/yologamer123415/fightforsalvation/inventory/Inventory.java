@@ -5,15 +5,13 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import nl.han.ica.oopg.dashboard.Dashboard;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class Inventory extends Dashboard {
 	private static final int MAX_ITEMS_PER_ROW = 5;
 
-	private List<UsableObject> items = new LinkedList<>();
+	private final List<UsableObject> items = new LinkedList<>();
 	private int selectedNormalAbility = -1;
 	private int selectedRangedAbility = -1;
 	private int selectedWeapon = -1;
@@ -100,8 +98,6 @@ public class Inventory extends Dashboard {
 
 	@Override
 	public void mousePressed(int x, int y, int button) {
-		super.mousePressed(x, y, button);
-
 		// TODO: Check real position of "done" button
 		if (x >= this.width * 0.90 && y >= this.height * 0.90) {
 			this.close();

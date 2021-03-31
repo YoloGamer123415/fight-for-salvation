@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
 	public BowAndArrow() {
-		super("Bow and Arrow", new Sprite(""));
+		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"));
 	}
 
 	@Override

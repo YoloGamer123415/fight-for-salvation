@@ -6,8 +6,8 @@ import com.yologamer123415.fightforsalvation.chests.NormalChest;
 import com.yologamer123415.fightforsalvation.helpers.FileHelper;
 import com.yologamer123415.fightforsalvation.monsters.BowMonster;
 import com.yologamer123415.fightforsalvation.monsters.Monster;
-import com.yologamer123415.fightforsalvation.monsters.SwordMonster;
-import com.yologamer123415.fightforsalvation.player.Player;
+import com.yologamer123415.fightforsalvation.monsters.KnifeMonster;
+import nl.han.ica.oopg.exceptions.GameEngineRuntimeException;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.persistence.FilePersistence;
@@ -128,20 +128,20 @@ public class MapGenerator {
 						case ' ':
 							break;
 						default:
-							throw new IllegalArgumentException("Char " + placeChar + " not registed in resources.");
+							throw new IllegalArgumentException("Char " + placeChar + " not registered in resources.");
 					}
 				}
 			}
 		}
 
 		if (chestPositions.size() < chestCount) throw new IllegalArgumentException("Not enough chest positions available for size.");
-		if (monsterPositions.size() < monsterCount) throw new IllegalArgumentException("Not enough chest positions available for size.");
+		if (monsterPositions.size() < monsterCount) throw new IllegalArgumentException("Not enough monster positions available for size.");
 
 		List<TileType<?>> types = new LinkedList<>(tileTypes.values());
 		types.add(new TileType(NormalChest.class, new Sprite("src/main/resources/tiletypes/special/NormalChest.png")));
 		types.add(new TileType(EndChest.class, new Sprite("src/main/resources/tiletypes/special/EndChest.png")));
 
-//		place(monsterPositions, monsterCount, getRandomMonster());
+		place(monsterPositions, monsterCount);
 		place(chestPositions, chestCount, indexMap, chestIndex);
 
 		System.out.println("TileMap has been generated, and is ready to set.");
@@ -154,15 +154,23 @@ public class MapGenerator {
 	 *
 	 * @param availablePositions The positions to place to.
 	 * @param placeCount The available position count.
-	 * @param object The {@link GameObject} to place.
 	 */
-	private static void place(List<TilePosition> availablePositions, int placeCount, GameObject object) {
+	private static void place(List<TilePosition> availablePositions, int placeCount) {
 		final Random rand = new Random();
 
 		for (int i = 0; i < placeCount; i++) {
 			TilePosition randomPos = availablePositions.get(rand.nextInt(availablePositions.size()));
 			availablePositions.remove(randomPos);
-			FightForSalvation.getInstance().addGameObject(object, TILESIZE * randomPos.getRow(), TILESIZE * randomPos.getLine());
+
+			GameObject toPlace = getRandomMonster();
+
+			System.out.println(toPlace.getClass().getName());
+			System.out.println(randomPos.toString());
+
+			//Add without the addGameObject() method, we force it to add the gameobject multiple times...
+			FightForSalvation.getInstance().getGameObjectItems().add(toPlace);
+			toPlace.setX(TILESIZE * randomPos.getLine());
+			toPlace.setY(TILESIZE * randomPos.getRow());
 		}
 	}
 
@@ -193,9 +201,9 @@ public class MapGenerator {
 		final Random rand = new Random();
 
 		if (rand.nextBoolean()) {
-			return new BowMonster(new Sprite(""));
+			return new BowMonster();
 		} else {
-			return new SwordMonster(new Sprite(""));
+			return new KnifeMonster();
 		}
 	}
 }

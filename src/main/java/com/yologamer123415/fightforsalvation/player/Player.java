@@ -1,25 +1,43 @@
 package com.yologamer123415.fightforsalvation.player;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
+import com.yologamer123415.fightforsalvation.generators.MapGenerator;
+import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
+import com.yologamer123415.fightforsalvation.tyles.Border;
+import nl.han.ica.oopg.collision.CollidedTile;
+import nl.han.ica.oopg.collision.CollisionSide;
+import nl.han.ica.oopg.collision.ICollidableWithTiles;
+import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PVector;
 
 import java.util.List;
 
-public class Player extends FlammableSpriteObject {
+public class Player extends FlammableSpriteObject implements ICollidableWithTiles {
 	private static final float SPEED_STOPPED = 0;
 	private static final float SPEED_NORMAL = 3.5f;
 
 	private int totalEssence;
 
+	/**
+	 * Construct a new Player object.
+	 * This method will be called from the MapGenerator!
+	 *
+	 * @param sprite The sprite to use.
+	 */
 	public Player(Sprite sprite) {
 		super(sprite, 10, 2);
 
 		this.totalEssence = 0;
+	}
+
+	public int getTotalEssence() {
+		return totalEssence;
 	}
 
 	public void addEssence(int amount) {
@@ -30,17 +48,16 @@ public class Player extends FlammableSpriteObject {
 	public void update() {
 		super.update();
 
-		this.setSpeed(0);
+		setxSpeed(0);
+		setySpeed(0);
 	}
 
 	@Override
 	public void mousePressed(int x, int y, int button) {
-		super.mousePressed(x, y, button);
-
 		// TODO: Check if these numbers are correct
-		if (button == 0 || button == 1) {
+		if (button == FightForSalvation.LEFT || button == FightForSalvation.RIGHT) {
 			Inventory inventory = FightForSalvation.getInstance().getInventory();
-			UsableObject usable = button == 0
+			UsableObject usable = button == FightForSalvation.LEFT
 					? inventory.getSelectedWeapon()
 					: inventory.getSelectedRangedAbility();
 
@@ -54,8 +71,6 @@ public class Player extends FlammableSpriteObject {
 
 	@Override
 	public void keyPressed(int keyCode, char key) {
-		super.keyPressed(keyCode, key);
-
 		switch (key) {
 			case 'w':
 				this.setxSpeed(SPEED_STOPPED);
@@ -90,8 +105,26 @@ public class Player extends FlammableSpriteObject {
 		}
 	}
 
+
+
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
+		for (GameObject go : list) {
+			if (go.getClass().getPackage().getName().endsWith("obstacles")) {
+				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+				if (side == null) continue;
+				CollidingHelper.handleCollisionStop(this, side, go.getX(), go.getY());
+			}
+		}
+	}
 
+	@Override
+	public void tileCollisionOccurred(List<CollidedTile> list) {
+		for (CollidedTile ct : list) {
+			if (ct.getTile() instanceof Border) {
+				PVector vector = FightForSalvation.getInstance().getTileMap().getTilePixelLocation(ct.getTile());
+				CollidingHelper.handleCollisionStop(this, ct.getCollisionSide(), vector.x, vector.y);
+			}
+		}
 	}
 }
