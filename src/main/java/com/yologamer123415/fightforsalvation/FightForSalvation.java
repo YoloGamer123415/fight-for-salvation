@@ -33,6 +33,10 @@ public class FightForSalvation extends GameEngine {
 		return this.player;
 	}
 
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 	@Override
 	public void setupGame() {
 		MapGenerator.load();

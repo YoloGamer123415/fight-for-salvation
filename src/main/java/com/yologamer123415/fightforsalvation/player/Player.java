@@ -33,6 +33,8 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	public Player(Sprite sprite) {
 		super(sprite, 10, 2);
 
+		FightForSalvation.getInstance().setPlayer(this);
+
 		this.totalEssence = 0;
 	}
 

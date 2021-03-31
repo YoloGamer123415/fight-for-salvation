@@ -1,27 +1,91 @@
 package com.yologamer123415.fightforsalvation.monsters;
 
+import com.yologamer123415.fightforsalvation.FightForSalvation;
+import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
+import com.yologamer123415.fightforsalvation.tyles.Border;
 import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
+import nl.han.ica.oopg.collision.CollidedTile;
+import nl.han.ica.oopg.collision.CollisionSide;
+import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PVector;
 
 import java.util.List;
+import java.util.Random;
 
-public class Monster extends FlammableSpriteObject {
+public class Monster extends FlammableSpriteObject implements ICollidableWithTiles {
 	private final Weapon weapon;
+
+	private final boolean movingX;
+	private boolean movingUp;
+	private boolean movingRight;
 
 	public Monster(Sprite sprite, Weapon weapon) {
 		super(sprite, 10, 2);
 		this.weapon = weapon;
-	}
 
-	@Override
-	public void gameObjectCollisionOccurred(List<GameObject> list) {
+		final Random rand = new Random();
 
+		this.movingX = rand.nextBoolean();
+		if (this.movingX) {
+			this.movingRight = rand.nextBoolean();
+		} else {
+			this.movingUp = rand.nextBoolean();
+		}
+
+		setSpeed(rand.nextInt(movingX ? 4 : 3) + 1);
 	}
 
 	@Override
 	public void update() {
 		super.update();
+		setDirection(movingX ? movingRight ? 90 : 270 : movingUp ? 0 : 180);
+
+		if (getDistanceFrom(FightForSalvation.getInstance().getPlayer()) <= 4) {
+			//TODO Handle shoot with weapon
+		}
+	}
+
+	@Override
+	public void gameObjectCollisionOccurred(List<GameObject> list) {
+		for (GameObject go : list) {
+			if (go instanceof FlammableSpriteObject && !go.equals(FightForSalvation.getInstance().getPlayer())) {
+				FlammableSpriteObject fso = (FlammableSpriteObject) go;
+				if (fso.shouldDoDamage()) {
+					//TODO Handle fire damage
+				} else {
+					CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+					if (side == null) continue;
+					handleMove(side);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void tileCollisionOccurred(List<CollidedTile> list) {
+		for (CollidedTile ct : list) {
+			if (ct.getTile() instanceof Border) {
+				handleMove(ct.getCollisionSide());
+			}
+		}
+	}
+
+	private void handleMove(CollisionSide side) {
+		if (movingX) {
+			if (movingRight && side == CollisionSide.LEFT) {
+				movingRight = false;
+			} else if (!movingRight && side == CollisionSide.RIGHT) {
+				movingRight = true;
+			}
+		} else {
+			if (movingUp && side == CollisionSide.BOTTOM) {
+				movingUp = false;
+			} else if (!movingUp && side == CollisionSide.TOP) {
+				movingUp = true;
+			}
+		}
 	}
 }
