@@ -44,16 +44,19 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	}
 
 	public void damage(int damage) {
-		hp = Math.max(hp - damage, 0);
-		if (hp == 0) FightForSalvation.getInstance().deleteGameObject(this);
+		this.hp = Math.max(this.hp - damage, 0);
+
+		if (hp == 0) {
+			FightForSalvation.getInstance().deleteGameObject(this);
+		}
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		setxSpeed(0);
-		setySpeed(0);
+		this.setxSpeed(0);
+		this.setySpeed(0);
 	}
 
 	@Override
