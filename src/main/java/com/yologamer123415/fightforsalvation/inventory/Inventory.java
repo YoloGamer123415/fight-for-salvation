@@ -110,6 +110,7 @@ public class Inventory extends Dashboard {
 	}
 
 	private void drawRarityRectangles() {
+		System.out.println("drawing!");
 		final FightForSalvation instance = FightForSalvation.getInstance();
 		int itemCount = 0;
 		for (UsableObject item : this.items) {
@@ -135,6 +136,8 @@ public class Inventory extends Dashboard {
 	@Override
 	public void draw(PGraphics g) {
 		super.draw(g);
+
+		this.drawRarityRectangles();
 	}
 
 	@Override
