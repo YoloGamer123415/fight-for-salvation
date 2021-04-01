@@ -99,6 +99,10 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 					if (side == null) continue;
 					handleMove(side);
 				}
+			} else if (go.getClass().getPackage().getName().endsWith("obstacles")) {
+				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+				if (side == null) continue;
+				handleMove(side);
 			}
 		}
 	}
