@@ -15,7 +15,7 @@ public class Knife extends Weapon {
 	private final int damage;
 
 	public Knife(GameObject holder) {
-		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder);
+		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder, 0.8F);
 
 		this.damage = this.rarity.getCalculationValue() * 2;
 	}
