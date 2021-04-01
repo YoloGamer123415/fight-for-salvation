@@ -6,6 +6,7 @@ import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
+import nl.han.ica.oopg.objects.TextObject;
 import nl.han.ica.oopg.view.View;
 
 public class FightForSalvation extends GameEngine {
@@ -13,6 +14,7 @@ public class FightForSalvation extends GameEngine {
 	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
 
+	private TextObject essenceText;
 	private int level = 0;
 	private boolean isInInventory;
 	private Player player;
@@ -36,7 +38,7 @@ public class FightForSalvation extends GameEngine {
 	}
 
 	public void setPlayer(Player player) {
-		this.player = player;
+		if (this.player == null) this.player = player;
 	}
 
 	/**
@@ -62,6 +64,9 @@ public class FightForSalvation extends GameEngine {
 		setView(view);
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+		this.essenceText = new TextObject("", 16);
+		this.addGameObject(this.essenceText, 0, 0);
+
 		this.inventory = new Inventory(800, 400, 200, 200);
 		this.inventory.show();
 
@@ -71,7 +76,7 @@ public class FightForSalvation extends GameEngine {
 
 	@Override
 	public void update() {
-
+		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getTotalEssence() );
 	}
 
 	public void closedInventory() {
