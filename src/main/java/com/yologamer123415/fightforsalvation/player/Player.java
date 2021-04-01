@@ -85,6 +85,8 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				usable.use(vector);
 			}
 		} else if (button == FightForSalvation.CENTER) {
+			System.out.println("Center");
+
 			final FightForSalvation instance = FightForSalvation.getInstance();
 			final double halfTileSize = MapGenerator.TILESIZE / 2.0;
 			Tile tile = instance.getTileMap().getTileOnPosition(x, y);
@@ -97,9 +99,13 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 					&& tile instanceof Chest
 					&& ( (Chest) tile ).canBeOpened()
 			) {
+				System.out.println("Okidoki");
+
 				UsableObject[] items = ( (Chest) tile ).open(this);
 
 				if (items != null) {
+					System.out.println("AAA!");
+
 					for (UsableObject item : items) instance.getInventory().addItem(item);
 				}
 			}

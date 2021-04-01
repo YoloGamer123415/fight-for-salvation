@@ -1,10 +1,13 @@
 package com.yologamer123415.fightforsalvation.object;
 
+import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.SpriteObject;
+import processing.core.PConstants;
+import processing.core.PGraphics;
 
 public abstract class UsableObject extends SpriteObject {
 	private final String name;
@@ -27,4 +30,13 @@ public abstract class UsableObject extends SpriteObject {
 	}
 
 	public abstract void use(Vector mousePos);
+
+	@Override
+	public void draw(PGraphics g) {
+		super.draw(g);
+		g.fill(0x000000, 0);
+		g.stroke( this.rarity.getColor() );
+		g.strokeWeight(1.3F);
+		g.rect(this.x, this.y, MapGenerator.TILESIZE, MapGenerator.TILESIZE);
+	}
 }

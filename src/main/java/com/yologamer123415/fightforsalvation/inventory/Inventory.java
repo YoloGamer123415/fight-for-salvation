@@ -5,7 +5,6 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import nl.han.ica.oopg.dashboard.Dashboard;
-import processing.core.PGraphics;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -65,13 +64,12 @@ public class Inventory extends Dashboard {
 	}
 
 	private void placeItems() {
-		final FightForSalvation instance = FightForSalvation.getInstance();
 		int itemCount = 0;
 		for (UsableObject item : this.items) {
 			if (
 					!item.equals( this.getSelectedWeapon() )
 							&& !item.equals( this.getSelectedNormalAbility() )
-							&& ! item.equals( this.getSelectedRangedAbility() )
+							&& !item.equals( this.getSelectedRangedAbility() )
 			) {
 				int y = (int) LocationHelper.tileToScreenPixel( (float) Math.floor( (float) itemCount / MAX_ITEMS_PER_ROW ) );
 				int x = (int) LocationHelper.tileToScreenPixel(itemCount % MAX_ITEMS_PER_ROW);
@@ -107,37 +105,6 @@ public class Inventory extends Dashboard {
 		instance.deleteDashboard(this);
 		this.resetShownItems();
 		instance.closedInventory();
-	}
-
-	private void drawRarityRectangles() {
-		System.out.println("drawing!");
-		final FightForSalvation instance = FightForSalvation.getInstance();
-		int itemCount = 0;
-		for (UsableObject item : this.items) {
-			if (
-					!item.equals( this.getSelectedWeapon() )
-							&& !item.equals( this.getSelectedNormalAbility() )
-							&& ! item.equals( this.getSelectedRangedAbility() )
-			) {
-				int y = (int) LocationHelper.tileToScreenPixel( (float) Math.floor( (float) itemCount / MAX_ITEMS_PER_ROW ) );
-				int x = (int) LocationHelper.tileToScreenPixel(itemCount % MAX_ITEMS_PER_ROW);
-
-				instance.stroke( item.getRarity().getColor() );
-				instance.fill(0x000000, 0);
-				instance.rect(x, y, MapGenerator.TILESIZE, MapGenerator.TILESIZE);
-
-				itemCount++;
-			}
-		}
-
-		// TODO: Place selected Usables in the right place
-	}
-
-	@Override
-	public void draw(PGraphics g) {
-		super.draw(g);
-
-		this.drawRarityRectangles();
 	}
 
 	@Override
