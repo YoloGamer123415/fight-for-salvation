@@ -35,15 +35,15 @@ public class Vector {
 	 * @return The generated {@link Vector}.
 	 */
 	public static Vector generateVector(float px, float py, float mx, float my) {
-		float ay = my;
+		double lp = mx - px;
 		double mp = Math.sqrt(
-				Math.pow( Math.abs(px - mx), 2 ) + Math.pow( Math.abs(py - my), 2 )
+				Math.pow( Math.abs(mx - px), 2 ) + Math.pow( Math.abs(my - py), 2 )
 		);
-		double ap = Math.abs(ay - py);
+		double angle = Math.toDegrees( Math.acos(lp / mp) );
 
-		double angle = Math.toDegrees( Math.acos(ap / mp) );
+		if (my < py) angle = 360 - angle;
 
-		return new Vector(px, py, (float) angle, (float) mp);
+		return new Vector(px, py, (float) angle + 90, (float) mp);
 	}
 
 	public float getX() {
@@ -60,5 +60,15 @@ public class Vector {
 
 	public float getLength() {
 		return length;
+	}
+
+	@Override
+	public String toString() {
+		return "Vector{" +
+				"x=" + x +
+				", y=" + y +
+				", angle=" + angle +
+				", length=" + length +
+				'}';
 	}
 }
