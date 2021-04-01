@@ -90,25 +90,25 @@ public class MapGenerator {
 		int[][] indexMap = new int[ mapRows.length ][ mapRows[0].toCharArray().length ];
 
 		for (int x = 0; x < mapRows.length; x++) {
-			Arrays.fill(indexMap[x], -1); //Fill with default value (-1)
+			Arrays.fill( indexMap[x], -1 ); //Fill with default value (-1)
 
 			char[] row = mapRows[x].toCharArray();
 
 			for (int y = 0; y < row.length; y++) {
 				char placeChar = row[y];
 
-				if (gameObjects.containsKey(placeChar)) {
+				if ( gameObjects.containsKey(placeChar) ) {
 					GameObject object = gameObjects.get(placeChar).getGameObject();
-					FightForSalvation.getInstance().addGameObject(object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x));
-				} else if (tileTypes.containsKey(placeChar)) {
-					indexMap[x][y] = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
+					FightForSalvation.getInstance().addGameObject( object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x) );
+				} else if ( tileTypes.containsKey(placeChar) ) {
+					indexMap[x][y] = new ArrayList<>( tileTypes.keySet() ).indexOf(placeChar);
 				} else {
 					switch (placeChar) {
 						case '@':
-							monsterPositions.add(new TilePosition(x, y));
+							monsterPositions.add( new TilePosition(x, y) );
 							break;
 						case 'c':
-							chestPositions.add(new TilePosition(x, y));
+							chestPositions.add( new TilePosition(x, y) );
 							break;
 						case 'C':
 							indexMap[x][y] = endChestIndex;
@@ -125,16 +125,18 @@ public class MapGenerator {
 		if (chestPositions.size() < chestCount) throw new IllegalArgumentException("Not enough chest positions available for size.");
 		if (monsterPositions.size() < monsterCount) throw new IllegalArgumentException("Not enough monster positions available for size.");
 
-		List<TileType<?>> types = new LinkedList<>(tileTypes.values());
-		types.add(new TileType(NormalChest.class, new Sprite("src/main/resources/tiletypes/special/NormalChest.png")));
-		types.add(new TileType(EndChest.class, new Sprite("src/main/resources/tiletypes/special/EndChest.png")));
+		List<TileType<?>> types = new LinkedList<>( tileTypes.values() );
+		types.add( new TileType( NormalChest.class, new Sprite("src/main/resources/tiletypes/special/NormalChest.png") ) );
+		types.add( new TileType( EndChest.class, new Sprite("src/main/resources/tiletypes/special/EndChest.png") ) );
 
 		place(monsterPositions, monsterCount);
 		place(chestPositions, chestCount, indexMap, chestIndex);
 
+		FightForSalvation.getInstance().setMonstersAlive( monsterPositions.size() );
+
 		System.out.println("TileMap has been generated, and is ready to set.");
 
-		return new TileMap(TILESIZE, types.toArray(new TileType[0]), indexMap);
+		return new TileMap(TILESIZE, types.toArray( new TileType[0] ), indexMap);
 	}
 
 	/**
@@ -147,11 +149,11 @@ public class MapGenerator {
 		final Random rand = new Random();
 
 		for (int i = 0; i < placeCount; i++) {
-			TilePosition randomPos = availablePositions.get(rand.nextInt(availablePositions.size()));
+			TilePosition randomPos = availablePositions.get( rand.nextInt( availablePositions.size() ) );
 			availablePositions.remove(randomPos);
 
 			GameObject toPlace = getRandomMonster();
-			FightForSalvation.getInstance().addGameObject(toPlace, LocationHelper.tileToScreenPixel(randomPos.getY()), LocationHelper.tileToScreenPixel(randomPos.getX()));
+			FightForSalvation.getInstance().addGameObject( toPlace, LocationHelper.tileToScreenPixel( randomPos.getY() ), LocationHelper.tileToScreenPixel( randomPos.getX() ) );
 		}
 	}
 
@@ -167,9 +169,9 @@ public class MapGenerator {
 		final Random rand = new Random();
 
 		for (int i = 0; i < placeCount; i++) {
-			TilePosition randomPos = availablePositions.get(rand.nextInt(availablePositions.size()));
+			TilePosition randomPos = availablePositions.get( rand.nextInt( availablePositions.size() ) );
 			availablePositions.remove(randomPos);
-			indexMap[(int) randomPos.getX()][(int) randomPos.getY()] = index;
+			indexMap[ (int) randomPos.getX() ][ (int) randomPos.getY() ] = index;
 		}
 	}
 
@@ -181,7 +183,7 @@ public class MapGenerator {
 	private static Monster getRandomMonster() {
 		final Random rand = new Random();
 
-		if (rand.nextBoolean()) {
+		if ( rand.nextBoolean() ) {
 			return new BowMonster();
 		} else {
 			return new KnifeMonster();

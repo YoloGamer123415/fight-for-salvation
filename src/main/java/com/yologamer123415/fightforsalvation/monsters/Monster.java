@@ -67,6 +67,7 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 
 			instance.getPlayer().addEssence(essenceToGive);
 			instance.deleteGameObject(this);
+			instance.decreaseMonstersAlive();
 		}
 	}
 

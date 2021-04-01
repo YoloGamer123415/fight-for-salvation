@@ -114,8 +114,6 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 		}
 	}
 
-
-
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
 		for (GameObject go : list) {

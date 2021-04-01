@@ -20,6 +20,7 @@ public class FightForSalvation extends GameEngine {
 	private boolean isInInventory;
 	private Player player;
 	private Inventory inventory;
+	private int monstersAlive = 0;
 
 	public static void main(String[] args) {
 		instance = new FightForSalvation();
@@ -40,6 +41,18 @@ public class FightForSalvation extends GameEngine {
 
 	public void setPlayer(Player player) {
 		if (this.player == null) this.player = player;
+	}
+
+	public int getMonstersAlive() {
+		return monstersAlive;
+	}
+
+	public void setMonstersAlive(int monstersAlive) {
+		this.monstersAlive = monstersAlive;
+	}
+
+	public void decreaseMonstersAlive() {
+		if (this.monstersAlive > 0) this.monstersAlive--;
 	}
 
 	/**
