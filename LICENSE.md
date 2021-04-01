@@ -51,3 +51,9 @@ https://opengameart.org/content/flare-mod-hobgoblin-archer
 
 ### Background
 https://www.freepik.com/free-photo/black-concrete-wall-texture-background_4390597.htm
+
+## Pixabay License:
+[More information](https://pixabay.com/service/license/)
+
+### Fire effect
+https://pixabay.com/illustrations/fire-flame-burning-combustion-heat-5679380/

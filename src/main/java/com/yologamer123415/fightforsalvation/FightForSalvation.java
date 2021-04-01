@@ -8,7 +8,6 @@ import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
-import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.TextObject;
 import nl.han.ica.oopg.userinput.IMouseInput;
 import nl.han.ica.oopg.view.View;
@@ -73,7 +72,6 @@ public class FightForSalvation extends GameEngine {
 	/**
 	 * Override of the mousePressed()
 	 * We fixed clicking on Dashboards
-	 *
 	 */
 	@Override
 	public void mousePressed() {

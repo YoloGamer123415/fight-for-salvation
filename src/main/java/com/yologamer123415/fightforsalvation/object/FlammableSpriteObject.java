@@ -6,27 +6,42 @@ import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
 
-public abstract class FlammableSpriteObject extends AnimatedSpriteObject implements IAlarmListener, ICollidableWithGameObjects {
-	private final int duration;
-	private final int tickTime;
+import java.util.UUID;
 
-	private Alarm alarm;
+public abstract class FlammableSpriteObject extends AnimatedSpriteObject implements IAlarmListener, ICollidableWithGameObjects {
+	public static final int FIREDAMAGE = 10;
+
+	private final String burnAlarmName = UUID.randomUUID().toString();
+	private final String tickTimeAlarmName = UUID.randomUUID().toString();
+
+	private final Alarm burnAlarm;
+	private final Alarm tickTimeAlarm;
+
 	private boolean shouldDoDamage = false;
+	private boolean isRunning;
 
 	public FlammableSpriteObject(Sprite sprite, int duration, int tickTime) {
 		super(sprite, 2);
-		this.duration = duration;
-		this.tickTime = tickTime;
+
+		this.burnAlarm = new Alarm(burnAlarmName, duration);
+		this.burnAlarm.addTarget(this);
+
+		this.tickTimeAlarm = new Alarm(tickTimeAlarmName, tickTime);
+		this.tickTimeAlarm.addTarget(this);
 	}
 
 	public final void startBurning() {
-		alarm = new Alarm(this.getClass().getName(), duration);
-		alarm.addTarget(this);
-		alarm.start();
+		burnAlarm.start();
+		isRunning = true;
+
+		setCurrentFrameIndex(1);
 	}
 
 	public final void stopBurning() {
-		alarm.stop();
+		burnAlarm.stop();
+		isRunning = false;
+
+		setCurrentFrameIndex(0);
 	}
 
 	@Override
@@ -44,8 +59,11 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 
 	@Override
 	public final void triggerAlarm(String s) {
-		if (!s.equals(this.getClass().getName())) return;
-		handler();
-		alarm.start();
+		if (s.equals(burnAlarmName)) {
+			stopBurning();
+		} else if (s.equals(tickTimeAlarmName) && isRunning) {
+			handler();
+			tickTimeAlarm.start();
+		}
 	}
 }

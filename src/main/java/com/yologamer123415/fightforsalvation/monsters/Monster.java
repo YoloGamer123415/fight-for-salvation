@@ -98,7 +98,17 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
 		for (GameObject go : list) {
 			if (go instanceof FlammableSpriteObject && ((FlammableSpriteObject) go).shouldDoDamage()) {
-				//TODO Handle fire damage
+				((FlammableSpriteObject) go).startBurning();
+
+				if (go instanceof Monster) {
+					((Monster) go).damage(FlammableSpriteObject.FIREDAMAGE);
+				} else if (go instanceof Player) {
+					((Player) go).damage(FlammableSpriteObject.FIREDAMAGE);
+				}
+
+				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+				if (side == null) continue;
+				handleMove(side);
 			} else if (go.getClass().getPackage().getName().endsWith("obstacles") || go instanceof Player) {
 				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
 				if (side == null) continue;

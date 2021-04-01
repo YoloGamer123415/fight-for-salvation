@@ -14,7 +14,7 @@ public class Chest extends Tile {
 	private static final int ITEM_COUNT = 3;
 
 	private final int cost;
-	private final Rarity rarity;
+	protected final Rarity rarity;
 	
 	public Chest(Sprite sprite) {
 		this(sprite, 2);
