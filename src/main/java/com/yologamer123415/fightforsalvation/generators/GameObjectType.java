@@ -16,6 +16,7 @@ public class GameObjectType {
 
 	public GameObject getGameObject() {
 		GameObject object;
+
 		try {
 			object = type.getDeclaredConstructor(Sprite.class).newInstance(sprite);
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

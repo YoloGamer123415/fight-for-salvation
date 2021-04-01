@@ -3,7 +3,6 @@ package com.yologamer123415.fightforsalvation;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
-import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
@@ -51,13 +50,6 @@ public class FightForSalvation extends GameEngine {
 		this.getGameObjectItems().add(gameObject);
 	}
 
-//	@Override
-//	public void addGameObject(GameObject gameObject, float x, float y) {
-//		this.addGameObject(gameObject);
-//		gameObject.setX(x);
-//		gameObject.setY(y);
-//	}
-
 	@Override
 	public void setupGame() {
 		MapGenerator.load();
@@ -65,7 +57,7 @@ public class FightForSalvation extends GameEngine {
 		setTileMap(MapGenerator.generateTilemapFromFile(level));
 
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
-//		view.setBackground(loadImage("src/main/java/nl/han/ica/oopd/waterworld/media/background.jpg"));
+		view.setBackground(loadImage("src/main/resources/background.png"));
 
 		setView(view);
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);

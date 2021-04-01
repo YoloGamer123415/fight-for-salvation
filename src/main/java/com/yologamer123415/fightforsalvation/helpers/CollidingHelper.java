@@ -42,7 +42,7 @@ public class CollidingHelper {
 				toHandleFor.setY(y - toHandleFor.getHeight());
 				break;
 			case RIGHT:
-				toHandleFor.setX(x + MapGenerator.TILESIZE + 30); //TODO Find out why I have to add 30??
+				toHandleFor.setX(x + MapGenerator.TILESIZE);
 				break;
 			case LEFT:
 				toHandleFor.setX(x - toHandleFor.getWidth());
