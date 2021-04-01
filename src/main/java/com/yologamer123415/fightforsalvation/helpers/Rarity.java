@@ -3,9 +3,9 @@ package com.yologamer123415.fightforsalvation.helpers;
 import java.awt.*;
 
 public enum Rarity {
-	COMMON(50, Color.decode("#a9a9a9")),
-	NORMAL(35, Color.decode("#6495ed")),
-	EPIC(15, Color.decode("#9932cc"));
+	COMMON( 50, Color.decode("#a9a9a9") ),
+	NORMAL( 35, Color.decode("#6495ed") ),
+	EPIC( 15, Color.decode("#9932cc") );
 
 	/**
 	 * The chance to get this rarity

@@ -80,9 +80,9 @@ public class FightForSalvation extends GameEngine {
 		super.mousePressed();
 
 		//Implemented mouseclick for Dashboards
-		PVector location = calculateRelativeMouseLocation(mouseX, mouseY);
-		for (Dashboard db : getDashboards()) {
-			((IMouseInput) db).mousePressed((int) location.x, (int) location.y, mouseButton);
+		PVector location = calculateRelativeMouseLocation(this.mouseX, this.mouseY);
+		for ( Dashboard db : this.getDashboards() ) {
+			( (IMouseInput) db ).mousePressed( (int) location.x, (int) location.y, this.mouseButton );
 		}
 	}
 
