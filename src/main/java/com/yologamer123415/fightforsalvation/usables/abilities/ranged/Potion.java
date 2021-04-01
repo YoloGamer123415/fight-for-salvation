@@ -7,9 +7,4 @@ public abstract class Potion extends RangedAbility {
 	public Potion(String name, Sprite sprite) {
 		super(name, sprite);
 	}
-
-	@Override
-	public void use(Vector mousePos) {
-
-	}
 }
