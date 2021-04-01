@@ -66,7 +66,7 @@ public class FightForSalvation extends GameEngine {
 		this.inventory = new Inventory(800, 400, 200, 200);
 		this.inventory.show();
 
-		int index = this.inventory.addItem( new BowAndArrow() );
+		int index = this.inventory.addItem( new BowAndArrow(this.player) );
 		this.inventory.setSelectedWeapon(index);
 	}
 

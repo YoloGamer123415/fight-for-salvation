@@ -7,8 +7,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class PoisonPotion extends Potion {
-	public PoisonPotion(Vector path) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path );
+	public PoisonPotion(Vector path, GameObject shooter) {
+		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
 	}
 
 	@Override

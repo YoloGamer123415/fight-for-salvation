@@ -7,8 +7,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class LightningBolt extends Movable {
-	public LightningBolt(Vector path) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/spark.png"), path );
+	public LightningBolt(Vector path, GameObject shooter) {
+		super( new Sprite("src/main/resources/usables/abilities/ranged/spark.png"), path, shooter );
 	}
 
 	@Override

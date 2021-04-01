@@ -8,8 +8,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class FirePotion extends Potion {
-	public FirePotion(Vector path) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path );
+	public FirePotion(Vector path, GameObject shooter) {
+		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
 	}
 
 	@Override

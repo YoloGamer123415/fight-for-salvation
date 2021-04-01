@@ -13,13 +13,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
-	public BowAndArrow() {
-		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"));
+	public BowAndArrow(GameObject holder) {
+		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder);
 	}
 
 	@Override
 	public void use(Vector mousePos) {
-		Movable arrowMovable = new Arrow(mousePos);
+		Movable arrowMovable = new Arrow(mousePos, holder);
 		FightForSalvation.getInstance().getGameObjectItems().add(arrowMovable);
 		arrowMovable.startMoving();
 	}

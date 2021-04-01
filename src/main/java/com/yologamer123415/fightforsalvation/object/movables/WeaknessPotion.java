@@ -7,8 +7,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class WeaknessPotion extends Potion {
-	public WeaknessPotion(Vector path) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path );
+	public WeaknessPotion(Vector path, GameObject shooter) {
+		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
 	}
 
 	@Override

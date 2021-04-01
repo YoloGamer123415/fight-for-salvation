@@ -21,6 +21,7 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	private static final float SPEED_STOPPED = 0;
 	private static final float SPEED_NORMAL = 3.5f;
 
+	private int hp = 300;
 	private int totalEssence;
 
 	/**
@@ -43,6 +44,12 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 
 	public void addEssence(int amount) {
 		if (amount >= 0) totalEssence += amount;
+	}
+
+	public void damage() {
+		hp -= hp / 10;
+
+		System.out.println("PLA " + hp);
 	}
 
 	@Override

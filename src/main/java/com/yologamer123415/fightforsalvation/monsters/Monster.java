@@ -18,15 +18,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Monster extends FlammableSpriteObject implements ICollidableWithTiles {
-	private final Weapon weapon;
+	protected Weapon weapon;
 
 	private final boolean movingX;
 	private boolean movingUp;
 	private boolean movingRight;
 
-	public Monster(Sprite sprite, Weapon weapon) {
+	private int hp;
+
+	public Monster(Sprite sprite, int hp) {
 		super(sprite, 10, 2);
-		this.weapon = weapon;
+		this.hp = hp;
 
 		final Random rand = new Random();
 
@@ -38,6 +40,12 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 		}
 
 		setSpeed(rand.nextInt(movingX ? 4 : 3) + 1);
+	}
+
+	public void damage() {
+		hp -= hp / 10;
+
+		System.out.println("MON " + hp);
 	}
 
 	@Override
