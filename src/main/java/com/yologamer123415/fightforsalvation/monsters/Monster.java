@@ -42,10 +42,9 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 		setSpeed(rand.nextInt(movingX ? 4 : 3) + 1);
 	}
 
-	public void damage() {
-		hp -= hp / 10;
-
-		System.out.println("MON " + hp);
+	public void damage(int damage) {
+		hp = Math.max(hp - damage, 0);
+		if (hp == 0) FightForSalvation.getInstance().deleteGameObject(this);
 	}
 
 	@Override

@@ -9,6 +9,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class Arrow extends Movable {
+	private static final int HP = 8;
+
 	public Arrow(Vector path, GameObject shooter) {
 		super( new Sprite("src/main/resources/usables/weapons/ranged/arrow.png"), path, shooter );
 	}
@@ -18,10 +20,10 @@ public class Arrow extends Movable {
 		for (GameObject ob : gameObjects) {
 			if (ob instanceof Monster) {
 				Monster monster = (Monster) ob;
-				monster.damage();
+				monster.damage(HP);
 			} else if (ob instanceof Player) {
 				Player player = (Player) ob;
-				player.damage();
+				player.damage(HP);
 			}
 		}
 	}

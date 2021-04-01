@@ -22,7 +22,7 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	private static final float SPEED_NORMAL = 3.5f;
 
 	private int hp = 300;
-	private int totalEssence;
+	private int totalEssence = 0;
 
 	/**
 	 * Construct a new Player object.
@@ -32,10 +32,7 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	 */
 	public Player(Sprite sprite) {
 		super(sprite, 10, 2);
-
 		FightForSalvation.getInstance().setPlayer(this);
-
-		this.totalEssence = 0;
 	}
 
 	public int getTotalEssence() {
@@ -46,10 +43,9 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 		if (amount >= 0) totalEssence += amount;
 	}
 
-	public void damage() {
-		hp -= hp / 10;
-
-		System.out.println("PLA " + hp);
+	public void damage(int damage) {
+		hp = Math.max(hp - damage, 0);
+		if (hp == 0) FightForSalvation.getInstance().deleteGameObject(this);
 	}
 
 	@Override
