@@ -34,9 +34,12 @@ public abstract class UsableObject extends SpriteObject {
 	@Override
 	public void draw(PGraphics g) {
 		super.draw(g);
+
+		final float strokeWidth = 2;
+
 		g.fill(0x000000, 0);
 		g.stroke( this.rarity.getColor() );
-		g.strokeWeight(1.3F);
-		g.rect(this.x, this.y, MapGenerator.TILESIZE, MapGenerator.TILESIZE);
+		g.strokeWeight(strokeWidth);
+		g.rect(this.x, this.y, MapGenerator.TILESIZE - strokeWidth, MapGenerator.TILESIZE - strokeWidth);
 	}
 }

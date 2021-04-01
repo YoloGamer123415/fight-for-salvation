@@ -5,12 +5,14 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import nl.han.ica.oopg.dashboard.Dashboard;
+import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Inventory extends Dashboard {
-	private static final int MAX_ITEMS_PER_ROW = 5;
+	private static final int ITEM_Y_OFFSET = MapGenerator.TILESIZE;
+	private static final int MAX_ITEMS_PER_ROW = FightForSalvation.SCREEN_WIDTH / MapGenerator.TILESIZE;
 
 	private final List<UsableObject> items = new LinkedList<>();
 	private int selectedNormalAbility = -1;
@@ -21,6 +23,12 @@ public class Inventory extends Dashboard {
 
 	public Inventory(float x, float y, float width, float height) {
 		super(x, y, width, height);
+
+		this.setVisible(false);
+		this.setX(0);
+		this.setY(0);
+		this.setZ(100);
+		this.setBackgroundImage( new Sprite("src/main/resources/background.jpg") );
 	}
 
 	public UsableObject getSelectedNormalAbility() {
@@ -56,6 +64,8 @@ public class Inventory extends Dashboard {
 	public int addItem(UsableObject item) {
 		this.items.add(item);
 
+		if ( this.isVisible() ) this.redrawShownItems();
+
 		return this.items.indexOf(item);
 	}
 
@@ -71,7 +81,8 @@ public class Inventory extends Dashboard {
 							&& !item.equals( this.getSelectedNormalAbility() )
 							&& !item.equals( this.getSelectedRangedAbility() )
 			) {
-				int y = (int) LocationHelper.tileToScreenPixel( (float) Math.floor( (float) itemCount / MAX_ITEMS_PER_ROW ) );
+				int y = (int) LocationHelper.tileToScreenPixel( (float) Math.floor( (float) itemCount / MAX_ITEMS_PER_ROW ) )
+						+ ITEM_Y_OFFSET;
 				int x = (int) LocationHelper.tileToScreenPixel(itemCount % MAX_ITEMS_PER_ROW);
 
 				this.addGameObject(item, x, y);
@@ -80,7 +91,16 @@ public class Inventory extends Dashboard {
 			}
 		}
 
-		// TODO: Place selected Usables in the right place
+		final int height = MapGenerator.TILESIZE * 3;
+		final double startY = this.height / 2 - height / 2d;
+		final double startX = this.width - MapGenerator.TILESIZE;
+
+		if ( this.getSelectedWeapon() != null )
+			this.addGameObject( this.getSelectedWeapon(), (int) startX, (int) startY);
+		if ( this.getSelectedNormalAbility() != null )
+			this.addGameObject( this.getSelectedNormalAbility(), (int) startX, (int) startY + height);
+		if ( this.getSelectedRangedAbility() != null )
+			this.addGameObject( this.getSelectedRangedAbility(), (int) startX, (int) startY + 2 * height );
 	}
 
 	private void redrawShownItems() {
@@ -93,22 +113,21 @@ public class Inventory extends Dashboard {
 
 		this.placeItems();
 
-		instance.addDashboard(this);
-		this.setX(0);
-		this.setY(0);
-		this.setZ(100);
 		this.setVisible(true);
 	}
 
 	private void close() {
 		FightForSalvation instance = FightForSalvation.getInstance();
-		instance.deleteDashboard(this);
+
 		this.resetShownItems();
+		this.setVisible(false);
 		instance.closedInventory();
 	}
 
 	@Override
 	public void mousePressed(int x, int y, int button) {
+		System.out.println("inventory click!");
+
 		// TODO: Check real position of "done" button
 		if (x >= this.width * 0.90 && y >= this.height * 0.90) {
 			this.close();
@@ -117,7 +136,10 @@ public class Inventory extends Dashboard {
 			int itemY = y / MapGenerator.TILESIZE;
 			int itemIndex = itemY * MAX_ITEMS_PER_ROW + itemX;
 
+			System.out.println(itemIndex);
+
 			if ( this.items.get(itemIndex) != null ) {
+				System.out.println("yeet");
 				if (this.selectedMoveItem == -1) { // first time selecting an UsableObject
 					this.selectedMoveItem = itemIndex;
 				} else { // second time selecting an UsableObject

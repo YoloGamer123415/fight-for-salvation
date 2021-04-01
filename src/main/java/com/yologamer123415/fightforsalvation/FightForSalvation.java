@@ -7,6 +7,7 @@ import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
+import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.TextObject;
 import nl.han.ica.oopg.view.View;
 
@@ -81,8 +82,8 @@ public class FightForSalvation extends GameEngine {
 		this.essenceText = new TextObject("", 16);
 		this.addGameObject(this.essenceText, 0, 0);
 
-		this.inventory = new Inventory(800, 400, 200, 200);
-		this.inventory.show();
+		this.inventory = new Inventory(800, 400, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.addDashboard(this.inventory);
 
 		int index = this.inventory.addItem( new Gun(this.player, Rarity.EPIC) );
 		this.inventory.setSelectedWeapon(index);

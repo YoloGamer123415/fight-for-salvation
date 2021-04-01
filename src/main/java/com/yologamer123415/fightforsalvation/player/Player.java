@@ -7,6 +7,7 @@ import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
+import com.yologamer123415.fightforsalvation.monsters.Monster;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
@@ -19,7 +20,9 @@ import nl.han.ica.oopg.tile.Tile;
 import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Player extends FlammableSpriteObject implements ICollidableWithTiles {
@@ -85,8 +88,6 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				usable.use(vector);
 			}
 		} else if (button == FightForSalvation.CENTER) {
-			System.out.println("Center");
-
 			final FightForSalvation instance = FightForSalvation.getInstance();
 			final double halfTileSize = MapGenerator.TILESIZE / 2.0;
 			Tile tile = instance.getTileMap().getTileOnPosition(x, y);
@@ -99,13 +100,9 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 					&& tile instanceof Chest
 					&& ( (Chest) tile ).canBeOpened()
 			) {
-				System.out.println("Okidoki");
-
 				UsableObject[] items = ( (Chest) tile ).open(this);
 
 				if (items != null) {
-					System.out.println("AAA!");
-
 					for (UsableObject item : items) instance.getInventory().addItem(item);
 				}
 			}
@@ -143,6 +140,17 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 					);
 
 					usable.use(vector);
+				}
+				break;
+			case 'k':
+				Iterator<GameObject> iterator = new ArrayList<>( FightForSalvation.getInstance().getGameObjectItems() ).iterator();
+
+				while ( iterator.hasNext() ) {
+					GameObject go = iterator.next();
+
+					if (go instanceof Monster) {
+						((Monster) go).damage(10000);
+					}
 				}
 				break;
 		}
