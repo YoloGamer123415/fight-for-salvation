@@ -4,29 +4,22 @@ import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.object.movables.Movable;
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class RangedAbility extends UsableObject {
-	public RangedAbility(String name, Sprite sprite) {
-		super(name, sprite);
+	public RangedAbility(String name, Sprite sprite, GameObject shooter) {
+		super(name, sprite, shooter);
 	}
 
-	public abstract Class<? extends Movable> getMovable();
+	public abstract Movable getMovable(Vector mousePos);
 
 	@Override
 	public void use(Vector mousePos) {
-		FightForSalvation instance = FightForSalvation.getInstance();
-		Class<? extends Movable> movableClass = this.getMovable();
-
-		try {
-			Movable movableInstance = movableClass.getDeclaredConstructor(Vector.class)
-					.newInstance(mousePos);
-			instance.getGameObjectItems().add(movableInstance);
-			movableInstance.startMoving();
-		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			e.printStackTrace();
-		}
+		Movable movableInstance = this.getMovable(mousePos);
+		FightForSalvation.getInstance().getGameObjectItems().add(movableInstance);
+		movableInstance.startMoving();
 	}
 }

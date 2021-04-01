@@ -1,9 +1,10 @@
 package com.yologamer123415.fightforsalvation.usables.abilities.ranged;
 
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Potion extends RangedAbility {
-	public Potion(String name, Sprite sprite) {
-		super(name, sprite);
+	public Potion(String name, Sprite sprite, GameObject holder) {
+		super(name, sprite, holder);
 	}
 }

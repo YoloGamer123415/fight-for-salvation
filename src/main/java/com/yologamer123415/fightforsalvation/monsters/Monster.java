@@ -1,6 +1,7 @@
 package com.yologamer123415.fightforsalvation.monsters;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
+import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
@@ -82,8 +83,13 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 		);
 
 		Player player = FightForSalvation.getInstance().getPlayer();
-		if (getDistanceFrom(player) <= 4) {
-			weapon.use(Vector.generateVector(x, y, player.getX(), player.getY()));
+		if (getDistanceFrom(player) <= 40) {
+			System.out.println("SHOOT");
+
+			float monsterX = this.x + ( MapGenerator.TILESIZE / 2f );
+			float monsterY = this.y + ( MapGenerator.TILESIZE / 2f );
+
+			this.weapon.use(Vector.generateVector(monsterX, monsterY, player.getX(), player.getY()));
 		}
 	}
 

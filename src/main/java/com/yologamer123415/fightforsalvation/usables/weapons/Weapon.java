@@ -14,7 +14,7 @@ public abstract class Weapon extends UsableObject {
 	private final Cooldown cooldown;
 
 	public Weapon(String name, Sprite sprite, GameObject holder, float cooldownSec) {
-		super(name, sprite);
+		super(name, sprite, holder);
 		this.holder = holder;
 		this.rarity = Rarity.getRandomRarity();
 		this.cooldown = new Cooldown(cooldownSec);

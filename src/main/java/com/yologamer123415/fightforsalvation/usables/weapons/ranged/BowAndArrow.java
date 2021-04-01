@@ -21,7 +21,7 @@ public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
 		if (isInCooldown()) return;
 
 		Movable arrowMovable = new Arrow(mousePos, this.holder);
-		FightForSalvation.getInstance().getGameObjectItems().add(arrowMovable);
+		FightForSalvation.getInstance().addGameObject(arrowMovable);
 		arrowMovable.startMoving();
 	}
 
