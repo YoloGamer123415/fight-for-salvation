@@ -6,8 +6,8 @@ import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class RegenerationAbility extends NormalAbility {
-	public RegenerationAbility(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
-		super(name, sprite, holder, chestRarity);
+	public RegenerationAbility(GameObject holder, Rarity chestRarity) {
+		super("Regeneration", new Sprite(""), holder, chestRarity);
 	}
 
 	@Override

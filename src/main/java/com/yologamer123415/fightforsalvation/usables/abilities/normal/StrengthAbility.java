@@ -6,8 +6,8 @@ import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class StrengthAbility extends NormalAbility {
-	public StrengthAbility(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
-		super(name, sprite, holder, chestRarity);
+	public StrengthAbility(GameObject holder, Rarity chestRarity) {
+		super("Strength", new Sprite(""), holder, chestRarity);
 	}
 
 	@Override
