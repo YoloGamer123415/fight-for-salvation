@@ -11,10 +11,10 @@ import nl.han.ica.oopg.view.View;
 
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
-	private static final int SCREEN_WIDTH = 1000;
-	private static final int SCREEN_HEIGHT = 600;
+	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
+	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
 
-	private int level = 1;
+	private int level = 0;
 	private boolean isInInventory;
 	private Player player;
 	private Inventory inventory;
@@ -40,11 +40,22 @@ public class FightForSalvation extends GameEngine {
 		this.player = player;
 	}
 
+	/**
+	 * Override of the addGameObject()
+	 * We force it to add multiple instance of the same object
+	 *
+	 * @param gameObject The GameObject to add
+	 */
+	@Override
+	public void addGameObject(GameObject gameObject) {
+		this.getGameObjectItems().add(gameObject);
+	}
+
 	@Override
 	public void setupGame() {
 		MapGenerator.load();
 
-		setTileMap(MapGenerator.generateTilemapFromFile(0));
+		setTileMap(MapGenerator.generateTilemapFromFile(level));
 
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
 //		view.setBackground(loadImage("src/main/java/nl/han/ica/oopd/waterworld/media/background.jpg"));
@@ -53,7 +64,7 @@ public class FightForSalvation extends GameEngine {
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		this.inventory = new Inventory(800, 400, 200, 200);
-		addDashboard(this.inventory);
+		this.inventory.show();
 
 		int index = this.inventory.addItem( new BowAndArrow() );
 		this.inventory.setSelectedWeapon(index);

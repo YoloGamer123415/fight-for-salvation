@@ -2,7 +2,9 @@ package com.yologamer123415.fightforsalvation.monsters;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
+import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
+import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.tyles.Border;
 import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.collision.CollidedTile;
@@ -41,10 +43,16 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	@Override
 	public void update() {
 		super.update();
-		setDirection(movingX ? movingRight ? 90 : 270 : movingUp ? 0 : 180);
 
-		if (getDistanceFrom(FightForSalvation.getInstance().getPlayer()) <= 4) {
-			//TODO Handle shoot with weapon
+		setDirection(
+				movingX
+						? movingRight ? 90 : 270
+						: movingUp ? 0 : 180
+		);
+
+		Player player = FightForSalvation.getInstance().getPlayer();
+		if (getDistanceFrom(player) <= 4) {
+			weapon.use(Vector.generateVector(x, y, player.getX(), player.getY()));
 		}
 	}
 

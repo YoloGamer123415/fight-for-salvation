@@ -1,8 +1,8 @@
 package com.yologamer123415.fightforsalvation.helpers;
 
 public class Vector {
-	private float x;
-	private float y;
+	private final float x;
+	private final float y;
 	private float angle = 0;
 	private float length = 0;
 

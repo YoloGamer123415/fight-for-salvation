@@ -4,10 +4,10 @@ import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.chests.EndChest;
 import com.yologamer123415.fightforsalvation.chests.NormalChest;
 import com.yologamer123415.fightforsalvation.helpers.FileHelper;
+import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.monsters.BowMonster;
-import com.yologamer123415.fightforsalvation.monsters.Monster;
 import com.yologamer123415.fightforsalvation.monsters.KnifeMonster;
-import nl.han.ica.oopg.exceptions.GameEngineRuntimeException;
+import com.yologamer123415.fightforsalvation.monsters.Monster;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.persistence.FilePersistence;
@@ -22,7 +22,7 @@ import java.util.*;
 public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
 	private static final Map<Character, GameObject> gameObjects = new LinkedHashMap<>();
-	public static final int TILESIZE = 50;
+	public static final int TILESIZE = 48;
 
 	/**
 	 * Loads the {@link TileType}s and {@link GameObject}s into the map.
@@ -111,7 +111,7 @@ public class MapGenerator {
 
 					if (FightForSalvation.getInstance().getGameObjectItems().contains(object)) continue;
 
-					FightForSalvation.getInstance().addGameObject(object, (float) (y * TILESIZE), (float) (x * TILESIZE));
+					FightForSalvation.getInstance().addGameObject(object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x));
 				} else if (tileTypes.containsKey(placeChar)) {
 					indexMap[x][y] = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
 				} else {
@@ -163,14 +163,7 @@ public class MapGenerator {
 			availablePositions.remove(randomPos);
 
 			GameObject toPlace = getRandomMonster();
-
-			System.out.println(toPlace.getClass().getName());
-			System.out.println(randomPos.toString());
-
-			//Add without the addGameObject() method, we force it to add the gameobject multiple times...
-			FightForSalvation.getInstance().getGameObjectItems().add(toPlace);
-			toPlace.setX(TILESIZE * randomPos.getLine());
-			toPlace.setY(TILESIZE * randomPos.getRow());
+			FightForSalvation.getInstance().addGameObject(toPlace, LocationHelper.tileToScreenPixel(randomPos.getY()), LocationHelper.tileToScreenPixel(randomPos.getX()));
 		}
 	}
 
@@ -188,7 +181,7 @@ public class MapGenerator {
 		for (int i = 0; i < placeCount; i++) {
 			TilePosition randomPos = availablePositions.get(rand.nextInt(availablePositions.size()));
 			availablePositions.remove(randomPos);
-			indexMap[randomPos.getRow()][randomPos.getLine()] = index;
+			indexMap[(int) randomPos.getX()][(int) randomPos.getY()] = index;
 		}
 	}
 

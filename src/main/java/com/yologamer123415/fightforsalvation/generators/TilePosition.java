@@ -1,27 +1,27 @@
 package com.yologamer123415.fightforsalvation.generators;
 
 public class TilePosition {
-	private final int row;
-	private final int line;
+	private final float x;
+	private final float y;
 
-	public TilePosition(int row, int line) {
-		this.row = row;
-		this.line = line;
+	public TilePosition(float x, float y) {
+		this.x = x;
+		this.y = y;
 	}
 
-	public int getRow() {
-		return row;
+	public float getX() {
+		return x;
 	}
 
-	public int getLine() {
-		return line;
+	public float getY() {
+		return y;
 	}
 
 	@Override
 	public String toString() {
 		return "TilePosition{" +
-				"row=" + row +
-				", line=" + line +
+				"x=" + x +
+				", y=" + y +
 				'}';
 	}
 }
