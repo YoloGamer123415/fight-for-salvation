@@ -6,7 +6,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public class StrengthAbility extends NormalAbility {
 	public StrengthAbility(String name, Sprite sprite, GameObject holder) {
-		super(name, sprite, holder);
+		super("Strength", new Sprite(""), holder);
 	}
 
 	@Override

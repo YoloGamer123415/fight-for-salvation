@@ -5,8 +5,8 @@ import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class InvicibleAbility extends NormalAbility {
-	public InvicibleAbility(String name, Sprite sprite, GameObject holder) {
-		super(name, sprite, holder);
+	public InvicibleAbility(GameObject holder) {
+		super("Invisibility", new Sprite(""), holder);
 	}
 
 	@Override

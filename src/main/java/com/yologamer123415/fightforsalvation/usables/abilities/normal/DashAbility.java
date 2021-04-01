@@ -5,8 +5,8 @@ import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class DashAbility extends NormalAbility {
-	public DashAbility(String name, Sprite sprite, GameObject holder) {
-		super(name, sprite, holder);
+	public DashAbility(GameObject holder) {
+		super("Dash", new Sprite(""), holder);
 	}
 
 	@Override

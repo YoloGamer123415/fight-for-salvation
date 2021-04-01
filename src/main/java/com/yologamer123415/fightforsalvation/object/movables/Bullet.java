@@ -12,7 +12,7 @@ public class Bullet extends Movable {
 	private static final int HP = 10;
 
 	public Bullet(Vector path, GameObject shooter) {
-		super( new Sprite("src/main/resources/usables/weapons/ranged/arrow.png"), path, shooter );
+		super( new Sprite("src/main/resources/usables/weapons/ranged/bullet.png"), path, shooter );
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.yologamer123415.fightforsalvation.usables.weapons.ranged;
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.object.movables.Arrow;
+import com.yologamer123415.fightforsalvation.object.movables.Bullet;
 import com.yologamer123415.fightforsalvation.object.movables.Movable;
 import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
@@ -20,7 +21,7 @@ public class Gun extends Weapon implements ICollidableWithGameObjects {
 	public void use(Vector mousePos) {
 		if (isInCooldown()) return;
 
-		Movable arrowMovable = new Arrow(mousePos, this.holder);
+		Movable arrowMovable = new Bullet(mousePos, this.holder);
 		FightForSalvation.getInstance().addGameObject(arrowMovable);
 		arrowMovable.startMoving();
 	}
