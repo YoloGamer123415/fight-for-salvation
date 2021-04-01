@@ -29,6 +29,9 @@ https://opengameart.org/content/cc0-ranged-icons
 ### Machete:
 https://opengameart.org/content/5-more-rpgfantasy-weapons
 
+### Bullet:
+https://opengameart.org/content/bullet-collection-1-m484
+
 ## CC BY 3.0:
 [More information](https://creativecommons.org/licenses/by/3.0/)
 
@@ -39,3 +42,9 @@ https://opengameart.org/content/side-scroller-tiles-and-objects-for-ardentryst-b
 ### Bow monster
 https://opengameart.org/content/flare-mod-hobgoblin-archer
 *(EDITED)*
+
+## Freepik License:
+[More information](https://www.freepikcompany.com/legal#nav-freepik)
+
+### Background
+https://www.freepik.com/free-photo/black-concrete-wall-texture-background_4390597.htm

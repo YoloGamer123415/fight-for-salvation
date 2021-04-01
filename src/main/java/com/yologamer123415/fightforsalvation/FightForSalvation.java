@@ -72,7 +72,7 @@ public class FightForSalvation extends GameEngine {
 		setTileMap(MapGenerator.generateTilemapFromFile(level));
 
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
-		view.setBackground(loadImage("src/main/resources/background.png"));
+		view.setBackground(loadImage("src/main/resources/background.jpg"));
 
 		setView(view);
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
