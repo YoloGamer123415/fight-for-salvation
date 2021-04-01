@@ -56,6 +56,10 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 		if (amount >= 0) this.totalEssence += amount;
 	}
 
+	public int getHp() {
+		return this.hp;
+	}
+
 	public void resetHp() {
 		this.hp = DEFAULT_HP;
 	}

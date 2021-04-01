@@ -18,12 +18,13 @@ import java.util.Arrays;
 
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
+	public static final int FONT_SIZE = 16;
 	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
 
 	private TextObject essenceText;
+	private TextObject hpText;
 	private int level = 0;
-	private boolean isInInventory;
 	private Player player;
 	private Inventory inventory;
 	private int monstersAlive = 0;
@@ -99,8 +100,10 @@ public class FightForSalvation extends GameEngine {
 		setView(view);
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		this.essenceText = new TextObject("", 16);
+		this.essenceText = new TextObject("Aantal essence: X", FONT_SIZE);
 		this.addGameObject(this.essenceText, 0, 0);
+		this.hpText = new TextObject("HP: XXX", FONT_SIZE);
+		this.addGameObject( this.hpText, 0, (float) (SCREEN_HEIGHT - FONT_SIZE * 1.25) );
 
 		this.inventory = new Inventory(800, 400, SCREEN_WIDTH, SCREEN_HEIGHT);
 		this.addDashboard(this.inventory);
@@ -112,6 +115,7 @@ public class FightForSalvation extends GameEngine {
 	@Override
 	public void update() {
 		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getTotalEssence() );
+		this.hpText.setText( "HP: " + this.getPlayer().getHp() );
 	}
 
 	public void closedInventory() {
