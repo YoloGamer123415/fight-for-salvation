@@ -11,7 +11,6 @@ import com.yologamer123415.fightforsalvation.tyles.Border;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
-import nl.han.ica.oopg.exceptions.TileNotFoundException;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import processing.core.PVector;
@@ -56,15 +55,17 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 
 	@Override
 	public void mousePressed(int x, int y, int button) {
-		// TODO: Check if these numbers are correct
 		if (button == FightForSalvation.LEFT || button == FightForSalvation.RIGHT) {
+			float playerX = this.x + ( MapGenerator.TILESIZE / 2f );
+			float playerY = this.y + ( MapGenerator.TILESIZE / 2f );
+
 			Inventory inventory = FightForSalvation.getInstance().getInventory();
 			UsableObject usable = button == FightForSalvation.LEFT
 					? inventory.getSelectedWeapon()
 					: inventory.getSelectedRangedAbility();
 
 			if (usable != null) {
-				Vector vector = Vector.generateVector(this.x, this.y, x, y);
+				Vector vector = Vector.generateVector(playerX, playerY, x, y);
 
 				usable.use(vector);
 			}
@@ -128,5 +129,14 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				CollidingHelper.handleCollisionStop(this, ct.getCollisionSide(), vector.x, vector.y);
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Player{" +
+				"totalEssence=" + totalEssence +
+				", x=" + x +
+				", y=" + y +
+				'}';
 	}
 }
