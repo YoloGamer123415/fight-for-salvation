@@ -15,7 +15,6 @@ import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
-import processing.core.PVector;
 
 import java.util.List;
 import java.util.Random;
@@ -51,7 +50,7 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	 * SOURCE: <a href="https://stackoverflow.com/a/7228322">StackOverflow: Generate random number between two numbers
 	 * in JavaScript</a>
 	 *
-	 * @return
+	 * @return The random total essence
 	 */
 	protected int calculateTotalEssence() {
 		int min = this.rarity.getCalculationValue() - 1;

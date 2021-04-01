@@ -142,6 +142,8 @@ public class MapGenerator {
 
 		FightForSalvation.getInstance().setMonstersAlive(monsterCount);
 
+		System.out.println(Arrays.deepToString(indexMap));
+
 		System.out.println("TileMap has been generated, and is ready to set.");
 
 		return new TileMap(TILESIZE, types.toArray( new TileType[0] ), indexMap);

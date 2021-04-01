@@ -14,6 +14,8 @@ import nl.han.ica.oopg.userinput.IMouseInput;
 import nl.han.ica.oopg.view.View;
 import processing.core.PVector;
 
+import java.util.Arrays;
+
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
 	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
@@ -89,7 +91,7 @@ public class FightForSalvation extends GameEngine {
 	public void setupGame() {
 		MapGenerator.load();
 
-		setTileMap(MapGenerator.generateTilemapFromFile(level));
+		this.setTileMap(MapGenerator.generateTilemapFromFile(this.level));
 
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
 		view.setBackground(loadImage("src/main/resources/background.jpg"));
@@ -114,6 +116,9 @@ public class FightForSalvation extends GameEngine {
 
 	public void closedInventory() {
 		this.level++;
+
+		deleteAllGameOBjects();
+		addGameObject(this.player);
 
 		TileMap newTileMap = MapGenerator.generateTilemapFromFile(this.level);
 		this.setTileMap(newTileMap);
