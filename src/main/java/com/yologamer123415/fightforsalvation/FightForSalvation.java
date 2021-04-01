@@ -14,7 +14,7 @@ import nl.han.ica.oopg.userinput.IMouseInput;
 import nl.han.ica.oopg.view.View;
 import processing.core.PVector;
 
-import java.util.Arrays;
+import java.util.Iterator;
 
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
@@ -121,8 +121,12 @@ public class FightForSalvation extends GameEngine {
 	public void closedInventory() {
 		this.level++;
 
-		deleteAllGameOBjects();
-		addGameObject(this.player);
+		Iterator<GameObject> iter = this.getGameObjectItems().iterator();
+		while (iter.hasNext()) {
+			GameObject go = iter.next();
+			if (go instanceof Player || go instanceof TextObject) continue;
+			iter.remove();
+		}
 
 		TileMap newTileMap = MapGenerator.generateTilemapFromFile(this.level);
 		this.setTileMap(newTileMap);
