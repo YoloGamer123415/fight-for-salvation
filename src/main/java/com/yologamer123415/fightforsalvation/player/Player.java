@@ -170,7 +170,7 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> list) {
 		for (CollidedTile ct : list) {
-			if (ct.getTile() instanceof Border) {
+			if (ct.getTile() instanceof Border || ct.getTile() instanceof Chest) {
 				PVector vector = FightForSalvation.getInstance().getTileMap().getTilePixelLocation(ct.getTile());
 				CollidingHelper.handleCollisionStop(this, ct.getCollisionSide(), vector.x, vector.y);
 			}

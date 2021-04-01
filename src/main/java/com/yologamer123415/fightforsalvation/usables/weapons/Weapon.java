@@ -1,8 +1,6 @@
 package com.yologamer123415.fightforsalvation.usables.weapons;
 
-import com.yologamer123415.fightforsalvation.helpers.Cooldown;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
-import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;

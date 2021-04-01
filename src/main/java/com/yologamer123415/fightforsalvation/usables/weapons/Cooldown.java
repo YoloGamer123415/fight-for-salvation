@@ -1,4 +1,4 @@
-package com.yologamer123415.fightforsalvation.helpers;
+package com.yologamer123415.fightforsalvation.usables.weapons;
 
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;

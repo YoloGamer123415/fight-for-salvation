@@ -5,11 +5,14 @@ import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
+import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.TextObject;
+import nl.han.ica.oopg.userinput.IMouseInput;
 import nl.han.ica.oopg.view.View;
+import processing.core.PVector;
 
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
@@ -65,6 +68,22 @@ public class FightForSalvation extends GameEngine {
 	@Override
 	public void addGameObject(GameObject gameObject) {
 		this.getGameObjectItems().add(gameObject);
+	}
+
+	/**
+	 * Override of the mousePressed()
+	 * We fixed clicking on Dashboards
+	 *
+	 */
+	@Override
+	public void mousePressed() {
+		super.mousePressed();
+
+		//Implemented mouseclick for Dashboards
+		PVector location = calculateRelativeMouseLocation(mouseX, mouseY);
+		for (Dashboard db : getDashboards()) {
+			((IMouseInput) db).mousePressed((int) location.x, (int) location.y, mouseButton);
+		}
 	}
 
 	@Override

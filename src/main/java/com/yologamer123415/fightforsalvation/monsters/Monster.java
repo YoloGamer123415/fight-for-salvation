@@ -1,6 +1,7 @@
 package com.yologamer123415.fightforsalvation.monsters;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
+import com.yologamer123415.fightforsalvation.chests.Chest;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
@@ -96,16 +97,9 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
 		for (GameObject go : list) {
-			if (go instanceof FlammableSpriteObject && !go.equals(FightForSalvation.getInstance().getPlayer())) {
-				FlammableSpriteObject fso = (FlammableSpriteObject) go;
-				if (fso.shouldDoDamage()) {
-					//TODO Handle fire damage
-				} else {
-					CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
-					if (side == null) continue;
-					handleMove(side);
-				}
-			} else if (go.getClass().getPackage().getName().endsWith("obstacles")) {
+			if (go instanceof FlammableSpriteObject && ((FlammableSpriteObject) go).shouldDoDamage()) {
+				//TODO Handle fire damage
+			} else if (go.getClass().getPackage().getName().endsWith("obstacles") || go instanceof Player) {
 				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
 				if (side == null) continue;
 				handleMove(side);
@@ -116,7 +110,7 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> list) {
 		for (CollidedTile ct : list) {
-			if (ct.getTile() instanceof Border) {
+			if (ct.getTile() instanceof Border || ct.getTile() instanceof Chest) {
 				handleMove(ct.getCollisionSide());
 			}
 		}
