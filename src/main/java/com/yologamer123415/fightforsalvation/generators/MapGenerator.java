@@ -8,6 +8,7 @@ import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.monsters.BowMonster;
 import com.yologamer123415.fightforsalvation.monsters.KnifeMonster;
 import com.yologamer123415.fightforsalvation.monsters.Monster;
+import com.yologamer123415.fightforsalvation.player.Player;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.persistence.FilePersistence;
@@ -98,8 +99,15 @@ public class MapGenerator {
 				char placeChar = row[y];
 
 				if ( gameObjects.containsKey(placeChar) ) {
-					GameObject object = gameObjects.get(placeChar).getGameObject();
-					FightForSalvation.getInstance().addGameObject( object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x) );
+					if ( placeChar == '^' && FightForSalvation.getInstance().getPlayer() != null ) {
+						Player object = FightForSalvation.getInstance().getPlayer();
+						object.setX( LocationHelper.tileToScreenPixel(x) );
+						object.setY( LocationHelper.tileToScreenPixel(y) );
+						object.resetHp();
+					} else {
+						GameObject object = gameObjects.get(placeChar).getGameObject();
+						FightForSalvation.getInstance().addGameObject( object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x) );
+					}
 				} else if ( tileTypes.containsKey(placeChar) ) {
 					indexMap[x][y] = new ArrayList<>( tileTypes.keySet() ).indexOf(placeChar);
 				} else {

@@ -9,6 +9,7 @@ import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.TextObject;
+import nl.han.ica.oopg.tile.TileMap;
 import nl.han.ica.oopg.userinput.IMouseInput;
 import nl.han.ica.oopg.view.View;
 import processing.core.PVector;
@@ -112,6 +113,9 @@ public class FightForSalvation extends GameEngine {
 	}
 
 	public void closedInventory() {
+		this.level++;
 
+		TileMap newTileMap = MapGenerator.generateTilemapFromFile(this.level);
+		this.setTileMap(newTileMap);
 	}
 }

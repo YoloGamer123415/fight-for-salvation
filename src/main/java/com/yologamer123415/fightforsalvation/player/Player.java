@@ -26,10 +26,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Player extends FlammableSpriteObject implements ICollidableWithTiles {
+	private static final int DEFAULT_HP = 150;
 	private static final float SPEED_STOPPED = 0;
 	private static final float SPEED_NORMAL = 3.5f;
 
-	private int hp = 300;
+	private int hp = DEFAULT_HP;
 	private int totalEssence = 0;
 
 	/**
@@ -53,6 +54,10 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 
 	public void addEssence(int amount) {
 		if (amount >= 0) this.totalEssence += amount;
+	}
+
+	public void resetHp() {
+		this.hp = DEFAULT_HP;
 	}
 
 	public void damage(int damage) {
