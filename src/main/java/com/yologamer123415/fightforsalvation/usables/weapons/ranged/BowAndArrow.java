@@ -1,6 +1,7 @@
 package com.yologamer123415.fightforsalvation.usables.weapons.ranged;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
+import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.object.movables.Arrow;
 import com.yologamer123415.fightforsalvation.object.movables.Movable;
@@ -12,8 +13,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
-	public BowAndArrow(GameObject holder) {
-		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder, 1.5F);
+	public BowAndArrow(GameObject holder, Rarity chestRarity) {
+		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder, chestRarity, 1.5F);
 	}
 
 	@Override

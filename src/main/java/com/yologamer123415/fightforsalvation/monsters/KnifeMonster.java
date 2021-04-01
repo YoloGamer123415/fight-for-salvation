@@ -8,6 +8,6 @@ public class KnifeMonster extends Monster {
 
 	public KnifeMonster() {
 		super(new Sprite("src/main/resources/gameobjects/monsters/KnifeMonster.png"), hp);
-		this.weapon = new Knife(this);
+		this.weapon = new Knife(this, this.rarity);
 	}
 }

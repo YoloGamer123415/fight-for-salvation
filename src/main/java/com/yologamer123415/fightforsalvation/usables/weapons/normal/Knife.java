@@ -2,6 +2,7 @@ package com.yologamer123415.fightforsalvation.usables.weapons.normal;
 
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
+import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.monsters.Monster;
 import com.yologamer123415.fightforsalvation.player.Player;
@@ -14,8 +15,8 @@ import java.util.List;
 public class Knife extends Weapon {
 	private final int damage;
 
-	public Knife(GameObject holder) {
-		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder, 0.8F);
+	public Knife(GameObject holder, Rarity chestRarity) {
+		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder, chestRarity, 0.8F);
 
 		this.damage = this.rarity.getCalculationValue() * 2;
 	}

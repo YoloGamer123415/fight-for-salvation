@@ -1,27 +1,19 @@
 package com.yologamer123415.fightforsalvation.helpers;
 
 public enum Rarity {
-	COMMON(50),
-	NORMAL(35),
-	EPIC(15);
+	COMMON(50, 0xa9a9a9),
+	NORMAL(35, 0x6495ed),
+	EPIC(15, 0x9932cc);
 
 	/**
 	 * The chance to get this rarity
 	 */
 	private final int chance;
+	private final int color;
 
-	Rarity(int chance) {
+	Rarity(int chance, int color) {
 		this.chance = chance;
-	}
-
-	public int getCalculationValue() {
-		Rarity[] rarities = Rarity.values();
-		for (int i = 0; i < rarities.length; i++) {
-			if (this.equals(rarities[i])) {
-				return ++i;
-			}
-		}
-		return 1;
+		this.color = color;
 	}
 
 	public static Rarity getRandomRarity() {
@@ -46,5 +38,19 @@ public enum Rarity {
 		}
 
 		return Rarity.COMMON;
+	}
+
+	public int getColor() {
+		return this.color;
+	}
+
+	public int getCalculationValue() {
+		Rarity[] rarities = Rarity.values();
+		for (int i = 0; i < rarities.length; i++) {
+			if (this.equals(rarities[i])) {
+				return ++i;
+			}
+		}
+		return 1;
 	}
 }

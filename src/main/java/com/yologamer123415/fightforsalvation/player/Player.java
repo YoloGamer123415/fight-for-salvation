@@ -1,8 +1,10 @@
 package com.yologamer123415.fightforsalvation.player;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
+import com.yologamer123415.fightforsalvation.chests.Chest;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
+import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
@@ -13,8 +15,11 @@ import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.tile.Tile;
+import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Player extends FlammableSpriteObject implements ICollidableWithTiles {
@@ -39,8 +44,12 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 		return totalEssence;
 	}
 
+	public void removeEssence(int amount) {
+		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
+	}
+
 	public void addEssence(int amount) {
-		if (amount >= 0) totalEssence += amount;
+		if (amount >= 0) this.totalEssence += amount;
 	}
 
 	public void damage(int damage) {
@@ -74,6 +83,25 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				Vector vector = Vector.generateVector(playerX, playerY, x, y);
 
 				usable.use(vector);
+			}
+		} else if (button == FightForSalvation.CENTER) {
+			final FightForSalvation instance = FightForSalvation.getInstance();
+			final double halfTileSize = MapGenerator.TILESIZE / 2.0;
+			Tile tile = instance.getTileMap().getTileOnPosition(x, y);
+
+			if (
+					LocationHelper.calculateDistanceBetweenTwoPoints(
+							x, y,
+							this.x + halfTileSize, this.y + halfTileSize
+					) <= halfTileSize * 3
+					&& tile instanceof Chest
+					&& ( (Chest) tile ).canBeOpened()
+			) {
+				UsableObject[] items = ( (Chest) tile ).open(this);
+
+				if (items != null) {
+					for (UsableObject item : items) instance.getInventory().addItem(item);
+				}
 			}
 		}
 	}

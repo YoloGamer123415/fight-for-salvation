@@ -36,9 +36,7 @@ public class Vector {
 	 */
 	public static Vector generateVector(float px, float py, float mx, float my) {
 		double lp = mx - px;
-		double mp = Math.sqrt(
-				Math.pow( Math.abs(mx - px), 2 ) + Math.pow( Math.abs(my - py), 2 )
-		);
+		double mp = LocationHelper.calculateDistanceBetweenTwoPoints(mx, my, px, py);
 		double angle = Math.toDegrees( Math.acos(lp / mp) );
 
 		if (my < py) angle = 360 - angle;

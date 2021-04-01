@@ -2,8 +2,10 @@ package com.yologamer123415.fightforsalvation.inventory;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
+import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import nl.han.ica.oopg.dashboard.Dashboard;
+import processing.core.PGraphics;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -63,6 +65,7 @@ public class Inventory extends Dashboard {
 	}
 
 	private void placeItems() {
+		final FightForSalvation instance = FightForSalvation.getInstance();
 		int itemCount = 0;
 		for (UsableObject item : this.items) {
 			if (
@@ -70,10 +73,10 @@ public class Inventory extends Dashboard {
 							&& !item.equals( this.getSelectedNormalAbility() )
 							&& ! item.equals( this.getSelectedRangedAbility() )
 			) {
-				int y = itemCount / MAX_ITEMS_PER_ROW;
-				int x = itemCount % MAX_ITEMS_PER_ROW;
+				int y = (int) LocationHelper.tileToScreenPixel( (float) Math.floor( (float) itemCount / MAX_ITEMS_PER_ROW ) );
+				int x = (int) LocationHelper.tileToScreenPixel(itemCount % MAX_ITEMS_PER_ROW);
 
-				this.addGameObject(this.items.get(itemCount), x * MapGenerator.TILESIZE, y * MapGenerator.TILESIZE);
+				this.addGameObject(item, x, y);
 
 				itemCount++;
 			}
@@ -93,6 +96,10 @@ public class Inventory extends Dashboard {
 		this.placeItems();
 
 		instance.addDashboard(this);
+		this.setX(0);
+		this.setY(0);
+		this.setZ(100);
+		this.setVisible(true);
 	}
 
 	private void close() {
@@ -100,6 +107,34 @@ public class Inventory extends Dashboard {
 		instance.deleteDashboard(this);
 		this.resetShownItems();
 		instance.closedInventory();
+	}
+
+	private void drawRarityRectangles() {
+		final FightForSalvation instance = FightForSalvation.getInstance();
+		int itemCount = 0;
+		for (UsableObject item : this.items) {
+			if (
+					!item.equals( this.getSelectedWeapon() )
+							&& !item.equals( this.getSelectedNormalAbility() )
+							&& ! item.equals( this.getSelectedRangedAbility() )
+			) {
+				int y = (int) LocationHelper.tileToScreenPixel( (float) Math.floor( (float) itemCount / MAX_ITEMS_PER_ROW ) );
+				int x = (int) LocationHelper.tileToScreenPixel(itemCount % MAX_ITEMS_PER_ROW);
+
+				instance.stroke( item.getRarity().getColor() );
+				instance.fill(0x000000, 0);
+				instance.rect(x, y, MapGenerator.TILESIZE, MapGenerator.TILESIZE);
+
+				itemCount++;
+			}
+		}
+
+		// TODO: Place selected Usables in the right place
+	}
+
+	@Override
+	public void draw(PGraphics g) {
+		super.draw(g);
 	}
 
 	@Override

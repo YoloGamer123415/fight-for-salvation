@@ -132,7 +132,7 @@ public class MapGenerator {
 		place(monsterPositions, monsterCount);
 		place(chestPositions, chestCount, indexMap, chestIndex);
 
-		FightForSalvation.getInstance().setMonstersAlive( monsterCount );
+		FightForSalvation.getInstance().setMonstersAlive(monsterCount);
 
 		System.out.println("TileMap has been generated, and is ready to set.");
 

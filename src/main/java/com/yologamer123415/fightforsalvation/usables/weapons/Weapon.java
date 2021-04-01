@@ -8,15 +8,13 @@ import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Weapon extends UsableObject {
-	protected Rarity rarity;
 	protected GameObject holder;
 
 	private final Cooldown cooldown;
 
-	public Weapon(String name, Sprite sprite, GameObject holder, float cooldownSec) {
-		super(name, sprite, holder);
+	public Weapon(String name, Sprite sprite, GameObject holder, Rarity chestRarity, float cooldownSec) {
+		super(name, sprite, holder, chestRarity);
 		this.holder = holder;
-		this.rarity = Rarity.getRandomRarity();
 		this.cooldown = new Cooldown(cooldownSec);
 	}
 

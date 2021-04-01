@@ -8,6 +8,6 @@ public class BowMonster extends Monster {
 
 	public BowMonster() {
 		super(new Sprite("src/main/resources/gameobjects/monsters/BowMonster.png"), hp);
-		this.weapon = new BowAndArrow(this);
+		this.weapon = new BowAndArrow(this, this.rarity);
 	}
 }
