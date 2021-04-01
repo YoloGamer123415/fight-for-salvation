@@ -4,7 +4,6 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
-import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;

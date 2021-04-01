@@ -7,6 +7,9 @@ Below are all our downloaded sprites, with the license it's using.
 ### Player
 https://kenney.nl/assets/platformer-characters
 
+### Palm tree
+https://opengameart.org/content/palms
+
 ### Nature and borders
 https://kenney.nl/assets/foliage-pack
 
