@@ -3,7 +3,10 @@ package com.yologamer123415.fightforsalvation;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
+import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
+import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import nl.han.ica.oopg.engine.GameEngine;
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.view.View;
 
 public class FightForSalvation extends GameEngine {
@@ -51,6 +54,9 @@ public class FightForSalvation extends GameEngine {
 
 		this.inventory = new Inventory(800, 400, 200, 200);
 		addDashboard(this.inventory);
+
+		int index = this.inventory.addItem( new BowAndArrow() );
+		this.inventory.setSelectedWeapon(index);
 	}
 
 	@Override

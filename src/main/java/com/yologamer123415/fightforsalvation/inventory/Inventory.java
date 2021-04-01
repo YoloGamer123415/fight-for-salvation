@@ -52,6 +52,12 @@ public class Inventory extends Dashboard {
 		this.selectedWeapon = selectedWeapon;
 	}
 
+	public int addItem(UsableObject item) {
+		this.items.add(item);
+
+		return this.items.indexOf(item);
+	}
+
 	private void resetShownItems() {
 		this.deleteAllGameObjectsOfType(UsableObject.class);
 	}
