@@ -90,13 +90,13 @@ public class MapGenerator {
 
 		int[][] indexMap = new int[ mapRows.length ][ mapRows[0].toCharArray().length ];
 
-		for (int x = 0; x < mapRows.length; x++) {
-			Arrays.fill( indexMap[x], -1 ); //Fill with default value (-1)
+		for (int y = 0; y < mapRows.length; y++) {
+			Arrays.fill( indexMap[y], -1 ); //Fill with default value (-1)
 
-			char[] row = mapRows[x].toCharArray();
+			char[] row = mapRows[y].toCharArray();
 
-			for (int y = 0; y < row.length; y++) {
-				char placeChar = row[y];
+			for (int x = 0; x < row.length; x++) {
+				char placeChar = row[x];
 
 				if ( gameObjects.containsKey(placeChar) ) {
 					if ( placeChar == '^' && FightForSalvation.getInstance().getPlayer() != null ) {
@@ -106,20 +106,20 @@ public class MapGenerator {
 						object.resetHp();
 					} else {
 						GameObject object = gameObjects.get(placeChar).getGameObject();
-						FightForSalvation.getInstance().addGameObject( object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x) );
+						FightForSalvation.getInstance().addGameObject( object, LocationHelper.tileToScreenPixel(x), LocationHelper.tileToScreenPixel(y) );
 					}
 				} else if ( tileTypes.containsKey(placeChar) ) {
-					indexMap[x][y] = new ArrayList<>( tileTypes.keySet() ).indexOf(placeChar);
+					indexMap[y][x] = new ArrayList<>( tileTypes.keySet() ).indexOf(placeChar);
 				} else {
 					switch (placeChar) {
 						case '@':
-							monsterPositions.add( new TilePosition(x, y) );
+							monsterPositions.add( new TilePosition(y, x) );
 							break;
 						case 'c':
-							chestPositions.add( new TilePosition(x, y) );
+							chestPositions.add( new TilePosition(y, x) );
 							break;
 						case 'C':
-							indexMap[x][y] = endChestIndex;
+							indexMap[y][x] = endChestIndex;
 							break;
 						case ' ':
 							break;

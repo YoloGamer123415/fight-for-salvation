@@ -34,7 +34,7 @@ public class Inventory extends Dashboard {
 		this.setX(0);
 		this.setY(0);
 		this.setZ(100);
-		this.setBackgroundImage( new Sprite("src/main/resources/background.jpg") );
+		this.setBackgroundImage( new Sprite("src/main/resources/background_inventory.jpg") );
 	}
 
 	public UsableObject getSelectedNormalAbility() {
@@ -164,7 +164,7 @@ public class Inventory extends Dashboard {
 			final int itemIndex = itemY * MAX_ITEMS_PER_ROW + itemX;
 
 			// TODO: Check real position of "done" button
-			if (x >= this.width * 0.90 && y >= this.height * 0.90) {
+			if (x >= 728 && y >= 523) {
 				this.close();
 			} else if ( this.selectedMoveItem > -1 && x >= startX && y >= startY && y <= startY + height * 3 ) { // click was on one of the selected items
 				int itemPos = (int) LocationHelper.screenToTilePixel( (float) (y - startY) );
