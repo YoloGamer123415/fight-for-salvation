@@ -51,12 +51,12 @@ public class FightForSalvation extends GameEngine {
 		this.getGameObjectItems().add(gameObject);
 	}
 
-	@Override
-	public void addGameObject(GameObject gameObject, float x, float y) {
-		this.addGameObject(gameObject);
-		gameObject.setX(x);
-		gameObject.setY(y);
-	}
+//	@Override
+//	public void addGameObject(GameObject gameObject, float x, float y) {
+//		this.addGameObject(gameObject);
+//		gameObject.setX(x);
+//		gameObject.setY(y);
+//	}
 
 	@Override
 	public void setupGame() {

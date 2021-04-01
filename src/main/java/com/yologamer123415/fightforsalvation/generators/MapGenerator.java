@@ -16,12 +16,11 @@ import nl.han.ica.oopg.tile.TileType;
 import processing.data.JSONObject;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class MapGenerator {
 	private static final Map<Character, TileType<?>> tileTypes = new LinkedHashMap<>();
-	private static final Map<Character, GameObject> gameObjects = new LinkedHashMap<>();
+	private static final Map<Character, GameObjectType> gameObjects = new LinkedHashMap<>();
 	public static final int TILESIZE = 48;
 
 	/**
@@ -51,9 +50,9 @@ public class MapGenerator {
 			String[] spriteNameSplit = FileHelper.getBaseName(file.getName()).split("_");
 
 			char spriteChar = spriteNameSplit[0].charAt(0);
-			Class<?> gameObjectClass;
+			Class<? extends GameObject> gameObjectClass;
 			try {
-				gameObjectClass = Class.forName("com.yologamer123415.fightforsalvation." + spriteNameSplit[1]);
+				gameObjectClass = (Class<? extends GameObject>) Class.forName("com.yologamer123415.fightforsalvation." + spriteNameSplit[1]);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				continue;
@@ -61,15 +60,7 @@ public class MapGenerator {
 
 			Sprite sprite = new Sprite("src/main/resources/" + file.getParentFile().getName() + "/" + file.getName());
 
-			GameObject object;
-			try {
-				object = (GameObject) gameObjectClass.getDeclaredConstructor(Sprite.class).newInstance(sprite);
-			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-				e.printStackTrace();
-				return;
-			}
-
-			gameObjects.put(spriteChar, object);
+			gameObjects.put(spriteChar, new GameObjectType(gameObjectClass, sprite));
 		}
 	}
 
@@ -107,10 +98,7 @@ public class MapGenerator {
 				char placeChar = row[y];
 
 				if (gameObjects.containsKey(placeChar)) {
-					GameObject object = gameObjects.get(placeChar);
-
-					if (FightForSalvation.getInstance().getGameObjectItems().contains(object)) continue;
-
+					GameObject object = gameObjects.get(placeChar).getGameObject();
 					FightForSalvation.getInstance().addGameObject(object, LocationHelper.tileToScreenPixel(y), LocationHelper.tileToScreenPixel(x));
 				} else if (tileTypes.containsKey(placeChar)) {
 					indexMap[x][y] = new ArrayList<>(tileTypes.keySet()).indexOf(placeChar);
