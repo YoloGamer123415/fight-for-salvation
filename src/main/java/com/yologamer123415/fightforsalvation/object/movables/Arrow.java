@@ -21,7 +21,6 @@ public class Arrow extends Movable {
 			if (ob instanceof Monster) {
 				Monster monster = (Monster) ob;
 				monster.damage(HP);
-				monster.startBurning();
 			} else if (ob instanceof Player) {
 				Player player = (Player) ob;
 				player.damage(HP);
