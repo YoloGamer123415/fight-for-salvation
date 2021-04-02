@@ -60,11 +60,21 @@ public class Vector {
 		return length;
 	}
 
+	public float getPointX() {
+		return (float) ( Math.cos( Math.toRadians(this.angle - 90) ) * this.length + this.x );
+	}
+
+	public float getPointY() {
+		return (float) ( Math.sin( Math.toRadians(this.angle - 90) ) * this.length + this.y );
+	}
+
 	@Override
 	public String toString() {
 		return "Vector{" +
 				"x=" + x +
 				", y=" + y +
+				", pointX=" + this.getPointX() +
+				", pointY=" + this.getPointY() +
 				", angle=" + angle +
 				", length=" + length +
 				'}';

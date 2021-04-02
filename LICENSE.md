@@ -35,6 +35,9 @@ https://opengameart.org/content/5-more-rpgfantasy-weapons
 ### Bullet:
 https://opengameart.org/content/bullet-collection-1-m484
 
+### Dash
+https://opengameart.org/content/two-colored-arrows
+
 ## CC BY 3.0:
 [More information](https://creativecommons.org/licenses/by/3.0/)
 
