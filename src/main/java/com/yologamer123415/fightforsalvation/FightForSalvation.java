@@ -169,8 +169,6 @@ public class FightForSalvation extends GameEngine {
 		try {
 			newTileMap = MapGenerator.generateTilemapFromFile(this.level);
 		} catch (IllegalArgumentException ex) {
-			ex.printStackTrace();
-
 			//TODO Move to end screen
 			this.stop();
 
