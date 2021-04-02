@@ -62,6 +62,26 @@ public class FightForSalvation extends GameEngine {
 		if (this.monstersAlive > 0) this.monstersAlive--;
 	}
 
+	private void setupView() {
+		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
+		view.setBackground(loadImage("src/main/resources/background.jpg"));
+
+		setView(view);
+		size(SCREEN_WIDTH, SCREEN_HEIGHT);
+	}
+
+	private void setupTextObjects() {
+		this.essenceText = new TextObject("Aantal essence: X", FONT_SIZE);
+		this.addGameObject(this.essenceText, 0, 0);
+		this.hpText = new TextObject("HP: XXX", FONT_SIZE);
+		this.addGameObject( this.hpText, 0, (float) (SCREEN_HEIGHT - FONT_SIZE * 1.25) );
+	}
+
+	private void setupInventory() {
+		this.inventory = new Inventory(800, 400, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.addDashboard(this.inventory);
+	}
+
 	/**
 	 * Override of the addGameObject()
 	 * We force it to add multiple instance of the same object
@@ -93,20 +113,9 @@ public class FightForSalvation extends GameEngine {
 		MapGenerator.load();
 
 		this.setTileMap(MapGenerator.generateTilemapFromFile(this.level));
-
-		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
-		view.setBackground(loadImage("src/main/resources/background.jpg"));
-
-		setView(view);
-		size(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-		this.essenceText = new TextObject("Aantal essence: X", FONT_SIZE);
-		this.addGameObject(this.essenceText, 0, 0);
-		this.hpText = new TextObject("HP: XXX", FONT_SIZE);
-		this.addGameObject( this.hpText, 0, (float) (SCREEN_HEIGHT - FONT_SIZE * 1.25) );
-
-		this.inventory = new Inventory(800, 400, SCREEN_WIDTH, SCREEN_HEIGHT);
-		this.addDashboard(this.inventory);
+		this.setupView();
+		this.setupTextObjects();
+		this.setupInventory();
 
 		int index = this.inventory.addItem( new Gun(this.player, Rarity.EPIC) );
 		this.inventory.setSelectedWeapon(index);
@@ -122,7 +131,7 @@ public class FightForSalvation extends GameEngine {
 		this.level++;
 
 		Iterator<GameObject> iter = this.getGameObjectItems().iterator();
-		while (iter.hasNext()) {
+		while ( iter.hasNext() ) {
 			GameObject go = iter.next();
 			if (go instanceof Player || go instanceof TextObject) continue;
 			iter.remove();
