@@ -54,7 +54,7 @@ public class ItemHelper {
 
 	/**
 	 * Clean a list, by removing all the null entries.
-	 * A {@see LinkedList} sometimes leaves null values at remove.
+	 * A {@link LinkedList} sometimes leaves null values at remove.
 	 *
 	 * @param toClean The list to clean.
 	 */
