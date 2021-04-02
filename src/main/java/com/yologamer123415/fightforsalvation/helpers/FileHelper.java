@@ -5,10 +5,7 @@ import java.io.File;
 public class FileHelper {
 	/**
 	 * Removes the extension of a filename.
-	 *
-	 * SOURCE: https://github.com/google/guava/blob/018796b79b314b5b7790c9320c1a7c89140af76d/guava/src/com/google/common/io/Files.java#L820
-	 * EDITED, removed unneeded methods.
-	 *
+	 * @see <a href="https://github.com/google/guava/blob/018796b79b314b5b7790c9320c1a7c89140af76d/guava/src/com/google/common/io/Files.java#L820">Guava</a> for the source of this code
 	 *
 	 * @param fileName The name of the file
 	 * @return The name without extension

@@ -103,7 +103,7 @@ public class MapGenerator {
 						Player object = FightForSalvation.getInstance().getPlayer();
 						object.setX( LocationHelper.tileToScreenPixel(x) );
 						object.setY( LocationHelper.tileToScreenPixel(y) );
-						object.resetHp();
+						object.resetHP();
 					} else {
 						GameObject object = gameObjects.get(placeChar).getGameObject();
 						FightForSalvation.getInstance().addGameObject( object, LocationHelper.tileToScreenPixel(x), LocationHelper.tileToScreenPixel(y) );

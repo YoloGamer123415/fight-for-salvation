@@ -8,6 +8,9 @@ import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.objects.GameObject;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class ItemHelper {
@@ -19,10 +22,23 @@ public class ItemHelper {
 			Machete.class,
 	};
 
+	/**
+	 * Get a random item with COMMON rarity.
+	 *
+	 * @param holder The holder of the item.
+	 * @return The UsableObject.
+	 */
 	public static UsableObject getRandomItem(GameObject holder) {
 		return getRandomItem(Rarity.COMMON, holder);
 	}
 
+	/**
+	 * Get a random item with a from rarity.
+	 *
+	 * @param from The from rarity.
+	 * @param holder The holder of the item.
+	 * @return The UsableObject.
+	 */
 	public static UsableObject getRandomItem(Rarity from, GameObject holder) {
 		try {
 			int randomNum = new Random().nextInt( ITEMS_LIST.length );
@@ -34,5 +50,15 @@ public class ItemHelper {
 
 			return null;
 		}
+	}
+
+	/**
+	 * Clean a list, by removing all the null entries.
+	 * A {@see LinkedList} sometimes leaves null values at remove.
+	 *
+	 * @param toClean The list to clean.
+	 */
+	public static void cleanList(List<?> toClean) {
+		toClean.removeAll( Collections.singleton(null) );
 	}
 }

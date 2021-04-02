@@ -8,6 +8,12 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class FirePotion extends Potion {
+	/**
+	 * Construct a new FirePotion.
+	 *
+	 * @param path The path of the potion.
+	 * @param shooter The shooter of the potion.
+	 */
 	public FirePotion(Vector path, GameObject shooter) {
 		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
 	}

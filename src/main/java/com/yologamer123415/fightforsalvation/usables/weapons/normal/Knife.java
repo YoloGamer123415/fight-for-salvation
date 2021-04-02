@@ -5,6 +5,7 @@ import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.monsters.Monster;
+import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.objects.GameObject;
@@ -17,6 +18,12 @@ public class Knife extends Weapon {
 
 	private final int damage;
 
+	/**
+	 * Construct a new Knife.
+	 *
+	 * @param holder The holder of the Knife.
+	 * @param chestRarity The rarity of the Knife.
+	 */
 	public Knife(GameObject holder, Rarity chestRarity) {
 		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder, chestRarity, COOLDOWN);
 
@@ -29,8 +36,9 @@ public class Knife extends Weapon {
 				.findTargetsWithinRange( MapGenerator.TILESIZE, this.holder );
 
 		for (GameObject go : monstersWithinRange) {
-			if (go instanceof Player) ( (Player) go ).damage(this.damage);
-			else if (go instanceof Monster) ( (Monster) go ).damage(this.damage);
+			if (go instanceof Damageable) {
+				((Damageable) go).damage(this.damage);
+			}
 		}
 	}
 }

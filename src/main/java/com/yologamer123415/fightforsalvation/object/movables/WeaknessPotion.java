@@ -7,6 +7,12 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class WeaknessPotion extends Potion {
+	/**
+	 * Construct a new Weakness Potion.
+	 *
+	 * @param path The path of the Weakness potion.
+	 * @param shooter The shooter of the Weakness potion.
+	 */
 	public WeaknessPotion(Vector path, GameObject shooter) {
 		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
 	}

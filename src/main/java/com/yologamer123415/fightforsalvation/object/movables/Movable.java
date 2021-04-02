@@ -18,6 +18,13 @@ public abstract class Movable extends SpriteObject implements ICollidableWithGam
 	private final Vector path;
 	private final GameObject shooter;
 
+	/**
+	 * Construct a new Movable.
+	 *
+	 * @param sprite The sprite of the Movable.
+	 * @param path The path of the Movable.
+	 * @param shooter The shooter of the Movable.
+	 */
 	public Movable(Sprite sprite, Vector path, GameObject shooter) {
 		super(sprite);
 
@@ -30,8 +37,16 @@ public abstract class Movable extends SpriteObject implements ICollidableWithGam
 		this.setVisible(false);
 	}
 
+	/**
+	 * Called when a collision is detected.
+	 *
+	 * @param gameObjects The object(s) it detects with.
+	 */
 	public abstract void collidedWithGameObjects(List<GameObject> gameObjects);
 
+	/**
+	 * Start movement of the movable.
+	 */
 	public final void startMoving() {
 		this.setVisible(true);
 		this.setDirectionSpeed( this.path.getAngle(), SPEED );

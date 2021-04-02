@@ -15,6 +15,14 @@ public abstract class UsableObject extends SpriteObject {
 	protected final Rarity rarity;
 	protected GameObject holder;
 
+	/**
+	 * Construct a new UsableObject.
+	 *
+	 * @param name The name of the object.
+	 * @param sprite The sprite of the object.
+	 * @param holder The holder of the object.
+	 * @param chestRarity The rarity of the object.
+	 */
 	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
 		super(sprite);
 		this.name = name;
@@ -22,21 +30,34 @@ public abstract class UsableObject extends SpriteObject {
 		this.rarity = Rarity.getRandomRarity(chestRarity);
 	}
 
+	/**
+	 * Get the name of the object.
+	 *
+	 * @return The name.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Get the rarity of the object.
+	 *
+	 * @return The rarity.
+	 */
 	public Rarity getRarity() {
 		return this.rarity;
 	}
 
+	/**
+	 * Use this object.
+	 *
+	 * @param mousePos The position of the mouse.
+	 */
 	public abstract void use(Vector mousePos);
 
 	@Override
 	public void draw(PGraphics g) {
 		super.draw(g);
-
-//		System.out.println(this.rarity.getColor());
 
 		g.fill(0x000000, 0);
 		g.stroke( this.rarity.getColor() );

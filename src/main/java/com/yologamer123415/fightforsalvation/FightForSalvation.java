@@ -26,35 +26,72 @@ public class FightForSalvation extends GameEngine {
 	private Player player;
 	private int monstersAlive = 0;
 
+	/**
+	 * Start the game.
+	 * (Called by JVM)
+	 *
+	 * @param args The args of the start command.
+	 */
 	public static void main(String[] args) {
 		instance = new FightForSalvation();
 		runSketch(new String[]{"Fight for Salvation"}, instance);
 	}
 
+	/**
+	 * Get the instance of the game.
+	 *
+	 * @return The instance.
+	 */
 	public static FightForSalvation getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Get the player.
+	 *
+	 * @return The player.
+	 */
 	public Player getPlayer() {
 		return this.player;
 	}
 
+	/**
+	 * Set the player.
+	 *
+	 * @param player The player.
+	 */
 	public void setPlayer(Player player) {
 		if (this.player == null) this.player = player;
 	}
 
+	/**
+	 * Get the amount of monsters still alive.
+	 *
+	 * @return The amount of monsters.
+	 */
 	public int getMonstersAlive() {
 		return this.monstersAlive;
 	}
 
+	/**
+	 * Set the amount of monsters still alive.
+	 *
+	 * @param monstersAlive The amount of monsters alive.
+	 */
 	public void setMonstersAlive(int monstersAlive) {
 		this.monstersAlive = monstersAlive;
 	}
 
+	/**
+	 * Decrease the amount of monsters alive with one.
+	 */
 	public void decreaseMonstersAlive() {
 		if (this.monstersAlive > 0) this.monstersAlive--;
 	}
 
+	/**
+	 * Setup the View.
+	 */
 	private void setupView() {
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
 		view.setBackground( this.loadImage("src/main/resources/background.jpg") );
@@ -63,6 +100,9 @@ public class FightForSalvation extends GameEngine {
 		this.size(SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
+	/**
+	 * Setup the TextObjects.
+	 */
 	private void setupTextObjects() {
 		this.essenceText = new TextObject("Aantal essence: X", FONT_SIZE);
 		this.addGameObject(this.essenceText, 0, 0);
@@ -107,10 +147,14 @@ public class FightForSalvation extends GameEngine {
 
 	@Override
 	public void update() {
-		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getTotalEssence() );
-		this.hpText.setText( "HP: " + this.getPlayer().getHp() );
+		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getEssence() );
+		this.hpText.setText( "HP: " + this.getPlayer().getHP() );
 	}
 
+	/**
+	 * Called when the inventory is closed.
+	 * Moves the game to the next level.
+	 */
 	public void closedInventory() {
 		this.level++;
 

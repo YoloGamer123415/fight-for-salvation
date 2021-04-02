@@ -7,7 +7,7 @@ import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
-import com.yologamer123415.fightforsalvation.monsters.Monster;
+import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Player extends FlammableSpriteObject implements ICollidableWithTiles {
+public class Player extends FlammableSpriteObject implements Damageable, ICollidableWithTiles {
 	private static final int DEFAULT_HP = 150;
 	private static final float SPEED_STOPPED = 0;
 	private static final float SPEED_NORMAL = 3.5f;
 
-	private final Inventory inventory;
+	private final Inventory inventory = new Inventory();
 
 	private int hp = DEFAULT_HP;
 	private int totalEssence = 0;
@@ -42,7 +42,6 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	 */
 	public Player(Sprite sprite) {
 		super(sprite, 10, 2);
-		this.inventory = new Inventory(800, 400, FightForSalvation.SCREEN_WIDTH, FightForSalvation.SCREEN_HEIGHT);
 
 		//Add default item...
 		int index = this.inventory.addItem( new BowAndArrow(this, Rarity.NORMAL) );
@@ -53,36 +52,65 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 		instance.addDashboard(this.inventory);
 	}
 
-	public int getTotalEssence() {
+	/**
+	 * Get the inventory of the Player.
+	 *
+	 * @return The inventory.
+	 */
+	public Inventory getInventory() {
+		return this.inventory;
+	}
+
+	/**
+	 * Get the essence of the Player.
+	 *
+	 * @return The essence.
+	 */
+	public int getEssence() {
 		return this.totalEssence;
 	}
 
-	public void removeEssence(int amount) {
-		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
-	}
-
+	/**
+	 * Add essence to the player.
+	 *
+	 * @param amount The essence to add.
+	 */
 	public void addEssence(int amount) {
 		if (amount >= 0) this.totalEssence += amount;
 	}
 
-	public int getHp() {
+	/**
+	 * Remove essence from the player.
+	 *
+	 * @param amount The essence to remove.
+	 */
+	public void removeEssence(int amount) {
+		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
+	}
+
+	/**
+	 * Get the HP of the player.
+	 *
+	 * @return The HP.
+	 */
+	public int getHP() {
 		return this.hp;
 	}
 
-	public void resetHp() {
+	/**
+	 * Reset the HP of the player to the default value.
+	 */
+	public void resetHP() {
 		this.hp = DEFAULT_HP;
 	}
 
+	@Override
 	public void damage(int damage) {
 		this.hp = Math.max(this.hp - damage, 0);
 
 		if (this.hp == 0) {
 			FightForSalvation.getInstance().deleteGameObject(this);
 		}
-	}
-
-	public Inventory getInventory() {
-		return this.inventory;
 	}
 
 	@Override
@@ -166,8 +194,8 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				while ( iterator.hasNext() ) {
 					GameObject go = iterator.next();
 
-					if (go instanceof Monster) {
-						((Monster) go).damage(10000);
+					if (go instanceof Damageable && !go.equals(this)) {
+						((Damageable) go).damage(10000);
 					}
 				}
 				break;
