@@ -111,17 +111,6 @@ public class FightForSalvation extends GameEngine {
 	}
 
 	/**
-	 * Override of the addGameObject()
-	 * We force it to add multiple instance of the same object
-	 *
-	 * @param gameObject The GameObject to add
-	 */
-	@Override
-	public void addGameObject(GameObject gameObject) {
-		this.getGameObjectItems().add(gameObject);
-	}
-
-	/**
 	 * Override of the mousePressed()
 	 * We fixed clicking on Dashboards
 	 */
