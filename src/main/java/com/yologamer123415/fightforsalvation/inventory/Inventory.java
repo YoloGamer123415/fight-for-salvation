@@ -23,9 +23,9 @@ public class Inventory extends Dashboard {
 	private static final int DONE_BUTTON_HEIGHT = 53;
 
 	public final LinkedList<UsableObject> items = new LinkedList<>();
-	private UsableObject selectedNormalAbility = null;
-	private UsableObject selectedRangedAbility = null;
-	private UsableObject selectedWeapon = null;
+	private UsableObject selectedNormalAbility;
+	private UsableObject selectedRangedAbility;
+	private UsableObject selectedWeapon;
 
 	private int selectedMoveItem = -1;
 
@@ -211,10 +211,10 @@ public class Inventory extends Dashboard {
 	 * @return True if above, false if not.
 	 */
 	private boolean isMouseAboveButton(int x, int y) {
-		return x > DONE_BUTTON_TOP_LEFT_X - DONE_BUTTON_WIDTH / 2 &&
-				x < DONE_BUTTON_TOP_LEFT_X + DONE_BUTTON_WIDTH / 2 &&
-				y > DONE_BUTTON_TOP_LEFT_Y - DONE_BUTTON_HEIGHT / 2 &&
-				y < DONE_BUTTON_TOP_LEFT_Y + DONE_BUTTON_HEIGHT / 2;
+		return x >= DONE_BUTTON_TOP_LEFT_X &&
+				x <= DONE_BUTTON_TOP_LEFT_X + DONE_BUTTON_WIDTH &&
+				y >= DONE_BUTTON_TOP_LEFT_Y &&
+				y <= DONE_BUTTON_TOP_LEFT_Y + DONE_BUTTON_HEIGHT;
 	}
 
 	@Override

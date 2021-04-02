@@ -25,7 +25,7 @@ public abstract class UsableObject extends SpriteObject {
 	 * @param holder The holder of the object.
 	 * @param chestRarity The rarity of the object.
 	 */
-	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
+	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity, float cooldownSec) {
 		super(sprite);
 		this.name = name;
 		this.holder = holder;
