@@ -16,9 +16,9 @@ public class EndChest extends Chest {
 	}
 
 	@Override
-	public UsableObject[] open(GameObject holder) {
-		FightForSalvation.getInstance().getInventory().show();
+	public UsableObject[] open(GameObject opener) {
+		FightForSalvation.getInstance().getPlayer().getInventory().show();
 
-		return super.open(holder);
+		return super.open(opener);
 	}
 }

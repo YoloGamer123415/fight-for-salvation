@@ -2,33 +2,34 @@ package com.yologamer123415.fightforsalvation.player;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.chests.Chest;
-import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
+import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
-import com.yologamer123415.fightforsalvation.monsters.Monster;
+import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
+import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.Tile;
-import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class Player extends FlammableSpriteObject implements ICollidableWithTiles {
+public class Player extends FlammableSpriteObject implements Damageable, ICollidableWithTiles {
 	private static final int DEFAULT_HP = 150;
 	private static final float SPEED_STOPPED = 0;
 	private static final float SPEED_NORMAL = 3.5f;
+
+	private final Inventory inventory = new Inventory();
 
 	private int hp = DEFAULT_HP;
 	private int totalEssence = 0;
@@ -41,33 +42,73 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	 */
 	public Player(Sprite sprite) {
 		super(sprite, 10, 2);
-		FightForSalvation.getInstance().setPlayer(this);
+
+		//Add default item...
+		int index = this.inventory.addItem( new BowAndArrow(this, Rarity.NORMAL) );
+		this.inventory.setSelectedWeapon(index);
+
+		final FightForSalvation instance = FightForSalvation.getInstance();
+		instance.setPlayer(this);
+		instance.addDashboard(this.inventory);
 	}
 
-	public int getTotalEssence() {
-		return totalEssence;
+	/**
+	 * Get the inventory of the Player.
+	 *
+	 * @return The inventory.
+	 */
+	public Inventory getInventory() {
+		return this.inventory;
 	}
 
-	public void removeEssence(int amount) {
-		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
+	/**
+	 * Get the essence of the Player.
+	 *
+	 * @return The essence.
+	 */
+	public int getEssence() {
+		return this.totalEssence;
 	}
 
+	/**
+	 * Add essence to the player.
+	 *
+	 * @param amount The essence to add.
+	 */
 	public void addEssence(int amount) {
 		if (amount >= 0) this.totalEssence += amount;
 	}
 
-	public int getHp() {
+	/**
+	 * Remove essence from the player.
+	 *
+	 * @param amount The essence to remove.
+	 */
+	public void removeEssence(int amount) {
+		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
+	}
+
+	/**
+	 * Get the HP of the player.
+	 *
+	 * @return The HP.
+	 */
+	public int getHP() {
 		return this.hp;
 	}
 
-	public void resetHp() {
+	/**
+	 * Reset the HP of the player to the default value.
+	 */
+	public void resetHP() {
 		this.hp = DEFAULT_HP;
 	}
 
+	@Override
 	public void damage(int damage) {
 		this.hp = Math.max(this.hp - damage, 0);
 
-		if (hp == 0) {
+		if (this.hp == 0) {
 			FightForSalvation.getInstance().deleteGameObject(this);
 		}
 	}
@@ -83,13 +124,12 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 	@Override
 	public void mousePressed(int x, int y, int button) {
 		if (button == FightForSalvation.LEFT || button == FightForSalvation.RIGHT) {
-			float playerX = this.x + ( MapGenerator.TILESIZE / 2f );
-			float playerY = this.y + ( MapGenerator.TILESIZE / 2f );
+			float playerX = this.x + LocationHelper.getHalfTileSize();
+			float playerY = this.y + LocationHelper.getHalfTileSize();
 
-			Inventory inventory = FightForSalvation.getInstance().getInventory();
 			UsableObject usable = button == FightForSalvation.LEFT
-					? inventory.getSelectedWeapon()
-					: inventory.getSelectedRangedAbility();
+					? this.inventory.getSelectedWeapon()
+					: this.inventory.getSelectedRangedAbility();
 
 			if ( usable != null && !usable.isInCooldown() ) {
 				Vector vector = Vector.generateVector(playerX, playerY, x, y);
@@ -97,22 +137,20 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				usable.use(vector);
 			}
 		} else if (button == FightForSalvation.CENTER) {
-			final FightForSalvation instance = FightForSalvation.getInstance();
-			final double halfTileSize = MapGenerator.TILESIZE / 2.0;
-			Tile tile = instance.getTileMap().getTileOnPosition(x, y);
+			Tile tile = FightForSalvation.getInstance().getTileMap().getTileOnPosition(x, y);
 
 			if (
 					LocationHelper.calculateDistanceBetweenTwoPoints(
 							x, y,
-							this.x + halfTileSize, this.y + halfTileSize
-					) <= halfTileSize * 3
+							this.x + LocationHelper.getHalfTileSize(), this.y + LocationHelper.getHalfTileSize()
+					) <= LocationHelper.getHalfTileSize() * 3
 					&& tile instanceof Chest
 					&& ( (Chest) tile ).canBeOpened()
 			) {
 				UsableObject[] items = ( (Chest) tile ).open(this);
 
 				if (items != null) {
-					for (UsableObject item : items) instance.getInventory().addItem(item);
+					for (UsableObject item : items) this.inventory.addItem(item);
 				}
 			}
 		}
@@ -138,11 +176,11 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				this.setySpeed(SPEED_STOPPED);
 				break;
 			case ' ':
-				FightForSalvation instance = FightForSalvation.getInstance();
-				Inventory inventory = instance.getInventory();
-				UsableObject usable = inventory.getSelectedNormalAbility();
+				UsableObject usable = this.inventory.getSelectedNormalAbility();
 
 				if ( usable != null && !usable.isInCooldown() ) {
+					FightForSalvation instance = FightForSalvation.getInstance();
+
 					Vector vector = Vector.generateVector(
 							this.x, this.y,
 							instance.mouseX, instance.mouseY
@@ -157,8 +195,8 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				while ( iterator.hasNext() ) {
 					GameObject go = iterator.next();
 
-					if (go instanceof Monster) {
-						((Monster) go).damage(10000);
+					if (go instanceof Damageable && !go.equals(this)) {
+						((Damageable) go).damage(10000);
 					}
 				}
 				break;
@@ -184,14 +222,5 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				CollidingHelper.handleCollisionStop(this, ct.getCollisionSide(), vector.x, vector.y);
 			}
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "Player{" +
-				"totalEssence=" + totalEssence +
-				", x=" + x +
-				", y=" + y +
-				'}';
 	}
 }

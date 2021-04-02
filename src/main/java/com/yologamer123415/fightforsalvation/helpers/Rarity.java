@@ -13,15 +13,32 @@ public enum Rarity {
 	private final int chance;
 	private final Color color;
 
+	/**
+	 * Construct a new Rarity.
+	 *
+	 * @param chance The chance to get this Rarity.
+	 * @param color The color of the Rarity.
+	 */
 	Rarity(int chance, Color color) {
 		this.chance = chance;
 		this.color = color;
 	}
 
+	/**
+	 * Get a random rarity.
+	 *
+	 * @return The random rarity.
+	 */
 	public static Rarity getRandomRarity() {
 		return getRandomRarity(Rarity.COMMON);
 	}
 
+	/**
+	 * Get a random rarity with a from rarity.
+	 *
+	 * @param from The from rarity.
+	 * @return The random rarity.
+	 */
 	public static Rarity getRandomRarity(Rarity from) {
 		final Rarity[] values = Rarity.values();
 		final double modifier = from.getCalculationValue() / 2.0 + 0.5;
@@ -42,10 +59,20 @@ public enum Rarity {
 		return Rarity.COMMON;
 	}
 
+	/**
+	 * Get the color of this rarity.
+	 *
+	 * @return The color.
+	 */
 	public int getColor() {
 		return this.color.getRGB();
 	}
 
+	/**
+	 * Get the calculation value.
+	 *
+	 * @return The calculation value.
+	 */
 	public int getCalculationValue() {
 		Rarity[] rarities = Rarity.values();
 		for (int i = 0; i < rarities.length; i++) {

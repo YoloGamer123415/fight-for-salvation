@@ -20,6 +20,15 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 	private boolean shouldDoDamage = false;
 	private boolean isRunning;
 
+	/**
+	 * Construct a new Flammable SpriteObject.
+	 * The left part of the image is default, the right part of the image is fire.
+	 *
+	 * @param sprite The sprite to use.
+	 * @param duration The duration of the fire.
+	 * @param tickTime The ticktime of the fire.
+	 *                    Firstly damage is off, after tickTime damage is on, then off, ...
+	 */
 	public FlammableSpriteObject(Sprite sprite, int duration, int tickTime) {
 		super(sprite, 2);
 
@@ -30,6 +39,9 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 		this.tickTimeAlarm.addTarget(this);
 	}
 
+	/**
+	 * Start burning of the object.
+	 */
 	public final void startBurning() {
 		burnAlarm.start();
 		isRunning = true;
@@ -37,6 +49,9 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 		setCurrentFrameIndex(1);
 	}
 
+	/**
+	 * Forcly stop burning of the object.
+	 */
 	public final void stopBurning() {
 		burnAlarm.stop();
 		isRunning = false;
@@ -49,10 +64,18 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 		shouldDoDamage = false;
 	}
 
+	/**
+	 * Called after ticktime.
+	 */
 	private void handler() {
 		shouldDoDamage = true;
 	}
 
+	/**
+	 * Check if the object should do damage.
+	 *
+	 * @return True if it should, false if not.
+	 */
 	public boolean shouldDoDamage() {
 		return shouldDoDamage;
 	}

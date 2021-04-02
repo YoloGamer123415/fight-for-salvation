@@ -5,6 +5,7 @@ import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.monsters.Monster;
+import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.objects.GameObject;
@@ -13,10 +14,18 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class Machete extends Weapon {
+	private static final float COOLDOWN = 1.0F;
+
 	private final int damage;
 
+	/**
+	 * Construct a new Machete.
+	 *
+	 * @param holder The holder of the Machete.
+	 * @param chestRarity The rarity of the Machete.
+	 */
 	public Machete(GameObject holder, Rarity chestRarity) {
-		super("Machete", new Sprite("src/main/resources/usables/weapons/normal/machete.png"), holder, chestRarity, 1.0F);
+		super("Machete", new Sprite("src/main/resources/usables/weapons/normal/machete.png"), holder, chestRarity, COOLDOWN);
 
 		this.damage = (int) (this.rarity.getCalculationValue() * 2.2);
 	}
@@ -27,8 +36,9 @@ public class Machete extends Weapon {
 				.findTargetsWithinRange( MapGenerator.TILESIZE, this.holder );
 
 		for (GameObject go : monstersWithinRange) {
-			if (go instanceof Player) ( (Player) go ).damage(this.damage);
-			else if (go instanceof Monster) ( (Monster) go ).damage(this.damage);
+			if (go instanceof Damageable) {
+				((Damageable) go).damage(this.damage);
+			}
 		}
 	}
 }

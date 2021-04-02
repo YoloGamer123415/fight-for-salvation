@@ -1,12 +1,7 @@
 package com.yologamer123415.fightforsalvation;
 
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
-import com.yologamer123415.fightforsalvation.helpers.Rarity;
-import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
-import com.yologamer123415.fightforsalvation.usables.abilities.normal.DashAbility;
-import com.yologamer123415.fightforsalvation.usables.abilities.ranged.FirePotion;
-import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
@@ -20,6 +15,7 @@ import java.util.Iterator;
 
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
+
 	public static final int FONT_SIZE = 16;
 	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
@@ -28,60 +24,90 @@ public class FightForSalvation extends GameEngine {
 	private TextObject hpText;
 	private int level = 0;
 	private Player player;
-	private Inventory inventory;
 	private int monstersAlive = 0;
 
+	/**
+	 * Start the game.
+	 * (Called by JVM)
+	 *
+	 * @param args The args of the start command.
+	 */
 	public static void main(String[] args) {
 		instance = new FightForSalvation();
 		runSketch(new String[]{"Fight for Salvation"}, instance);
 	}
 
+	/**
+	 * Get the instance of the game.
+	 *
+	 * @return The instance.
+	 */
 	public static FightForSalvation getInstance() {
 		return instance;
 	}
 
-	public Inventory getInventory() {
-		return this.inventory;
-	}
-
+	/**
+	 * Get the player.
+	 *
+	 * @return The player.
+	 */
 	public Player getPlayer() {
 		return this.player;
 	}
 
+	/**
+	 * Set the player.
+	 *
+	 * @param player The player.
+	 */
 	public void setPlayer(Player player) {
 		if (this.player == null) this.player = player;
 	}
 
+	/**
+	 * Get the amount of monsters still alive.
+	 *
+	 * @return The amount of monsters.
+	 */
 	public int getMonstersAlive() {
-		return monstersAlive;
+		return this.monstersAlive;
 	}
 
+	/**
+	 * Set the amount of monsters still alive.
+	 *
+	 * @param monstersAlive The amount of monsters alive.
+	 */
 	public void setMonstersAlive(int monstersAlive) {
 		this.monstersAlive = monstersAlive;
 	}
 
+	/**
+	 * Decrease the amount of monsters alive with one.
+	 */
 	public void decreaseMonstersAlive() {
 		if (this.monstersAlive > 0) this.monstersAlive--;
 	}
 
+	/**
+	 * Setup the View.
+	 */
 	private void setupView() {
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
-		view.setBackground(loadImage("src/main/resources/background.jpg"));
+		view.setBackground( this.loadImage("src/main/resources/background.jpg") );
 
-		setView(view);
-		size(SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.setView(view);
+		this.size(SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
+	/**
+	 * Setup the TextObjects.
+	 */
 	private void setupTextObjects() {
 		this.essenceText = new TextObject("Aantal essence: X", FONT_SIZE);
 		this.addGameObject(this.essenceText, 0, 0);
 		this.hpText = new TextObject("HP: XXX", FONT_SIZE);
 		this.addGameObject( this.hpText, 0, (float) (SCREEN_HEIGHT - FONT_SIZE * 1.25) );
-	}
-
-	private void setupInventory() {
-		this.inventory = new Inventory(800, 400, SCREEN_WIDTH, SCREEN_HEIGHT);
-		this.addDashboard(this.inventory);
 	}
 
 	/**
@@ -104,7 +130,7 @@ public class FightForSalvation extends GameEngine {
 		super.mousePressed();
 
 		//Implemented mouseclick for Dashboards
-		PVector location = calculateRelativeMouseLocation(this.mouseX, this.mouseY);
+		PVector location = this.calculateRelativeMouseLocation(this.mouseX, this.mouseY);
 		for ( Dashboard db : this.getDashboards() ) {
 			( (IMouseInput) db ).mousePressed( (int) location.x, (int) location.y, this.mouseButton );
 		}
@@ -117,24 +143,18 @@ public class FightForSalvation extends GameEngine {
 		this.setTileMap(MapGenerator.generateTilemapFromFile(this.level));
 		this.setupView();
 		this.setupTextObjects();
-		this.setupInventory();
-
-		int weaponIndex = this.inventory.addItem( new Gun(this.player, Rarity.EPIC) );
-		this.inventory.setSelectedWeapon(weaponIndex);
-
-		int normalAbilityIndex = this.inventory.addItem( new DashAbility(this.player, Rarity.COMMON) );
-		this.inventory.setSelectedNormalAbility(normalAbilityIndex);
-
-		int rangedAbilityIndex = this.inventory.addItem( new FirePotion(this.player, Rarity.COMMON) );
-		this.inventory.setSelectedRangedAbility(rangedAbilityIndex);
 	}
 
 	@Override
 	public void update() {
-		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getTotalEssence() );
-		this.hpText.setText( "HP: " + this.getPlayer().getHp() );
+		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getEssence() );
+		this.hpText.setText( "HP: " + this.getPlayer().getHP() );
 	}
 
+	/**
+	 * Called when the inventory is closed.
+	 * Moves the game to the next level.
+	 */
 	public void closedInventory() {
 		this.level++;
 

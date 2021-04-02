@@ -11,14 +11,31 @@ public class Cooldown implements IAlarmListener {
 
 	private boolean inCooldown;
 
+	/**
+	 * Construct a new Cooldown.
+	 *
+	 * @param sec The seconds of the cooldown.
+	 */
 	public Cooldown(float sec) {
 		this.alarm = new Alarm(alarmName, sec);
 		this.alarm.addTarget(this);
 	}
 
+	/**
+	 * Start the cooldown.
+	 */
 	public void start() {
 		this.alarm.start();
 		this.inCooldown = true;
+	}
+
+	/**
+	 * Check if the cooldown is active.
+	 *
+	 * @return True if active, false if not.
+	 */
+	public boolean isInCooldown() {
+		return this.inCooldown;
 	}
 
 	@Override
@@ -26,9 +43,5 @@ public class Cooldown implements IAlarmListener {
 		if (!this.alarmName.equals(s)) return;
 
 		this.inCooldown = false;
-	}
-
-	public boolean isInCooldown() {
-		return inCooldown;
 	}
 }

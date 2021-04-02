@@ -6,6 +6,7 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
+import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.player.Player;
 import com.yologamer123415.fightforsalvation.tyles.Border;
@@ -19,7 +20,7 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 import java.util.Random;
 
-public class Monster extends FlammableSpriteObject implements ICollidableWithTiles {
+public class Monster extends FlammableSpriteObject implements Damageable, ICollidableWithTiles {
 	protected final Rarity rarity;
 	protected Weapon weapon;
 
@@ -29,6 +30,12 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 
 	private int hp;
 
+	/**
+	 * Construct a new Monster.
+	 *
+	 * @param sprite The sprite of the monster.
+	 * @param hp The default HP of the monster.
+	 */
 	public Monster(Sprite sprite, int hp) {
 		super(sprite, 10, 2);
 		this.hp = hp;
@@ -47,10 +54,9 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	}
 
 	/**
-	 * SOURCE: <a href="https://stackoverflow.com/a/7228322">StackOverflow: Generate random number between two numbers
-	 * in JavaScript</a>
+	 * Calculate the total essence randomly.
 	 *
-	 * @return The random total essence
+	 * @return The total essence.
 	 */
 	protected int calculateTotalEssence() {
 		int min = this.rarity.getCalculationValue() - 1;
@@ -59,6 +65,7 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 		return (int) ( Math.random() * (max - min + 1) + min );
 	}
 
+	@Override
 	public void damage(int damage) {
 		this.hp = Math.max(this.hp - damage, 0);
 
@@ -99,19 +106,17 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 			if (go instanceof FlammableSpriteObject && ((FlammableSpriteObject) go).shouldDoDamage()) {
 				((FlammableSpriteObject) go).startBurning();
 
-				if (go instanceof Monster) {
-					((Monster) go).damage(FlammableSpriteObject.FIREDAMAGE);
-				} else if (go instanceof Player) {
-					((Player) go).damage(FlammableSpriteObject.FIREDAMAGE);
+				if (go instanceof Damageable) {
+					((Damageable) go).damage(FIREDAMAGE);
 				}
 
 				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
 				if (side == null) continue;
-				handleMove(side);
+				handleBounce(side);
 			} else if (go.getClass().getPackage().getName().endsWith("obstacles") || go instanceof Player) {
 				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
 				if (side == null) continue;
-				handleMove(side);
+				handleBounce(side);
 			}
 		}
 	}
@@ -120,12 +125,17 @@ public class Monster extends FlammableSpriteObject implements ICollidableWithTil
 	public void tileCollisionOccurred(List<CollidedTile> list) {
 		for (CollidedTile ct : list) {
 			if (ct.getTile() instanceof Border || ct.getTile() instanceof Chest) {
-				handleMove(ct.getCollisionSide());
+				handleBounce(ct.getCollisionSide());
 			}
 		}
 	}
 
-	private void handleMove(CollisionSide side) {
+	/**
+	 * Handle movement of the monster, on collision.
+	 *
+	 * @param side The side of the collision.
+	 */
+	private void handleBounce(CollisionSide side) {
 		if (movingX) {
 			if (movingRight && side == CollisionSide.LEFT) {
 				movingRight = false;

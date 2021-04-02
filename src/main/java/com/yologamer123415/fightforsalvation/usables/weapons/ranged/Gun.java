@@ -13,9 +13,17 @@ import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.List;
 
-public class Gun extends Weapon implements ICollidableWithGameObjects {
+public class Gun extends Weapon {
+	private static final float COOLDOWN = 0.4F;
+
+	/**
+	 * Construct a new Gun.
+	 *
+	 * @param holder The holder of the Gun.
+	 * @param chestRarity The rarity of the Gun.
+	 */
 	public Gun(GameObject holder, Rarity chestRarity) {
-		super("Gun", new Sprite("src/main/resources/usables/weapons/ranged/Revolver.png"), holder, chestRarity, 0.5F);
+		super("Gun", new Sprite("src/main/resources/usables/weapons/ranged/Revolver.png"), holder, chestRarity, COOLDOWN);
 	}
 
 	@Override
@@ -23,10 +31,5 @@ public class Gun extends Weapon implements ICollidableWithGameObjects {
 		Movable arrowMovable = new Bullet(mousePos, this.holder);
 		FightForSalvation.getInstance().addGameObject(arrowMovable);
 		arrowMovable.startMoving();
-	}
-
-	@Override
-	public void gameObjectCollisionOccurred(List<GameObject> list) {
-
 	}
 }

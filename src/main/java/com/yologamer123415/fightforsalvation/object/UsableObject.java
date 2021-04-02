@@ -17,7 +17,15 @@ public abstract class UsableObject extends SpriteObject {
 
 	private final Cooldown cooldown;
 
-	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity, float cooldownSec) {
+	/**
+	 * Construct a new UsableObject.
+	 *
+	 * @param name The name of the object.
+	 * @param sprite The sprite of the object.
+	 * @param holder The holder of the object.
+	 * @param chestRarity The rarity of the object.
+	 */
+	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
 		super(sprite);
 		this.name = name;
 		this.holder = holder;
@@ -25,14 +33,29 @@ public abstract class UsableObject extends SpriteObject {
 		this.cooldown = new Cooldown(cooldownSec);
 	}
 
+	/**
+	 * Get the name of the object.
+	 *
+	 * @return The name.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Get the rarity of the object.
+	 *
+	 * @return The rarity.
+	 */
 	public Rarity getRarity() {
 		return this.rarity;
 	}
 
+	/**
+	 * Use this object.
+	 *
+	 * @param mousePos The position of the mouse.
+	 */
 	public abstract void use(Vector mousePos);
 
 	public boolean isInCooldown() {
