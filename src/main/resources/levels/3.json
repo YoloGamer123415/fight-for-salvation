@@ -1,0 +1,18 @@
+{
+  "totalChests": 3,
+  "totalMonsters": 4,
+  "map": [
+    "####################",
+    "#^                 #",
+    "#  cSSSSSSS  SSSS  #",
+    "#  SS@ c @s  Sc s  #",
+    "#   S     s  S  s@ #",
+    "#   S           SSS#",
+    "#  SSSSsSSS  SSSSc #",
+    "#   S              #",
+    "#  @s    c   S    @#",
+    "#   s  SSSSSSSSSsSS#",
+    "# c S      @@     C#",
+    "####################"
+  ]
+}
