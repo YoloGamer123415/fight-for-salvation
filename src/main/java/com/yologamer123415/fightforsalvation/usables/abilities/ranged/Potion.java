@@ -6,6 +6,6 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Potion extends RangedAbility {
 	public Potion(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
-		super(name, sprite, holder, chestRarity);
+		super(name, sprite, holder, chestRarity, 10f);
 	}
 }

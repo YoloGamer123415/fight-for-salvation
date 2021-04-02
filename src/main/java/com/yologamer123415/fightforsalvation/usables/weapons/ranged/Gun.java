@@ -20,8 +20,6 @@ public class Gun extends Weapon implements ICollidableWithGameObjects {
 
 	@Override
 	public void use(Vector mousePos) {
-		if (isInCooldown()) return;
-
 		Movable arrowMovable = new Bullet(mousePos, this.holder);
 		FightForSalvation.getInstance().addGameObject(arrowMovable);
 		arrowMovable.startMoving();

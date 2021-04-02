@@ -11,8 +11,8 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class RangedAbility extends UsableObject {
-	public RangedAbility(String name, Sprite sprite, GameObject shooter, Rarity chestRarity) {
-		super(name, sprite, shooter, chestRarity);
+	public RangedAbility(String name, Sprite sprite, GameObject shooter, Rarity chestRarity, float cooldownSec) {
+		super(name, sprite, shooter, chestRarity, cooldownSec);
 	}
 
 	public abstract Movable getMovable(Vector mousePos);

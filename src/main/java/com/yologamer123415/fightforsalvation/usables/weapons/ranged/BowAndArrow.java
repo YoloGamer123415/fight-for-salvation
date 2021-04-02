@@ -19,8 +19,6 @@ public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
 
 	@Override
 	public void use(Vector mousePos) {
-		if (isInCooldown()) return;
-
 		Movable arrowMovable = new Arrow(mousePos, this.holder);
 		FightForSalvation.getInstance().addGameObject(arrowMovable);
 		arrowMovable.startMoving();

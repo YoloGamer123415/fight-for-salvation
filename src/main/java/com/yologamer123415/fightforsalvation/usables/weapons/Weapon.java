@@ -8,18 +8,9 @@ import nl.han.ica.oopg.objects.Sprite;
 public abstract class Weapon extends UsableObject {
 	protected GameObject holder;
 
-	private final Cooldown cooldown;
-
 	public Weapon(String name, Sprite sprite, GameObject holder, Rarity chestRarity, float cooldownSec) {
-		super(name, sprite, holder, chestRarity);
+		super(name, sprite, holder, chestRarity, cooldownSec);
 		this.holder = holder;
-		this.cooldown = new Cooldown(cooldownSec);
-	}
-
-	public boolean isInCooldown() {
-		if (this.cooldown.isInCooldown()) return true;
-		this.cooldown.start();
-		return false;
 	}
 
 	@Override

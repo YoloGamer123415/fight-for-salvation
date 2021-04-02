@@ -91,7 +91,7 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 					? inventory.getSelectedWeapon()
 					: inventory.getSelectedRangedAbility();
 
-			if (usable != null) {
+			if ( usable != null && !usable.isInCooldown() ) {
 				Vector vector = Vector.generateVector(playerX, playerY, x, y);
 
 				usable.use(vector);
@@ -142,7 +142,7 @@ public class Player extends FlammableSpriteObject implements ICollidableWithTile
 				Inventory inventory = instance.getInventory();
 				UsableObject usable = inventory.getSelectedNormalAbility();
 
-				if (usable != null) {
+				if ( usable != null && !usable.isInCooldown() ) {
 					Vector vector = Vector.generateVector(
 							this.x, this.y,
 							instance.mouseX, instance.mouseY

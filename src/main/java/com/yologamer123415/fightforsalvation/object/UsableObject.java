@@ -4,10 +4,10 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
+import com.yologamer123415.fightforsalvation.helpers.Cooldown;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.SpriteObject;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public abstract class UsableObject extends SpriteObject {
@@ -15,11 +15,14 @@ public abstract class UsableObject extends SpriteObject {
 	protected final Rarity rarity;
 	protected GameObject holder;
 
-	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
+	private final Cooldown cooldown;
+
+	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity, float cooldownSec) {
 		super(sprite);
 		this.name = name;
 		this.holder = holder;
 		this.rarity = Rarity.getRandomRarity(chestRarity);
+		this.cooldown = new Cooldown(cooldownSec);
 	}
 
 	public String getName() {
@@ -32,11 +35,15 @@ public abstract class UsableObject extends SpriteObject {
 
 	public abstract void use(Vector mousePos);
 
+	public boolean isInCooldown() {
+		if ( this.cooldown.isInCooldown() ) return true;
+		this.cooldown.start();
+		return false;
+	}
+
 	@Override
 	public void draw(PGraphics g) {
 		super.draw(g);
-
-//		System.out.println(this.rarity.getColor());
 
 		g.fill(0x000000, 0);
 		g.stroke( this.rarity.getColor() );
