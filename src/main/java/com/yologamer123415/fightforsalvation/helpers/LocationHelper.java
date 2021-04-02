@@ -7,6 +7,7 @@ import com.yologamer123415.fightforsalvation.player.Player;
 import nl.han.ica.oopg.objects.GameObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -48,21 +49,23 @@ public class LocationHelper {
 	 * @return A list of found targets.
 	 */
 	public static List<GameObject> findTargetsWithinRange(double range, GameObject aroundObject) {
+		List<GameObject> hits = new ArrayList<>();
+
 		if (aroundObject instanceof Monster || aroundObject instanceof Player) {
-			Vector<GameObject> gameObjects = FightForSalvation.getInstance().getGameObjectItems();
-			List<GameObject> hits = new ArrayList<>();
 			Class<? extends GameObject> target = aroundObject instanceof Player
 					? Monster.class
 					: Player.class;
 
-			for (GameObject ob : gameObjects)
+			Iterator<GameObject> iter = new ArrayList<>( FightForSalvation.getInstance().getGameObjectItems() ).iterator();
+			while (iter.hasNext()) {
+				GameObject ob = iter.next();
+
 				if ( target.isInstance(ob) && ob.getDistanceFrom(aroundObject) <= range )
 					hits.add( ob );
-
-			return hits;
+			}
 		}
 
-		return new ArrayList<>();
+		return hits;
 	}
 
 	/**
