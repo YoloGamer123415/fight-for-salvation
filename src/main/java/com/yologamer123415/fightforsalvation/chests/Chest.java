@@ -11,9 +11,9 @@ import nl.han.ica.oopg.tile.TileMap;
 import processing.core.PVector;
 
 public class Chest extends Tile {
-	private static final int ITEM_COUNT = 2;
+	private static final int ITEM_COUNT = 1;
 
-	private final int cost;
+	private int cost;
 	protected final Rarity rarity;
 
 	/**
@@ -44,6 +44,10 @@ public class Chest extends Tile {
 	 */
 	public boolean canBeOpened() {
 		return FightForSalvation.getInstance().getPlayer().getEssence() >= this.cost;
+	}
+
+	protected void setCost(int cost) {
+		this.cost = cost;
 	}
 
 	/**

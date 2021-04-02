@@ -30,13 +30,13 @@ public class ItemHelper {
 			WeaknessPotion.class,
 			// normal abilities
 			DashAbility.class,
-//			InvicibleAbility.class,
-//			RegenerationAbility.class,
-//			StrengthAbility.class,
+			InvicibleAbility.class,
+			RegenerationAbility.class,
+			StrengthAbility.class,
 			// ranged weapons
 			Gun.class,
 			BowAndArrow.class,
-			// normal weapons
+//			 normal weapons
 			Knife.class,
 			Machete.class,
 	};
