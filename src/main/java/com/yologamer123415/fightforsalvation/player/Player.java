@@ -11,6 +11,7 @@ import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
+import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
@@ -44,7 +45,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		super(sprite, 10, 2);
 
 		//Add default item...
-		int index = this.inventory.addItem( new BowAndArrow(this, Rarity.NORMAL) );
+		int index = this.inventory.addItem( new Knife(this, Rarity.COMMON) );
 		this.inventory.setSelectedWeapon(index);
 
 		final FightForSalvation instance = FightForSalvation.getInstance();
