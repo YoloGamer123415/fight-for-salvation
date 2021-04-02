@@ -50,7 +50,7 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 			this.movingUp = rand.nextBoolean();
 		}
 
-		setSpeed(rand.nextInt(movingX ? 4 : 3) + 1);
+		setSpeed( rand.nextInt(movingX ? 4 : 3) + 1 );
 	}
 
 	/**

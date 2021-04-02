@@ -237,7 +237,7 @@ public class Inventory extends Dashboard {
 
 			if ( this.isMouseAboveButton(x, y) ) {
 				this.close();
-			} else if ( this.selectedMoveItem > -1 && x >= startX && y >= startY && y <= startY + height * 3 ) { // click was on one of the selected items
+			} else if ( this.selectedMoveItem > -1 && x >= startX && y >= startY && y <= startY + height ) { // click was on one of the selected items
 				int itemPos = (int) LocationHelper.screenToTilePixel( (float) (y - startY) );
 
 				// 0 is the first item, 1 is the second, etc
