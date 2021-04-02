@@ -165,7 +165,17 @@ public class FightForSalvation extends GameEngine {
 			iter.remove();
 		}
 
-		TileMap newTileMap = MapGenerator.generateTilemapFromFile(this.level);
+		TileMap newTileMap;
+		try {
+			newTileMap = MapGenerator.generateTilemapFromFile(this.level);
+		} catch (IllegalArgumentException ex) {
+			ex.printStackTrace();
+
+			//TODO Move to end screen
+			this.stop();
+
+			return;
+		}
 		this.setTileMap(newTileMap);
 	}
 }
