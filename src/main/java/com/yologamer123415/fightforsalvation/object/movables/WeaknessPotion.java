@@ -14,7 +14,7 @@ public class WeaknessPotion extends Potion {
 	 * @param shooter The shooter of the Weakness potion.
 	 */
 	public WeaknessPotion(Vector path, GameObject shooter) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
+		super( new Sprite("src/main/resources/usables/abilities/ranged/weakness_potion.png"), path, shooter );
 	}
 
 	@Override

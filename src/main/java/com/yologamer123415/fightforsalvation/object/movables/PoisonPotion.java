@@ -14,7 +14,7 @@ public class PoisonPotion extends Potion {
 	 * @param shooter The shooter of the Poison potion.
 	 */
 	public PoisonPotion(Vector path, GameObject shooter) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
+		super( new Sprite("src/main/resources/usables/abilities/ranged/poison_potion.png"), path, shooter );
 	}
 
 	@Override

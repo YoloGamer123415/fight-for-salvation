@@ -15,7 +15,7 @@ public class FirePotion extends Potion {
 	 * @param shooter The shooter of the potion.
 	 */
 	public FirePotion(Vector path, GameObject shooter) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/rood.png"), path, shooter );
+		super( new Sprite("src/main/resources/usables/abilities/ranged/fire_potion.png"), path, shooter );
 	}
 
 	@Override

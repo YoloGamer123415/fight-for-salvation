@@ -9,7 +9,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public class WeaknessPotion extends Potion {
 	public WeaknessPotion(GameObject holder, Rarity chestRarity) {
-		super("Weakness Potion", new Sprite("src/main/resources/usables/abilities/ranged/paars.png"), holder, chestRarity);
+		super("Weakness Potion", new Sprite("src/main/resources/usables/abilities/ranged/weakness_potion.png"), holder, chestRarity);
 	}
 
 	@Override
