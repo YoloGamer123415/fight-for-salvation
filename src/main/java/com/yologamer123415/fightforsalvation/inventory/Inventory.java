@@ -17,6 +17,8 @@ public class Inventory extends Dashboard {
 	private static final int ITEM_Y_OFFSET = MapGenerator.TILESIZE;
 	private static final int MAX_ITEMS_PER_ROW = (FightForSalvation.SCREEN_WIDTH - 2 * MapGenerator.TILESIZE) / MapGenerator.TILESIZE;
 	public static final int ITEM_STROKE_WIDTH = 2;
+	public static final int DONE_BUTTON_TOP_LEFT_X = 728;
+	public static final int DONE_BUTTON_TOP_LEFT_Y = 523;
 
 	public final List<UsableObject> items = new LinkedList<>();
 	private UsableObject selectedNormalAbility = null;
@@ -164,7 +166,7 @@ public class Inventory extends Dashboard {
 			final int itemIndex = itemY * MAX_ITEMS_PER_ROW + itemX;
 
 			// TODO: Check real position of "done" button
-			if (x >= 728 && y >= 523) {
+			if (x >= DONE_BUTTON_TOP_LEFT_X && y >= DONE_BUTTON_TOP_LEFT_Y) {
 				this.close();
 			} else if ( this.selectedMoveItem > -1 && x >= startX && y >= startY && y <= startY + height * 3 ) { // click was on one of the selected items
 				int itemPos = (int) LocationHelper.screenToTilePixel( (float) (y - startY) );
