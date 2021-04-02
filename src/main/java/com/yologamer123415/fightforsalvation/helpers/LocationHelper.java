@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class LocationHelper {
+	public static float getHalfTileSize() {
+		return (float) (MapGenerator.TILESIZE / 2.0);
+	}
+
 	public static float screenToTilePixel(float pixelLocation) {
 		return pixelLocation / MapGenerator.TILESIZE;
 	}

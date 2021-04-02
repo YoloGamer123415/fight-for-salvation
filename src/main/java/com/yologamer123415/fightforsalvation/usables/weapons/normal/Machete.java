@@ -13,10 +13,12 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class Machete extends Weapon {
+	private static final float COOLDOWN = 1.0F;
+
 	private final int damage;
 
 	public Machete(GameObject holder, Rarity chestRarity) {
-		super("Machete", new Sprite("src/main/resources/usables/weapons/normal/machete.png"), holder, chestRarity, 1.0F);
+		super("Machete", new Sprite("src/main/resources/usables/weapons/normal/machete.png"), holder, chestRarity, COOLDOWN);
 
 		this.damage = (int) (this.rarity.getCalculationValue() * 2.2);
 	}

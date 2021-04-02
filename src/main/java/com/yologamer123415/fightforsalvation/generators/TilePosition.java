@@ -16,12 +16,4 @@ public class TilePosition {
 	public float getY() {
 		return y;
 	}
-
-	@Override
-	public String toString() {
-		return "TilePosition{" +
-				"x=" + x +
-				", y=" + y +
-				'}';
-	}
 }

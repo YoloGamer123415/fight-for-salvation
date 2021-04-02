@@ -7,6 +7,6 @@ public class NormalChest extends Chest {
 		super(sprite);
 
 		//Overwrite sprite with sprite for rarity.
-		setSprite(new Sprite("src/main/resources/tiletypes/special/NormalChest_" + rarity.name() + ".png"));
+		this.setSprite(new Sprite("src/main/resources/tiletypes/special/NormalChest_" + rarity.name() + ".png"));
 	}
 }

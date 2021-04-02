@@ -29,6 +29,6 @@ public class Cooldown implements IAlarmListener {
 	}
 
 	public boolean isInCooldown() {
-		return inCooldown;
+		return this.inCooldown;
 	}
 }

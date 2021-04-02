@@ -1,10 +1,7 @@
 package com.yologamer123415.fightforsalvation;
 
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
-import com.yologamer123415.fightforsalvation.helpers.Rarity;
-import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
-import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
@@ -18,6 +15,7 @@ import java.util.Iterator;
 
 public class FightForSalvation extends GameEngine {
 	private static FightForSalvation instance;
+
 	public static final int FONT_SIZE = 16;
 	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
@@ -26,7 +24,6 @@ public class FightForSalvation extends GameEngine {
 	private TextObject hpText;
 	private int level = 0;
 	private Player player;
-	private Inventory inventory;
 	private int monstersAlive = 0;
 
 	public static void main(String[] args) {
@@ -38,10 +35,6 @@ public class FightForSalvation extends GameEngine {
 		return instance;
 	}
 
-	public Inventory getInventory() {
-		return this.inventory;
-	}
-
 	public Player getPlayer() {
 		return this.player;
 	}
@@ -51,7 +44,7 @@ public class FightForSalvation extends GameEngine {
 	}
 
 	public int getMonstersAlive() {
-		return monstersAlive;
+		return this.monstersAlive;
 	}
 
 	public void setMonstersAlive(int monstersAlive) {
@@ -64,10 +57,10 @@ public class FightForSalvation extends GameEngine {
 
 	private void setupView() {
 		View view = new View(SCREEN_WIDTH, SCREEN_HEIGHT);
-		view.setBackground(loadImage("src/main/resources/background.jpg"));
+		view.setBackground( this.loadImage("src/main/resources/background.jpg") );
 
-		setView(view);
-		size(SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.setView(view);
+		this.size(SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
 	private void setupTextObjects() {
@@ -75,11 +68,6 @@ public class FightForSalvation extends GameEngine {
 		this.addGameObject(this.essenceText, 0, 0);
 		this.hpText = new TextObject("HP: XXX", FONT_SIZE);
 		this.addGameObject( this.hpText, 0, (float) (SCREEN_HEIGHT - FONT_SIZE * 1.25) );
-	}
-
-	private void setupInventory() {
-		this.inventory = new Inventory(800, 400, SCREEN_WIDTH, SCREEN_HEIGHT);
-		this.addDashboard(this.inventory);
 	}
 
 	/**
@@ -102,7 +90,7 @@ public class FightForSalvation extends GameEngine {
 		super.mousePressed();
 
 		//Implemented mouseclick for Dashboards
-		PVector location = calculateRelativeMouseLocation(this.mouseX, this.mouseY);
+		PVector location = this.calculateRelativeMouseLocation(this.mouseX, this.mouseY);
 		for ( Dashboard db : this.getDashboards() ) {
 			( (IMouseInput) db ).mousePressed( (int) location.x, (int) location.y, this.mouseButton );
 		}
@@ -115,10 +103,6 @@ public class FightForSalvation extends GameEngine {
 		this.setTileMap(MapGenerator.generateTilemapFromFile(this.level));
 		this.setupView();
 		this.setupTextObjects();
-		this.setupInventory();
-
-		int index = this.inventory.addItem( new Gun(this.player, Rarity.EPIC) );
-		this.inventory.setSelectedWeapon(index);
 	}
 
 	@Override

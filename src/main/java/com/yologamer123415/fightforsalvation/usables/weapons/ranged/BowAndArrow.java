@@ -12,22 +12,19 @@ import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.List;
 
-public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
+public class BowAndArrow extends Weapon {
+	private static final float COOLDOWN = 1.2F;
+
 	public BowAndArrow(GameObject holder, Rarity chestRarity) {
-		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder, chestRarity, 1.5F);
+		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder, chestRarity, COOLDOWN);
 	}
 
 	@Override
 	public void use(Vector mousePos) {
-		if (isInCooldown()) return;
+		if (this.isInCooldown()) return;
 
 		Movable arrowMovable = new Arrow(mousePos, this.holder);
 		FightForSalvation.getInstance().addGameObject(arrowMovable);
 		arrowMovable.startMoving();
-	}
-
-	@Override
-	public void gameObjectCollisionOccurred(List<GameObject> list) {
-
 	}
 }

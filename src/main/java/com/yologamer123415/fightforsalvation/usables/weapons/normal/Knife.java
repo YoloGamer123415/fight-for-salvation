@@ -13,10 +13,12 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class Knife extends Weapon {
+	private static final float COOLDOWN = 0.8F;
+
 	private final int damage;
 
 	public Knife(GameObject holder, Rarity chestRarity) {
-		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder, chestRarity, 0.8F);
+		super("Knife", new Sprite("src/main/resources/usables/weapons/normal/Knife.png"), holder, chestRarity, COOLDOWN);
 
 		this.damage = this.rarity.getCalculationValue() * 2;
 	}

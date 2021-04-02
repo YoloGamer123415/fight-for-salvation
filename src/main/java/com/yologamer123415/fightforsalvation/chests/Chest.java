@@ -33,7 +33,7 @@ public class Chest extends Tile {
 	public UsableObject[] open(GameObject holder) {
 		if ( !this.canBeOpened() ) return null;
 
-		FightForSalvation instance = FightForSalvation.getInstance();
+		final FightForSalvation instance = FightForSalvation.getInstance();
 
 		instance.getPlayer().removeEssence(this.cost);
 
