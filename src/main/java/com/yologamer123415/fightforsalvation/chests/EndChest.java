@@ -12,7 +12,7 @@ public class EndChest extends Chest {
 
 	@Override
 	public boolean canBeOpened() {
-		return FightForSalvation.getInstance().getMonstersAlive() <= 0; //TODO Implement (false should be replaced by level ended)
+		return FightForSalvation.getInstance().getMonstersAlive() <= 0;
 	}
 
 	@Override
