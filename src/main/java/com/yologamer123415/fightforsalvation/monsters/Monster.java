@@ -81,6 +81,10 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 
 	@Override
 	public void update() {
+		if (this.shouldDoDamage()) {
+			this.damage(FIREDAMAGE);
+		}
+
 		super.update();
 
 		setDirection(
@@ -104,7 +108,7 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
 		for (GameObject go : list) {
-			if (go instanceof FlammableSpriteObject && ((FlammableSpriteObject) go).shouldDoDamage()) {
+			if (go instanceof FlammableSpriteObject && this.isRunning()) {
 				((FlammableSpriteObject) go).startBurning();
 
 				if (go instanceof Damageable) {

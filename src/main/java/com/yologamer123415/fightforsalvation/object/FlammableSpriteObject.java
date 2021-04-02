@@ -72,12 +72,16 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 	}
 
 	/**
-	 * Check if the object should do damage.
+	 * Check if the object should take damage.
 	 *
 	 * @return True if it should, false if not.
 	 */
 	public boolean shouldDoDamage() {
 		return shouldDoDamage;
+	}
+
+	public boolean isRunning() {
+		return isRunning;
 	}
 
 	@Override

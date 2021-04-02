@@ -116,6 +116,10 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	@Override
 	public void update() {
+		if (this.shouldDoDamage()) {
+			this.damage(FIREDAMAGE);
+		}
+
 		super.update();
 
 		this.setxSpeed(0);
@@ -207,7 +211,17 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
 		for (GameObject go : list) {
-			if (go.getClass().getPackage().getName().endsWith("obstacles")) {
+			if (go instanceof FlammableSpriteObject && this.isRunning()) {
+				((FlammableSpriteObject) go).startBurning();
+
+				if (go instanceof Damageable) {
+					((Damageable) go).damage(FIREDAMAGE);
+				}
+
+				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+				if (side == null) continue;
+				CollidingHelper.handleCollisionStop(this, side, go.getX(), go.getY());
+			} else if (go.getClass().getPackage().getName().endsWith("obstacles")) {
 				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
 				if (side == null) continue;
 				CollidingHelper.handleCollisionStop(this, side, go.getX(), go.getY());

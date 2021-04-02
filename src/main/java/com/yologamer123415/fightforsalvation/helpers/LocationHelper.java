@@ -56,6 +56,7 @@ public class LocationHelper {
 					? Monster.class
 					: Player.class;
 
+
 			Iterator<GameObject> iter = new ArrayList<>( FightForSalvation.getInstance().getGameObjectItems() ).iterator();
 			while (iter.hasNext()) {
 				GameObject ob = iter.next();
