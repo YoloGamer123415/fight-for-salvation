@@ -23,7 +23,5 @@ public abstract class Weapon extends UsableObject {
 	}
 
 	@Override
-	public void update() {
-
-	}
+	public void update() {}
 }

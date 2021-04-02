@@ -1,6 +1,14 @@
 package com.yologamer123415.fightforsalvation.helpers;
 
 import com.yologamer123415.fightforsalvation.object.UsableObject;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.DashAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.InvicibleAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.RegenerationAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.StrengthAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.FirePotion;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.LightningBolt;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.PoisonPotion;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.WeaknessPotion;
 import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
 import com.yologamer123415.fightforsalvation.usables.weapons.normal.Machete;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
@@ -15,9 +23,20 @@ import java.util.Random;
 
 public class ItemHelper {
 	private static final Class<?>[] ITEMS_LIST = new Class<?>[] {
+			// ranged abilities
+			FirePotion.class,
+			LightningBolt.class,
+			PoisonPotion.class,
+			WeaknessPotion.class,
+			// normal abilities
+			DashAbility.class,
+//			InvicibleAbility.class,
+//			RegenerationAbility.class,
+//			StrengthAbility.class,
+			// ranged weapons
 			Gun.class,
 			BowAndArrow.class,
-
+			// normal weapons
 			Knife.class,
 			Machete.class,
 	};

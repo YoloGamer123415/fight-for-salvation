@@ -15,7 +15,7 @@ public abstract class UsableObject extends SpriteObject {
 	protected final Rarity rarity;
 	protected GameObject holder;
 
-	private final Cooldown cooldown;
+	protected final Cooldown cooldown;
 
 	/**
 	 * Construct a new UsableObject.
@@ -24,8 +24,9 @@ public abstract class UsableObject extends SpriteObject {
 	 * @param sprite The sprite of the object.
 	 * @param holder The holder of the object.
 	 * @param chestRarity The rarity of the object.
+	 * @param cooldownSec The cooldown on the object.
 	 */
-	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity) {
+	public UsableObject(String name, Sprite sprite, GameObject holder, Rarity chestRarity, float cooldownSec) {
 		super(sprite);
 		this.name = name;
 		this.holder = holder;

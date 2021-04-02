@@ -5,6 +5,9 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.ItemHelper;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.NormalAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.RangedAbility;
+import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.objects.Sprite;
 import processing.core.PGraphics;
@@ -237,18 +240,19 @@ public class Inventory extends Dashboard {
 			} else if ( this.selectedMoveItem > -1 && x >= startX && y >= startY && y <= startY + height * 3 ) { // click was on one of the selected items
 				int itemPos = (int) LocationHelper.screenToTilePixel( (float) (y - startY) );
 
-				System.out.println(itemPos);
-
 				// 0 is the first item, 1 is the second, etc
 				switch (itemPos) {
 					case 0:
-						this.setSelectedWeapon(this.selectedMoveItem);
+						if ( this.items.get(this.selectedMoveItem) instanceof Weapon)
+							this.setSelectedWeapon(this.selectedMoveItem);
 						break;
 					case 1:
-						this.setSelectedNormalAbility(this.selectedMoveItem);
+						if ( this.items.get(this.selectedMoveItem) instanceof NormalAbility )
+							this.setSelectedNormalAbility(this.selectedMoveItem);
 						break;
 					case 2:
-						this.setSelectedRangedAbility(this.selectedMoveItem);
+						if ( this.items.get(this.selectedMoveItem) instanceof RangedAbility )
+							this.setSelectedRangedAbility(this.selectedMoveItem);
 						break;
 				}
 

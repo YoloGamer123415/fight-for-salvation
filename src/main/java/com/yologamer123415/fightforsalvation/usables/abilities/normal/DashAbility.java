@@ -9,7 +9,7 @@ import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class DashAbility extends NormalAbility {
-	private static final int MAX_DISTANCE = 2;
+	private static final int MAX_DISTANCE = 1;
 
 	public DashAbility(GameObject holder, Rarity chestRarity) {
 		super("Dash", new Sprite("src/main/resources/usables/abilities/normal/dash.png"), holder, chestRarity, 5f);
@@ -18,7 +18,10 @@ public class DashAbility extends NormalAbility {
 	@Override
 	public void use(Vector mousePos) {
 		final Player player = FightForSalvation.getInstance().getPlayer();
-		final float distance = Math.min( mousePos.getLength(), LocationHelper.tileToScreenPixel(MAX_DISTANCE) );
+		final float distance = Math.min(
+				mousePos.getLength(),
+				LocationHelper.tileToScreenPixel(MAX_DISTANCE) * this.rarity.getCalculationValue()
+		);
 
 		float newX = 0, newY = 0;
 

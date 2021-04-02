@@ -13,8 +13,13 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public class BowAndArrow extends Weapon implements ICollidableWithGameObjects {
+
+	public static final float COOLDOWN_SEC = 1.5F;
+
 	public BowAndArrow(GameObject holder, Rarity chestRarity) {
-		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder, chestRarity, 1.5F);
+		super("Bow and Arrow", new Sprite("src/main/resources/usables/weapons/ranged/crossbow_01.png"), holder, chestRarity, COOLDOWN_SEC);
+
+		this.cooldown.setCooldown( COOLDOWN_SEC / this.rarity.getCalculationValue() );
 	}
 
 	@Override
