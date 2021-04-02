@@ -106,9 +106,9 @@ public class Inventory extends Dashboard {
 		if ( this.getSelectedWeapon() != null )
 			this.addGameObject( this.getSelectedWeapon(), (int) startX, (int) startY);
 		if ( this.getSelectedNormalAbility() != null )
-			this.addGameObject( this.getSelectedNormalAbility(), (int) startX, (int) startY + height);
+			this.addGameObject( this.getSelectedNormalAbility(), (int) startX, (int) startY + MapGenerator.TILESIZE );
 		if ( this.getSelectedRangedAbility() != null )
-			this.addGameObject( this.getSelectedRangedAbility(), (int) startX, (int) startY + 2 * height );
+			this.addGameObject( this.getSelectedRangedAbility(), (int) startX, (int) startY + 2 * MapGenerator.TILESIZE );
 	}
 
 	private void redrawShownItems() {

@@ -4,6 +4,8 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.player.Player;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.DashAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.FirePotion;
 import com.yologamer123415.fightforsalvation.usables.weapons.ranged.Gun;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
@@ -117,8 +119,14 @@ public class FightForSalvation extends GameEngine {
 		this.setupTextObjects();
 		this.setupInventory();
 
-		int index = this.inventory.addItem( new Gun(this.player, Rarity.EPIC) );
-		this.inventory.setSelectedWeapon(index);
+		int weaponIndex = this.inventory.addItem( new Gun(this.player, Rarity.EPIC) );
+		this.inventory.setSelectedWeapon(weaponIndex);
+
+		int normalAbilityIndex = this.inventory.addItem( new DashAbility(this.player, Rarity.COMMON) );
+		this.inventory.setSelectedNormalAbility(normalAbilityIndex);
+
+		int rangedAbilityIndex = this.inventory.addItem( new FirePotion(this.player, Rarity.COMMON) );
+		this.inventory.setSelectedRangedAbility(rangedAbilityIndex);
 	}
 
 	@Override
