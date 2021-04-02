@@ -21,6 +21,10 @@ public class Cooldown implements IAlarmListener {
 		this.alarm.addTarget(this);
 	}
 
+	public void setCooldown(float cooldown) {
+		this.alarm.setSeconds(cooldown);
+	}
+
 	/**
 	 * Start the cooldown.
 	 */

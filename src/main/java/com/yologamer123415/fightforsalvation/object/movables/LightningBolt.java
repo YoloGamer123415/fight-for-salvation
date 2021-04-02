@@ -15,7 +15,7 @@ public class LightningBolt extends Movable {
 	 * @param shooter The shooter of the bolt.
 	 */
 	public LightningBolt(Vector path, GameObject shooter) {
-		super( new Sprite("src/main/resources/usables/abilities/ranged/spark.png"), path, shooter );
+		super( new Sprite("src/main/resources/usables/abilities/ranged/LightningBolt.png"), path, shooter );
 	}
 
 	@Override

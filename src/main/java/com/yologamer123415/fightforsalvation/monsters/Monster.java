@@ -90,7 +90,8 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 		);
 
 		Player player = FightForSalvation.getInstance().getPlayer();
-		if (getDistanceFrom(player) <= 40) {
+
+		if ( getDistanceFrom(player) <= 40 && !this.weapon.isInCooldown() ) {
 			System.out.println("SHOOT");
 
 			float monsterX = this.x + ( MapGenerator.TILESIZE / 2f );

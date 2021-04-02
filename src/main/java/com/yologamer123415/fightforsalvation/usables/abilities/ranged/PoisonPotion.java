@@ -8,7 +8,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public class PoisonPotion extends Potion {
 	public PoisonPotion(GameObject holder, Rarity chestRarity) {
-		super("Poison Potion", new Sprite("src/main/resources/usables/abilities/ranged/groen.png"), holder, chestRarity);
+		super("Poison Potion", new Sprite("src/main/resources/usables/abilities/ranged/poison_potion.png"), holder, chestRarity);
 	}
 
 	@Override

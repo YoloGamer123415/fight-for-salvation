@@ -8,7 +8,7 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public class LightningBolt extends RangedAbility {
 	public LightningBolt(GameObject holder, Rarity chestRarity) {
-		super("LightningBolt", new Sprite("src/main/resources/usables/abilities/ranged/spark.png"), holder, chestRarity, 10f);
+		super("LightningBolt", new Sprite("src/main/resources/usables/abilities/ranged/LightningBolt.png"), holder, chestRarity, 10f);
 	}
 
 	@Override
