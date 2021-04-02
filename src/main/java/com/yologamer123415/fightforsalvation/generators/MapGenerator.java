@@ -71,7 +71,7 @@ public class MapGenerator {
 	 * @param level The level to get it from.
 	 * @return The TileMap to use.
 	 */
-	public static TileMap generateTilemapFromFile(int level) {
+	public static TileMap generateTilemapFromFile(int level) throws IllegalArgumentException {
 		FilePersistence file = new FilePersistence("main/resources/levels/" + level + ".json");
 		if (!file.fileExists()) throw new IllegalArgumentException("Level " + level + " does not exists!");
 		JSONObject data = JSONObject.parse(file.loadDataString());
