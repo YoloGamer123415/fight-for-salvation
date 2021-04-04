@@ -13,12 +13,7 @@ public class LightningBolt extends RangedAbility {
 
 	@Override
 	public Movable getMovable(Vector mousePos) {
-		return new com.yologamer123415.fightforsalvation.object.movables.LightningBolt(mousePos, holder);
-	}
-
-	@Override
-	public void use(Vector mousePos) {
-
+		return new com.yologamer123415.fightforsalvation.object.movables.LightningBolt(mousePos, this.holder);
 	}
 
 	@Override
