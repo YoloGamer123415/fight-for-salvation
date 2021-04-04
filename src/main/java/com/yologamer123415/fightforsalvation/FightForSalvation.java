@@ -21,7 +21,6 @@ public class FightForSalvation extends GameEngine {
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
 
 	private TextObject essenceText;
-	private TextObject hpText;
 	private int level = 0;
 	private Player player;
 	private int monstersAlive = 0;
@@ -106,8 +105,6 @@ public class FightForSalvation extends GameEngine {
 	private void setupTextObjects() {
 		this.essenceText = new TextObject("Aantal essence: X", FONT_SIZE);
 		this.addGameObject(this.essenceText, 0, 0);
-		this.hpText = new TextObject("HP: XXX", FONT_SIZE);
-		this.addGameObject( this.hpText, 0, (float) (SCREEN_HEIGHT - FONT_SIZE * 1.25) );
 	}
 
 	/**
@@ -137,7 +134,6 @@ public class FightForSalvation extends GameEngine {
 	@Override
 	public void update() {
 		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getEssence() );
-		this.hpText.setText( "HP: " + this.getPlayer().getHP() );
 	}
 
 	/**

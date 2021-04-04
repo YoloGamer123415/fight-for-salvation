@@ -2,6 +2,7 @@ package com.yologamer123415.fightforsalvation.player;
 
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.chests.Chest;
+import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
@@ -19,13 +20,17 @@ import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.tile.Tile;
+import processing.core.PGraphics;
 import processing.core.PVector;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Player extends FlammableSpriteObject implements Damageable, ICollidableWithTiles {
+	protected static final int COLOR_HEALTH_BAR = Color.decode("#00ff00").getRGB();
+	protected static final int COLOR_HEALTH_BAR_HP = Color.decode("#ff0000").getRGB();
 	private static final int DEFAULT_HP = 150;
 	private static final float SPEED_STOPPED = 0;
 	private static final float SPEED_NORMAL = 3.5f;
@@ -125,6 +130,31 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 		this.setxSpeed(0);
 		this.setySpeed(0);
+	}
+
+	@Override
+	public void draw(PGraphics g) {
+		super.draw(g);
+
+		// draw a hp bar above the monster
+		if (this.hp < DEFAULT_HP) {
+			final float height = MapGenerator.TILESIZE / 10f;
+			final float width = this.getWidth();
+			final float hpWidth = width * (this.hp / (float) DEFAULT_HP);
+
+			g.noStroke();
+			g.fill(COLOR_HEALTH_BAR);
+			g.rect(
+					this.getX(), this.getY(),
+					width, height
+			);
+
+			g.fill(COLOR_HEALTH_BAR_HP);
+			g.rect(
+					this.getX(), this.getY(),
+					hpWidth, height
+			);
+		}
 	}
 
 	@Override
