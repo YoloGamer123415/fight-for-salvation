@@ -26,13 +26,13 @@ public class ItemHelper {
 			// ranged abilities
 			FirePotion.class,
 			LightningBolt.class,
-			PoisonPotion.class,
-			WeaknessPotion.class,
+//			PoisonPotion.class,
+//			WeaknessPotion.class,
 			// normal abilities
 			DashAbility.class,
-			InvicibleAbility.class,
-			RegenerationAbility.class,
-			StrengthAbility.class,
+//			InvicibleAbility.class,
+//			RegenerationAbility.class,
+//			StrengthAbility.class,
 			// ranged weapons
 			Gun.class,
 			BowAndArrow.class,
