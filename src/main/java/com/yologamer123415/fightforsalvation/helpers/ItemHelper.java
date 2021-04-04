@@ -32,7 +32,7 @@ public class ItemHelper {
 			DashAbility.class,
 //			InvicibleAbility.class,
 			RegenerationAbility.class,
-//			StrengthAbility.class,
+			StrengthAbility.class,
 			// ranged weapons
 			Gun.class,
 			BowAndArrow.class,
