@@ -13,6 +13,7 @@ import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
 import com.yologamer123415.fightforsalvation.usables.abilities.normal.RegenerationAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.StrengthAbility;
 import com.yologamer123415.fightforsalvation.usables.abilities.ranged.LightningBolt;
 import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
 import nl.han.ica.oopg.collision.CollidedTile;
@@ -38,6 +39,8 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	private final Inventory inventory = new Inventory();
 
+	private boolean hasStrength = false;
+
 	private int hp = DEFAULT_HP;
 	private int totalEssence = 0;
 
@@ -54,7 +57,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		int index = this.inventory.addItem( new Knife(this, Rarity.COMMON) );
 		this.inventory.setSelectedWeapon(index);
 
-		int abilityIndex = this.inventory.addItem( new RegenerationAbility(this, Rarity.EPIC) );
+		int abilityIndex = this.inventory.addItem( new StrengthAbility(this, Rarity.EPIC) );
 		this.inventory.setSelectedNormalAbility(abilityIndex);
 
 		final FightForSalvation instance = FightForSalvation.getInstance();
@@ -96,6 +99,14 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	 */
 	public void removeEssence(int amount) {
 		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
+	}
+
+	public void setHasStrength(boolean hasStrength) {
+		this.hasStrength = hasStrength;
+	}
+
+	public int getDamageModifier() {
+		return this.hasStrength ? 2 : 1;
 	}
 
 	/**

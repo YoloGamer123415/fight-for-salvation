@@ -1,5 +1,6 @@
 package com.yologamer123415.fightforsalvation.usables.weapons.normal;
 
+import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.helpers.Rarity;
@@ -32,12 +33,13 @@ public class Knife extends Weapon {
 
 	@Override
 	public void use(Vector mousePos) {
+		final int damage = getCorrectedDamage(this.holder, this.damage);
 		List<GameObject> monstersWithinRange = LocationHelper
 				.findTargetsWithinRange( MapGenerator.TILESIZE, this.holder );
 
 		for (GameObject go : monstersWithinRange) {
 			if (go instanceof Damageable) {
-				((Damageable) go).damage(this.damage);
+				((Damageable) go).damage(damage);
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package com.yologamer123415.fightforsalvation.object.movables;
 
 import com.yologamer123415.fightforsalvation.helpers.Vector;
 import com.yologamer123415.fightforsalvation.object.Damageable;
+import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
@@ -22,9 +23,11 @@ public class Arrow extends Movable {
 
 	@Override
 	public void collidedWithGameObjects(List<GameObject> gameObjects) {
+		final int damage = Weapon.getCorrectedDamage(this.shooter, HP);
+
 		for (GameObject go : gameObjects) {
 			if ( !go.equals(this.shooter) && go instanceof Damageable ) {
-				((Damageable) go).damage(HP);
+				((Damageable) go).damage(damage);
 			}
 		}
 	}

@@ -51,12 +51,17 @@ https://opengameart.org/content/flare-mod-hobgoblin-archer
 
 ### Regeneration
 https://opengameart.org/content/heart-pixel-art
+*(EDITED)*
 
 ## CC BY 4.0
 [More information](https://creativecommons.org/licenses/by/4.0/)
 
 ### Regeneration
 https://opengameart.org/content/heart-pixel-art
+*(EDITED)*
+
+### Strength
+https://opengameart.org/content/a-sword-0
 
 ## Freepik License:
 [More information](https://www.freepikcompany.com/legal#nav-freepik)

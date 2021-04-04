@@ -30,8 +30,8 @@ public class Gun extends Weapon {
 
 	@Override
 	public void use(Vector mousePos) {
-		Movable arrowMovable = new Bullet(mousePos, this.holder);
-		FightForSalvation.getInstance().addGameObject(arrowMovable);
-		arrowMovable.startMoving();
+		Movable bulletMovable = new Bullet(mousePos, this.holder);
+		FightForSalvation.getInstance().addGameObject(bulletMovable);
+		bulletMovable.startMoving();
 	}
 }
