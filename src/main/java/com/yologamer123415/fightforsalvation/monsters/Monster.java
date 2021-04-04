@@ -16,11 +16,16 @@ import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PGraphics;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
 public class Monster extends FlammableSpriteObject implements Damageable, ICollidableWithTiles {
+	protected static final int COLOR_HEALTH_BAR = Color.decode("#00ff00").getRGB();
+	protected static final int COLOR_HEALTH_BAR_HP = Color.decode("#ff0000").getRGB();
+
 	protected final Rarity rarity;
 	protected Weapon weapon;
 
@@ -28,6 +33,7 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 	private boolean movingUp;
 	private boolean movingRight;
 
+	private int startHp;
 	private int hp;
 
 	/**
@@ -38,7 +44,7 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 	 */
 	public Monster(Sprite sprite, int hp) {
 		super(sprite, 10, 2);
-		this.hp = hp;
+		this.hp = this.startHp = hp;
 		this.rarity = Rarity.getRandomRarity();
 
 		final Random rand = new Random();
@@ -81,7 +87,7 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 
 	@Override
 	public void update() {
-		if (this.shouldDoDamage()) {
+		if ( this.shouldDoDamage() ) {
 			this.damage(FIREDAMAGE);
 		}
 
@@ -96,32 +102,30 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 		Player player = FightForSalvation.getInstance().getPlayer();
 
 		if ( getDistanceFrom(player) <= 40 && !this.weapon.isInCooldown() ) {
-			System.out.println("SHOOT");
-
 			float monsterX = this.x + ( MapGenerator.TILESIZE / 2f );
 			float monsterY = this.y + ( MapGenerator.TILESIZE / 2f );
 
-			this.weapon.use(Vector.generateVector(monsterX, monsterY, player.getX(), player.getY()));
+			this.weapon.use( Vector.generateVector( monsterX, monsterY, player.getX(), player.getY() ) );
 		}
 	}
 
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> list) {
 		for (GameObject go : list) {
-			if (go instanceof FlammableSpriteObject && this.isRunning()) {
+			if ( go instanceof FlammableSpriteObject && this.isRunning() ) {
 				((FlammableSpriteObject) go).startBurning();
 
 				if (go instanceof Damageable) {
 					((Damageable) go).damage(FIREDAMAGE);
 				}
 
-				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+				CollisionSide side = CollidingHelper.calculateCollidedTileSide( (int) go.getAngleFrom(this) );
 				if (side == null) continue;
-				handleBounce(side);
-			} else if (go.getClass().getPackage().getName().endsWith("obstacles") || go instanceof Player) {
-				CollisionSide side = CollidingHelper.calculateCollidedTileSide((int) go.getAngleFrom(this));
+				this.handleBounce(side);
+			} else if ( go.getClass().getPackage().getName().endsWith("obstacles") || go instanceof Player ) {
+				CollisionSide side = CollidingHelper.calculateCollidedTileSide( (int) go.getAngleFrom(this) );
 				if (side == null) continue;
-				handleBounce(side);
+				this.handleBounce(side);
 			}
 		}
 	}
@@ -132,6 +136,31 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 			if (ct.getTile() instanceof Border || ct.getTile() instanceof Chest) {
 				handleBounce(ct.getCollisionSide());
 			}
+		}
+	}
+
+	@Override
+	public void draw(PGraphics g) {
+		super.draw(g);
+
+		// draw a hp bar above the monster
+		if (this.hp < this.startHp) {
+			final float height = MapGenerator.TILESIZE / 10f;
+			final float width = this.getWidth();
+			final float hpWidth = width * (this.hp / (float) this.startHp);
+
+			g.noStroke();
+			g.fill(COLOR_HEALTH_BAR);
+			g.rect(
+					this.getX(), this.getY(),
+					width, height
+			);
+
+			g.fill(COLOR_HEALTH_BAR_HP);
+			g.rect(
+					this.getX(), this.getY(),
+					hpWidth, height
+			);
 		}
 	}
 
