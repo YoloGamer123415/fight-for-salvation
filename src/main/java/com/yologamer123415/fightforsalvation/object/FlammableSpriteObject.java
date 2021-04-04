@@ -15,7 +15,8 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 	private final String tickTimeAlarmName = UUID.randomUUID().toString();
 
 	private final Alarm burnAlarm;
-	private final Alarm tickTimeAlarm;
+	private Alarm tickTimeAlarm;
+	private final int tickTime;
 
 	private boolean shouldDoDamage = false;
 	private boolean isRunning;
@@ -32,10 +33,12 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 	public FlammableSpriteObject(Sprite sprite, int duration, int tickTime) {
 		super(sprite, 2);
 
-		this.burnAlarm = new Alarm(burnAlarmName, duration);
+		this.tickTime = tickTime;
+
+		this.burnAlarm = new Alarm(this.burnAlarmName, duration);
 		this.burnAlarm.addTarget(this);
 
-		this.tickTimeAlarm = new Alarm(tickTimeAlarmName, tickTime);
+		this.tickTimeAlarm = new Alarm(this.tickTimeAlarmName, tickTime);
 		this.tickTimeAlarm.addTarget(this);
 	}
 
@@ -43,32 +46,34 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 	 * Start burning of the object.
 	 */
 	public final void startBurning() {
-		burnAlarm.start();
-		isRunning = true;
+		this.burnAlarm.start();
+		this.tickTimeAlarm.start();
+		this.isRunning = true;
 
-		setCurrentFrameIndex(1);
+		this.setCurrentFrameIndex(1);
 	}
 
 	/**
-	 * Forcly stop burning of the object.
+	 * Forcibly stop burning of the object.
 	 */
 	public final void stopBurning() {
-		burnAlarm.stop();
-		isRunning = false;
+		this.burnAlarm.stop();
+		this.tickTimeAlarm.stop();
+		this.isRunning = false;
 
-		setCurrentFrameIndex(0);
+		this.setCurrentFrameIndex(0);
 	}
 
 	@Override
 	public void update() {
-		shouldDoDamage = false;
+		this.shouldDoDamage = false;
 	}
 
 	/**
 	 * Called after ticktime.
 	 */
 	private void handler() {
-		shouldDoDamage = true;
+		this.shouldDoDamage = true;
 	}
 
 	/**
@@ -77,20 +82,23 @@ public abstract class FlammableSpriteObject extends AnimatedSpriteObject impleme
 	 * @return True if it should, false if not.
 	 */
 	public boolean shouldDoDamage() {
-		return shouldDoDamage;
+		return this.shouldDoDamage;
 	}
 
 	public boolean isRunning() {
-		return isRunning;
+		return this.isRunning;
 	}
 
 	@Override
 	public final void triggerAlarm(String s) {
-		if (s.equals(burnAlarmName)) {
-			stopBurning();
-		} else if (s.equals(tickTimeAlarmName) && isRunning) {
-			handler();
-			tickTimeAlarm.start();
+		if ( s.equals(this.burnAlarmName) ) {
+			this.stopBurning();
+		} else if ( s.equals(this.tickTimeAlarmName) && this.isRunning ) {
+			this.handler();
+
+			this.tickTimeAlarm = new Alarm(this.tickTimeAlarmName, this.tickTime);
+			this.tickTimeAlarm.addTarget(this);
+			this.tickTimeAlarm.start();
 		}
 	}
 }
