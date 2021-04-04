@@ -23,7 +23,7 @@ public class Arrow extends Movable {
 	@Override
 	public void collidedWithGameObjects(List<GameObject> gameObjects) {
 		for (GameObject go : gameObjects) {
-			if (go instanceof Damageable) {
+			if ( !go.equals(this.shooter) && go instanceof Damageable ) {
 				((Damageable) go).damage(HP);
 			}
 		}

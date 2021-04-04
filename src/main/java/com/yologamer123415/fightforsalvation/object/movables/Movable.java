@@ -16,7 +16,7 @@ public abstract class Movable extends SpriteObject implements ICollidableWithGam
 	private static final float SPEED = 20;
 
 	private final Vector path;
-	private final GameObject shooter;
+	protected final GameObject shooter;
 
 	/**
 	 * Construct a new Movable.
