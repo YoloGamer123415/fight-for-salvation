@@ -2,6 +2,8 @@ package com.yologamer123415.fightforsalvation;
 
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.player.Player;
+import com.yologamer123415.fightforsalvation.screens.EndScreen;
+import com.yologamer123415.fightforsalvation.screens.StartScreen;
 import nl.han.ica.oopg.dashboard.Dashboard;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.objects.GameObject;
@@ -19,6 +21,9 @@ public class FightForSalvation extends GameEngine {
 	public static final int FONT_SIZE = 16;
 	public static final int SCREEN_WIDTH = MapGenerator.TILESIZE * 20;
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
+
+	private StartScreen startScreen;
+	private EndScreen endScreen;
 
 	private TextObject essenceText;
 	private int level = 0;
@@ -107,9 +112,21 @@ public class FightForSalvation extends GameEngine {
 		this.addGameObject(this.essenceText, 0, 0);
 	}
 
+	public void startGame() {
+		this.setupTextObjects();
+		this.startScreen.setVisible(false);
+	}
+
+	public void endGame(boolean died) {
+		this.deleteAllGameOBjects();
+
+		this.endScreen = new EndScreen(died);
+		this.addDashboard(this.endScreen);
+	}
+
 	/**
 	 * Override of the mousePressed()
-	 * We fixed clicking on Dashboards
+	 * We fixed clicking on Dashboards.
 	 */
 	@Override
 	public void mousePressed() {
@@ -126,14 +143,16 @@ public class FightForSalvation extends GameEngine {
 	public void setupGame() {
 		MapGenerator.load();
 
-		this.setTileMap(MapGenerator.generateTilemapFromFile(this.level));
+		this.startScreen = new StartScreen();
+		this.addDashboard(this.startScreen);
+
 		this.setupView();
-		this.setupTextObjects();
+		this.setTileMap(MapGenerator.generateTilemapFromFile(level));
 	}
 
 	@Override
 	public void update() {
-		this.essenceText.setText( "Aantal essence: " + this.getPlayer().getEssence() );
+		if (this.essenceText != null) this.essenceText.setText( "Aantal essence: " + this.getPlayer().getEssence() );
 	}
 
 	/**
@@ -154,9 +173,7 @@ public class FightForSalvation extends GameEngine {
 		try {
 			newTileMap = MapGenerator.generateTilemapFromFile(this.level);
 		} catch (IllegalArgumentException ex) {
-			//TODO Move to end screen
-			this.stop();
-
+			this.endGame(false);
 			return;
 		}
 		this.setTileMap(newTileMap);

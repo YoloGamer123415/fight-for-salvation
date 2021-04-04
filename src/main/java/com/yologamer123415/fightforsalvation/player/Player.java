@@ -124,9 +124,10 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	public void damage(int damage) {
 		this.hp = Math.max(this.hp - damage, 0);
 
+		System.out.println(this.hp);
+
 		if (this.hp == 0) {
-			//TODO Move to end screen
-			FightForSalvation.getInstance().stop();
+			FightForSalvation.getInstance().endGame(true);
 		}
 	}
 

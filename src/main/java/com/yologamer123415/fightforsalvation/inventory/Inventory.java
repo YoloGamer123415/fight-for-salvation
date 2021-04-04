@@ -5,6 +5,7 @@ import com.yologamer123415.fightforsalvation.generators.MapGenerator;
 import com.yologamer123415.fightforsalvation.helpers.ItemHelper;
 import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
+import com.yologamer123415.fightforsalvation.screens.parts.Button;
 import com.yologamer123415.fightforsalvation.usables.abilities.normal.NormalAbility;
 import com.yologamer123415.fightforsalvation.usables.abilities.ranged.RangedAbility;
 import com.yologamer123415.fightforsalvation.usables.weapons.Weapon;
@@ -20,10 +21,7 @@ public class Inventory extends Dashboard {
 	private static final int MAX_ITEMS_PER_ROW = (FightForSalvation.SCREEN_WIDTH - 2 * MapGenerator.TILESIZE) / MapGenerator.TILESIZE;
 	public static final int ITEM_STROKE_WIDTH = 2;
 
-	private static final int DONE_BUTTON_TOP_LEFT_X = 728;
-	private static final int DONE_BUTTON_TOP_LEFT_Y = 523;
-	private static final int DONE_BUTTON_WIDTH = 232;
-	private static final int DONE_BUTTON_HEIGHT = 53;
+	private final Button closeInventoryButton;
 
 	public final LinkedList<UsableObject> items = new LinkedList<>();
 	private UsableObject selectedNormalAbility;
@@ -39,6 +37,8 @@ public class Inventory extends Dashboard {
 	 */
 	public Inventory() {
 		super(800, 400, FightForSalvation.SCREEN_WIDTH, FightForSalvation.SCREEN_HEIGHT);
+
+		this.closeInventoryButton = new Button(728, 523, 232, 53);
 
 		this.setVisible(false);
 		this.setX(0);
@@ -206,20 +206,6 @@ public class Inventory extends Dashboard {
 		}
 	}
 
-	/**
-	 * Check if the mouse is above the done button.
-	 *
-	 * @param x The x-position of the mouse.
-	 * @param y The y-position of the mouse.
-	 * @return True if above, false if not.
-	 */
-	private boolean isMouseAboveButton(int x, int y) {
-		return x >= DONE_BUTTON_TOP_LEFT_X &&
-				x <= DONE_BUTTON_TOP_LEFT_X + DONE_BUTTON_WIDTH &&
-				y >= DONE_BUTTON_TOP_LEFT_Y &&
-				y <= DONE_BUTTON_TOP_LEFT_Y + DONE_BUTTON_HEIGHT;
-	}
-
 	@Override
 	public void mousePressed(int x, int y, int button) {
 		if ( this.isVisible() ) {
@@ -235,7 +221,7 @@ public class Inventory extends Dashboard {
 			final int itemY = (int) LocationHelper.screenToTilePixel(y - ITEM_Y_OFFSET);
 			final int itemIndex = itemY * MAX_ITEMS_PER_ROW + itemX;
 
-			if ( this.isMouseAboveButton(x, y) ) {
+			if ( this.closeInventoryButton.isMouseAboveButton(x, y) ) {
 				this.close();
 			} else if ( this.selectedMoveItem > -1 && x >= startX && y >= startY && y <= startY + height ) { // click was on one of the selected items
 				int itemPos = (int) LocationHelper.screenToTilePixel( (float) (y - startY) );
