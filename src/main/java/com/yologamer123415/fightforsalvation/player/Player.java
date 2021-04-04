@@ -12,8 +12,9 @@ import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.RegenerationAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.ranged.LightningBolt;
 import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
-import com.yologamer123415.fightforsalvation.usables.weapons.ranged.BowAndArrow;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
 import nl.han.ica.oopg.collision.ICollidableWithTiles;
@@ -52,6 +53,9 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		//Add default item...
 		int index = this.inventory.addItem( new Knife(this, Rarity.COMMON) );
 		this.inventory.setSelectedWeapon(index);
+
+		int abilityIndex = this.inventory.addItem( new RegenerationAbility(this, Rarity.EPIC) );
+		this.inventory.setSelectedNormalAbility(abilityIndex);
 
 		final FightForSalvation instance = FightForSalvation.getInstance();
 		instance.setPlayer(this);
@@ -95,19 +99,14 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	}
 
 	/**
-	 * Get the HP of the player.
-	 *
-	 * @return The HP.
-	 */
-	public int getHP() {
-		return this.hp;
-	}
-
-	/**
 	 * Reset the HP of the player to the default value.
 	 */
 	public void resetHP() {
 		this.hp = DEFAULT_HP;
+	}
+
+	public void heal(int health) {
+		this.hp = Math.min(this.hp + health, DEFAULT_HP);
 	}
 
 	@Override
@@ -122,7 +121,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	@Override
 	public void update() {
-		if (this.shouldDoDamage()) {
+		if ( this.shouldDoDamage() ) {
 			this.damage(FIREDAMAGE);
 		}
 

@@ -33,7 +33,7 @@ public class Monster extends FlammableSpriteObject implements Damageable, IColli
 	private boolean movingUp;
 	private boolean movingRight;
 
-	private int startHp;
+	private final int startHp;
 	private int hp;
 
 	/**

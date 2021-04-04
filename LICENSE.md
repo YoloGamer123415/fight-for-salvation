@@ -49,6 +49,15 @@ https://opengameart.org/content/side-scroller-tiles-and-objects-for-ardentryst-b
 https://opengameart.org/content/flare-mod-hobgoblin-archer
 *(EDITED)*
 
+### Regeneration
+https://opengameart.org/content/heart-pixel-art
+
+## CC BY 4.0
+[More information](https://creativecommons.org/licenses/by/4.0/)
+
+### Regeneration
+https://opengameart.org/content/heart-pixel-art
+
 ## Freepik License:
 [More information](https://www.freepikcompany.com/legal#nav-freepik)
 
