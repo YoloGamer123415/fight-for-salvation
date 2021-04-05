@@ -12,9 +12,7 @@ import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
-import com.yologamer123415.fightforsalvation.usables.abilities.normal.RegenerationAbility;
-import com.yologamer123415.fightforsalvation.usables.abilities.normal.StrengthAbility;
-import com.yologamer123415.fightforsalvation.usables.abilities.ranged.LightningBolt;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.InvincibleAbility;
 import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
@@ -39,6 +37,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	private final Inventory inventory = new Inventory();
 
+	private boolean isInvisible = false;
 	private boolean hasStrength = false;
 
 	private int hp = DEFAULT_HP;
@@ -57,7 +56,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		int index = this.inventory.addItem( new Knife(this, Rarity.COMMON) );
 		this.inventory.setSelectedWeapon(index);
 
-		int abilityIndex = this.inventory.addItem( new StrengthAbility(this, Rarity.EPIC) );
+		int abilityIndex = this.inventory.addItem( new InvincibleAbility(this, Rarity.EPIC) );
 		this.inventory.setSelectedNormalAbility(abilityIndex);
 
 		final FightForSalvation instance = FightForSalvation.getInstance();
@@ -101,6 +100,11 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
 	}
 
+	public void setIsInvisible(boolean isInvisible) {
+		this.isInvisible = isInvisible;
+		this.setVisible(!isInvisible);
+	}
+
 	public void setHasStrength(boolean hasStrength) {
 		this.hasStrength = hasStrength;
 	}
@@ -122,10 +126,12 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	@Override
 	public void damage(int damage) {
-		this.hp = Math.max(this.hp - damage, 0);
+		if (!this.isInvisible) {
+			this.hp = Math.max(this.hp - damage, 0);
 
-		if (this.hp == 0) {
-			FightForSalvation.getInstance().endGame(true);
+			if (this.hp == 0) {
+				FightForSalvation.getInstance().endGame(true);
+			}
 		}
 	}
 
@@ -133,6 +139,10 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	public void update() {
 		if ( this.shouldDoDamage() ) {
 			this.damage(FIREDAMAGE);
+		}
+
+		if (this.isInvisible) {
+			this.setVisible( !this.isVisible() );
 		}
 
 		super.update();
