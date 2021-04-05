@@ -34,8 +34,8 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	private final Inventory inventory = new Inventory();
 
-	private boolean isInvisible = false;
-	private boolean hasStrength = false;
+	private boolean invisible = false;
+	private boolean strength = false;
 
 	private Cooldown invisibilityCooldown;
 
@@ -99,22 +99,22 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		if (amount >= 0 && this.totalEssence >= amount) this.totalEssence -= amount;
 	}
 
-	public void setIsInvisible(boolean isInvisible) {
-		this.isInvisible = isInvisible;
-		this.setVisible(!isInvisible);
+	public void setInvisible(boolean invisible) {
+		this.invisible = invisible;
+		this.setVisible(!invisible);
 
-		if (isInvisible) {
+		if (invisible) {
 			if (this.invisibilityCooldown == null) this.invisibilityCooldown = new Cooldown(0.3F);
 			this.invisibilityCooldown.start();
 		}
 	}
 
-	public void setHasStrength(boolean hasStrength) {
-		this.hasStrength = hasStrength;
+	public void setStrength(boolean strength) {
+		this.strength = strength;
 	}
 
 	public int getDamageModifier() {
-		return this.hasStrength ? 2 : 1;
+		return this.strength ? 2 : 1;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 
 	@Override
 	public void damage(int damage) {
-		if (!this.isInvisible) {
+		if (!this.invisible) {
 			this.hp = Math.max(this.hp - damage, 0);
 
 			if (this.hp == 0) {
@@ -145,7 +145,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 			this.damage(FIREDAMAGE);
 		}
 
-		if (this.isInvisible && !this.invisibilityCooldown.isInCooldown()) {
+		if (this.invisible && !this.invisibilityCooldown.isInCooldown()) {
 			this.setVisible( !this.isVisible() );
 			this.invisibilityCooldown.start();
 		}

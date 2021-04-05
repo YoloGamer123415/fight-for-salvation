@@ -26,7 +26,7 @@ public class StrengthAbility extends NormalAbility implements IAlarmListener {
 	@Override
 	public void use(Vector mousePos) {
 		this.alarm.start();
-		FightForSalvation.getInstance().getPlayer().setHasStrength(true);
+		FightForSalvation.getInstance().getPlayer().setStrength(true);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class StrengthAbility extends NormalAbility implements IAlarmListener {
 	@Override
 	public void triggerAlarm(String s) {
 		if ( s.equals(this.alarmName) ) {
-			FightForSalvation.getInstance().getPlayer().setHasStrength(false);
+			FightForSalvation.getInstance().getPlayer().setStrength(false);
 		}
 	}
 }

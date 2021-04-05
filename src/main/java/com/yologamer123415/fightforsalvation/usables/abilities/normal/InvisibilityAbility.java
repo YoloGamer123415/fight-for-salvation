@@ -26,7 +26,7 @@ public class InvisibilityAbility extends NormalAbility implements IAlarmListener
 	@Override
 	public void use(Vector mousePos) {
 		this.alarm.start();
-		FightForSalvation.getInstance().getPlayer().setIsInvisible(true);
+		FightForSalvation.getInstance().getPlayer().setInvisible(true);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class InvisibilityAbility extends NormalAbility implements IAlarmListener
 	@Override
 	public void triggerAlarm(String s) {
 		if ( s.equals(this.alarmName) ) {
-			FightForSalvation.getInstance().getPlayer().setIsInvisible(false);
+			FightForSalvation.getInstance().getPlayer().setInvisible(false);
 		}
 	}
 }
