@@ -5,8 +5,8 @@ import com.yologamer123415.fightforsalvation.helpers.Vector;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
-public class InvicibleAbility extends NormalAbility {
-	public InvicibleAbility(GameObject holder, Rarity chestRarity) {
+public class InvisibleAbility extends NormalAbility {
+	public InvisibleAbility(GameObject holder, Rarity chestRarity) {
 		super("Invisibility", new Sprite(""), holder, chestRarity, 15f);
 	}
 
