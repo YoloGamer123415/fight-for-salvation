@@ -18,15 +18,18 @@ public class EndScreen extends Dashboard {
 		CenteredTextObject title = new CenteredTextObject("Fight for Salvation", FightForSalvation.FONT_SIZE * 3);
 		this.addGameObject(title, FightForSalvation.SCREEN_WIDTH / 2, 100);
 
-		CenteredTextObject by = new CenteredTextObject("Game over!", FightForSalvation.FONT_SIZE * 2);
-		this.addGameObject(by, FightForSalvation.SCREEN_WIDTH / 2, 150);
-
+		String infoText;
 		String diedText;
 		if (playerDied) {
+			infoText = "Game Over!";
 			diedText = "Je bent vermoord door de monsters. Probeer het opnieuw!";
 		} else {
-			diedText = "Gefeliciteerd. Goed gedaan, je hebt het spel gehaald!";
+			infoText = "Gefeliciteerd!";
+			diedText = "Goed gedaan, je hebt het spel gehaald!";
 		}
+
+		CenteredTextObject info = new CenteredTextObject(infoText, FightForSalvation.FONT_SIZE * 2);
+		this.addGameObject(info, FightForSalvation.SCREEN_WIDTH / 2, 150);
 
 		CenteredTextObject died = new CenteredTextObject(diedText, FightForSalvation.FONT_SIZE);
 		this.addGameObject(died, FightForSalvation.SCREEN_WIDTH / 2, 200);
@@ -38,8 +41,8 @@ public class EndScreen extends Dashboard {
 
 	@Override
 	public void mousePressed(int x, int y, int button) {
-		if (this.quit.isMouseAboveButton(x, y)) {
-			FightForSalvation.getInstance().stop();
+		if ( this.quit.isMouseAboveButton(x, y) ) {
+			System.exit(0);
 		}
 	}
 }
