@@ -13,6 +13,7 @@ import nl.han.ica.oopg.userinput.IMouseInput;
 import nl.han.ica.oopg.view.View;
 import processing.core.PVector;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class FightForSalvation extends GameEngine {
@@ -134,7 +135,11 @@ public class FightForSalvation extends GameEngine {
 
 		//Implemented mouseclick for Dashboards
 		PVector location = this.calculateRelativeMouseLocation(this.mouseX, this.mouseY);
-		for ( Dashboard db : this.getDashboards() ) {
+		Iterator<Dashboard> iterator = new ArrayList<>( this.getDashboards() ).iterator();
+
+		while( iterator.hasNext() ) {
+			Dashboard db = iterator.next();
+
 			( (IMouseInput) db ).mousePressed( (int) location.x, (int) location.y, this.mouseButton );
 		}
 	}
