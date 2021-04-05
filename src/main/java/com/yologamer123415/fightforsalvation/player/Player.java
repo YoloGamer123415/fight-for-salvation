@@ -3,16 +3,13 @@ package com.yologamer123415.fightforsalvation.player;
 import com.yologamer123415.fightforsalvation.FightForSalvation;
 import com.yologamer123415.fightforsalvation.chests.Chest;
 import com.yologamer123415.fightforsalvation.generators.MapGenerator;
-import com.yologamer123415.fightforsalvation.helpers.CollidingHelper;
-import com.yologamer123415.fightforsalvation.helpers.LocationHelper;
-import com.yologamer123415.fightforsalvation.helpers.Rarity;
-import com.yologamer123415.fightforsalvation.helpers.Vector;
+import com.yologamer123415.fightforsalvation.helpers.*;
 import com.yologamer123415.fightforsalvation.inventory.Inventory;
 import com.yologamer123415.fightforsalvation.object.Damageable;
 import com.yologamer123415.fightforsalvation.object.FlammableSpriteObject;
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.tyles.Border;
-import com.yologamer123415.fightforsalvation.usables.abilities.normal.InvincibleAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.InvisibilityAbility;
 import com.yologamer123415.fightforsalvation.usables.weapons.normal.Knife;
 import nl.han.ica.oopg.collision.CollidedTile;
 import nl.han.ica.oopg.collision.CollisionSide;
@@ -40,6 +37,8 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	private boolean isInvisible = false;
 	private boolean hasStrength = false;
 
+	private Cooldown invisibilityCooldown;
+
 	private int hp = DEFAULT_HP;
 	private int totalEssence = 0;
 
@@ -56,7 +55,7 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 		int index = this.inventory.addItem( new Knife(this, Rarity.COMMON) );
 		this.inventory.setSelectedWeapon(index);
 
-		int abilityIndex = this.inventory.addItem( new InvincibleAbility(this, Rarity.EPIC) );
+		int abilityIndex = this.inventory.addItem( new InvisibilityAbility(this, Rarity.EPIC) );
 		this.inventory.setSelectedNormalAbility(abilityIndex);
 
 		final FightForSalvation instance = FightForSalvation.getInstance();
@@ -103,6 +102,11 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 	public void setIsInvisible(boolean isInvisible) {
 		this.isInvisible = isInvisible;
 		this.setVisible(!isInvisible);
+
+		if (isInvisible) {
+			if (this.invisibilityCooldown == null) this.invisibilityCooldown = new Cooldown(0.3F);
+			this.invisibilityCooldown.start();
+		}
 	}
 
 	public void setHasStrength(boolean hasStrength) {
@@ -141,8 +145,9 @@ public class Player extends FlammableSpriteObject implements Damageable, ICollid
 			this.damage(FIREDAMAGE);
 		}
 
-		if (this.isInvisible) {
+		if (this.isInvisible && !this.invisibilityCooldown.isInCooldown()) {
 			this.setVisible( !this.isVisible() );
+			this.invisibilityCooldown.start();
 		}
 
 		super.update();
