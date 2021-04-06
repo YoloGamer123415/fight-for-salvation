@@ -24,7 +24,6 @@ public class FightForSalvation extends GameEngine {
 	public static final int SCREEN_HEIGHT = MapGenerator.TILESIZE * 12;
 
 	private StartScreen startScreen;
-	private EndScreen endScreen;
 
 	private TextObject essenceText;
 	private int level = 0;
@@ -121,8 +120,8 @@ public class FightForSalvation extends GameEngine {
 	public void endGame(boolean died) {
 		this.deleteAllGameOBjects();
 
-		this.endScreen = new EndScreen(died);
-		this.addDashboard(this.endScreen);
+		EndScreen endScreen = new EndScreen(died);
+		this.addDashboard(endScreen);
 	}
 
 	/**

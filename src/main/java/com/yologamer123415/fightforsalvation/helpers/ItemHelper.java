@@ -34,7 +34,7 @@ public class ItemHelper {
 			// ranged weapons
 			Gun.class,
 			BowAndArrow.class,
-//			 normal weapons
+			// normal weapons
 			Knife.class,
 			Machete.class,
 	};
