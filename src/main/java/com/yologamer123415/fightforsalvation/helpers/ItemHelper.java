@@ -2,6 +2,7 @@ package com.yologamer123415.fightforsalvation.helpers;
 
 import com.yologamer123415.fightforsalvation.object.UsableObject;
 import com.yologamer123415.fightforsalvation.usables.abilities.normal.DashAbility;
+import com.yologamer123415.fightforsalvation.usables.abilities.normal.InvisibilityAbility;
 import com.yologamer123415.fightforsalvation.usables.abilities.normal.RegenerationAbility;
 import com.yologamer123415.fightforsalvation.usables.abilities.normal.StrengthAbility;
 import com.yologamer123415.fightforsalvation.usables.abilities.ranged.FirePotion;
@@ -27,7 +28,7 @@ public class ItemHelper {
 //			WeaknessPotion.class,
 			// normal abilities
 			DashAbility.class,
-//			InvicibleAbility.class,
+			InvisibilityAbility.class,
 			RegenerationAbility.class,
 			StrengthAbility.class,
 			// ranged weapons
