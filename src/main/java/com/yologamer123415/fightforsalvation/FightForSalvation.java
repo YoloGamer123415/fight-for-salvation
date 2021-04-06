@@ -136,7 +136,7 @@ public class FightForSalvation extends GameEngine {
 		//Implemented mouseclick for Dashboards
 		PVector location = this.calculateRelativeMouseLocation(this.mouseX, this.mouseY);
 
-		for (Dashboard db : new ArrayList<>(this.getDashboards())) {
+		for ( Dashboard db : new ArrayList<>( this.getDashboards() ) ) {
 			((IMouseInput) db).mousePressed((int) location.x, (int) location.y, this.mouseButton);
 		}
 	}
@@ -149,7 +149,7 @@ public class FightForSalvation extends GameEngine {
 		this.addDashboard(this.startScreen);
 
 		this.setupView();
-		this.setTileMap(MapGenerator.generateTilemapFromFile(level));
+		this.setTileMap( MapGenerator.generateTilemapFromFile(level) );
 	}
 
 	@Override
